@@ -14,7 +14,8 @@
       "arena": "SS",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/8/8f/Dracula.png/revision/latest/scale-to-width-down/140?cb=20260327152424"
   },
   {
     "id": "lucilla",
@@ -31,7 +32,8 @@
       "arena": "SS",
       "dreamRealm": "S+",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/56/Lucilla.png/revision/latest/scale-to-width-down/121?cb=20230913072702"
   },
   {
     "id": "trishea",
@@ -48,7 +50,8 @@
       "arena": "S+",
       "dreamRealm": "SS",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/7b/Trishea.png/revision/latest/scale-to-width-down/172?cb=20241212124353"
   },
   {
     "id": "sung-jinwoo",
@@ -65,7 +68,8 @@
       "arena": "SS",
       "dreamRealm": "S",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/8/83/Sung-Jinwoo.webp/revision/latest/scale-to-width-down/159?cb=20251006084749"
   },
   {
     "id": "liberta",
@@ -82,7 +86,8 @@
       "arena": "S",
       "dreamRealm": "S+",
       "guildHunt": "SSS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/bd/Liberta.png/revision/latest/scale-to-width-down/120?cb=20230913072640"
   },
   {
     "id": "tatsumaki-terrible-tornado",
@@ -99,7 +104,8 @@
       "arena": "A+",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/93/Terrible_Tornado.webp/revision/latest/scale-to-width-down/145?cb=20260225204904"
   },
   {
     "id": "awakened-talene",
@@ -116,7 +122,8 @@
       "arena": "S+",
       "dreamRealm": "S+",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/1a/Talene_-_The_Resurging_Flame.png/revision/latest/scale-to-width-down/200?cb=20220104152713"
   },
   {
     "id": "awakened-brutus",
@@ -133,7 +140,8 @@
       "arena": "SS",
       "dreamRealm": "B",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5a/Brutus.png/revision/latest/scale-to-width-down/155?cb=20190618193101"
   },
   {
     "id": "saitama",
@@ -150,7 +158,8 @@
       "arena": "S",
       "dreamRealm": "S+",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/0d/Saitama.webp/revision/latest/scale-to-width-down/132?cb=20260225204651"
   },
   {
     "id": "lyca",
@@ -167,7 +176,8 @@
       "arena": "S",
       "dreamRealm": "S+",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/be/Lyca.png/revision/latest/scale-to-width-down/125?cb=20190618182546"
   },
   {
     "id": "talimar",
@@ -184,7 +194,8 @@
       "arena": "A+",
       "dreamRealm": "SS",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/01/Talimar.png/revision/latest/scale-to-width-down/137?cb=20251007140508"
   },
   {
     "id": "albedo",
@@ -201,7 +212,8 @@
       "arena": "SS",
       "dreamRealm": "A",
       "guildHunt": "A"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/cd/Albedo.png/revision/latest/scale-to-width-down/159?cb=20201029115418"
   },
   {
     "id": "awakened-baden",
@@ -218,7 +230,8 @@
       "arena": "S-",
       "dreamRealm": "S",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/f/f3/Baden.png/revision/latest/scale-to-width-down/145?cb=20190619000048"
   },
   {
     "id": "judy-punch",
@@ -235,7 +248,8 @@
       "arena": "S",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": null
   },
   {
     "id": "palmer",
@@ -252,7 +266,8 @@
       "arena": "S-",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/af/Palmer-508x1024.png/revision/latest/scale-to-width-down/99?cb=20230201103027"
   },
   {
     "id": "mira",
@@ -269,7 +284,8 @@
       "arena": "S-",
       "dreamRealm": "S-",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/2/2a/Mira.png/revision/latest/scale-to-width-down/155?cb=20251007135233"
   },
   {
     "id": "talene",
@@ -286,7 +302,8 @@
       "arena": "S",
       "dreamRealm": "S",
       "guildHunt": "S"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/2/21/Talene.png/revision/latest/scale-to-width-down/150?cb=20191121032235"
   },
   {
     "id": "maetria",
@@ -303,7 +320,8 @@
       "arena": "S+",
       "dreamRealm": "B",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/75/Maetria.png/revision/latest/scale-to-width-down/200?cb=20241212133204"
   },
   {
     "id": "marcille",
@@ -320,7 +338,8 @@
       "arena": "A+",
       "dreamRealm": "S",
       "guildHunt": "S"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d6/Marcille-nobg.webp/revision/latest/scale-to-width-down/131?cb=20251006083624"
   },
   {
     "id": "haelus",
@@ -337,7 +356,8 @@
       "arena": "S-",
       "dreamRealm": "S-",
       "guildHunt": "S-"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/f/f1/Haelus.png/revision/latest/scale-to-width-down/132?cb=20211021101038"
   },
   {
     "id": "merlin",
@@ -354,7 +374,8 @@
       "arena": "SS",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/a6/Merlin.png/revision/latest/scale-to-width-down/147?cb=20210622130219"
   },
   {
     "id": "shalltear",
@@ -371,7 +392,8 @@
       "arena": "SS",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/0f/Shalltear.png/revision/latest/scale-to-width-down/117?cb=20250126151221"
   },
   {
     "id": "lorsan",
@@ -388,7 +410,8 @@
       "arena": "A+",
       "dreamRealm": "S+",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/cf/Lorsan.png/revision/latest/scale-to-width-down/150?cb=20190918093136"
   },
   {
     "id": "nevanthi",
@@ -405,7 +428,8 @@
       "arena": "S",
       "dreamRealm": "A",
       "guildHunt": "A+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/e/e3/Nevanthi.png/revision/latest/scale-to-width-down/130?cb=20221120103525"
   },
   {
     "id": "awakened-solise",
@@ -422,7 +446,8 @@
       "arena": "S-",
       "dreamRealm": "A",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/8/80/Solise.png/revision/latest/scale-to-width-down/154?cb=20200206195544"
   },
   {
     "id": "salaki",
@@ -439,7 +464,8 @@
       "arena": "S",
       "dreamRealm": "B",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/76/Bust_149.png/revision/latest/scale-to-width-down/109?cb=20230114084750"
   },
   {
     "id": "cha-hae-in",
@@ -456,7 +482,8 @@
       "arena": "A",
       "dreamRealm": "A+",
       "guildHunt": "A+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/4/41/Cha-Hae-in.webp/revision/latest/scale-to-width-down/78?cb=20251006084804"
   },
   {
     "id": "arthur",
@@ -473,7 +500,8 @@
       "arena": "A+",
       "dreamRealm": "A",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/50/Arthur.png/revision/latest/scale-to-width-down/152?cb=20191206042641"
   },
   {
     "id": "gwyneth",
@@ -490,7 +518,8 @@
       "arena": "A",
       "dreamRealm": "S-",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/be/Gwyneth.png/revision/latest/scale-to-width-down/197?cb=20190826224021"
   },
   {
     "id": "rowan",
@@ -507,7 +536,8 @@
       "arena": "C",
       "dreamRealm": "S",
       "guildHunt": "S-"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/93/Rowan.png/revision/latest/scale-to-width-down/141?cb=20191110024029"
   },
   {
     "id": "laios",
@@ -524,7 +554,8 @@
       "arena": "C",
       "dreamRealm": "SS",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/52/Laios.webp/revision/latest/scale-to-width-down/112?cb=20251006083704"
   },
   {
     "id": "framton",
@@ -541,7 +572,8 @@
       "arena": "S+",
       "dreamRealm": "D",
       "guildHunt": "E"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d2/Framton.png/revision/latest/scale-to-width-down/124?cb=20211202083242"
   },
   {
     "id": "rosaline",
@@ -558,7 +590,8 @@
       "arena": "C",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/97/Rosaline.png/revision/latest/scale-to-width-down/89?cb=20190807125446"
   },
   {
     "id": "selene",
@@ -575,7 +608,8 @@
       "arena": "A",
       "dreamRealm": "A+",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/3/36/Selene.png/revision/latest/scale-to-width-down/129?cb=20251007112106"
   },
   {
     "id": "thane",
@@ -592,7 +626,8 @@
       "arena": "A",
       "dreamRealm": "S-",
       "guildHunt": "S"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d0/Thane.png/revision/latest/scale-to-width-down/111?cb=20190618192317"
   },
   {
     "id": "raine",
@@ -609,7 +644,8 @@
       "arena": "C",
       "dreamRealm": "S+",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/a8/Raine.png/revision/latest/scale-to-width-down/115?cb=20190618190229"
   },
   {
     "id": "zolrath",
@@ -626,7 +662,8 @@
       "arena": "S+",
       "dreamRealm": "C",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/ad/Zolrath.png/revision/latest/scale-to-width-down/195?cb=20190827124651"
   },
   {
     "id": "skriath",
@@ -643,7 +680,8 @@
       "arena": "C",
       "dreamRealm": "S",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/c4/Skriath.png/revision/latest/scale-to-width-down/172?cb=20200114192626"
   },
   {
     "id": "satrana",
@@ -660,7 +698,8 @@
       "arena": "A+",
       "dreamRealm": "B",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/04/Satrana.png/revision/latest/scale-to-width-down/133?cb=20190815232429"
   },
   {
     "id": "brutus",
@@ -677,7 +716,8 @@
       "arena": "B",
       "dreamRealm": "B",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5a/Brutus.png/revision/latest/scale-to-width-down/155?cb=20190618193101"
   },
   {
     "id": "orthros",
@@ -694,7 +734,8 @@
       "arena": "A",
       "dreamRealm": "S",
       "guildHunt": "A"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/a5/Orthros.png/revision/latest/scale-to-width-down/174?cb=20190918103229"
   },
   {
     "id": "skreg",
@@ -711,7 +752,8 @@
       "arena": "S-",
       "dreamRealm": "C",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/74/Skreg.png/revision/latest/scale-to-width-down/162?cb=20190618191103"
   },
   {
     "id": "audrae",
@@ -728,7 +770,8 @@
       "arena": "B",
       "dreamRealm": "A+",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/64/Audrae.png/revision/latest/scale-to-width-down/110?cb=20220326204426"
   },
   {
     "id": "mishka",
@@ -745,7 +788,8 @@
       "arena": "A",
       "dreamRealm": "B",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/e/e4/Mishka.png/revision/latest/scale-to-width-down/178?cb=20211014180658"
   },
   {
     "id": "estrilda",
@@ -762,7 +806,8 @@
       "arena": "B",
       "dreamRealm": "S-",
       "guildHunt": "A"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/c5/Full_Estrilda.png/revision/latest/scale-to-width-down/184?cb=20181215113356"
   },
   {
     "id": "crassio",
@@ -779,7 +824,8 @@
       "arena": "B",
       "dreamRealm": "B",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/3/3f/Crassio.png/revision/latest/scale-to-width-down/99?cb=20241211101403"
   },
   {
     "id": "flora",
@@ -796,7 +842,8 @@
       "arena": "S-",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/90/Flora.png/revision/latest/scale-to-width-down/169?cb=20200723232004"
   },
   {
     "id": "walker",
@@ -813,7 +860,8 @@
       "arena": "D",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/a1/Walker.png/revision/latest/scale-to-width-down/148?cb=20210611144716"
   },
   {
     "id": "mehira",
@@ -830,7 +878,8 @@
       "arena": "B",
       "dreamRealm": "A+",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/b4/Mehira.png/revision/latest/scale-to-width-down/187?cb=20190807115402"
   },
   {
     "id": "lucretia",
@@ -847,7 +896,8 @@
       "arena": "C",
       "dreamRealm": "B",
       "guildHunt": "A+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/3/39/Lucretia.png/revision/latest/scale-to-width-down/128?cb=20200927161021"
   },
   {
     "id": "elijah-lailah",
@@ -864,7 +914,8 @@
       "arena": "C",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d1/Elijah_Lailah.png/revision/latest/scale-to-width-down/141?cb=20190807120227"
   },
   {
     "id": "mortas",
@@ -881,7 +932,8 @@
       "arena": "D",
       "dreamRealm": "S+",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5f/Mortas.png/revision/latest/scale-to-width-down/166?cb=20210119154546"
   },
   {
     "id": "khasos",
@@ -898,7 +950,8 @@
       "arena": "A+",
       "dreamRealm": "C",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/4/43/Khasos.png/revision/latest/scale-to-width-down/186?cb=20190618184916"
   },
   {
     "id": "safiya",
@@ -915,7 +968,8 @@
       "arena": "B",
       "dreamRealm": "B",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d9/Safiya.png/revision/latest/scale-to-width-down/200?cb=20190618214410"
   },
   {
     "id": "silas",
@@ -932,7 +986,8 @@
       "arena": "B",
       "dreamRealm": "A",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/a6/Silas.png/revision/latest/scale-to-width-down/145?cb=20201111234435"
   },
   {
     "id": "khazard",
@@ -949,7 +1004,8 @@
       "arena": "B",
       "dreamRealm": "C",
       "guildHunt": "E"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/f/fa/Khazard.png/revision/latest/scale-to-width-down/150?cb=20191230112939"
   },
   {
     "id": "tasi",
@@ -966,7 +1022,8 @@
       "arena": "A",
       "dreamRealm": "B",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5a/Tasi.png/revision/latest/scale-to-width-down/171?cb=20190618185216"
   },
   {
     "id": "scarlet",
@@ -983,7 +1040,8 @@
       "arena": "C",
       "dreamRealm": "S+",
       "guildHunt": "S+"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/7a/Scarlet.png/revision/latest/scale-to-width-down/160?cb=20220123151627"
   },
   {
     "id": "sonja",
@@ -1000,7 +1058,8 @@
       "arena": "B",
       "dreamRealm": "D",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/ce/Sonja.png/revision/latest/scale-to-width-down/200?cb=20220627155033"
   },
   {
     "id": "numisu",
@@ -1017,7 +1076,8 @@
       "arena": "C",
       "dreamRealm": "B",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/3/30/Numisu.png/revision/latest/scale-to-width-down/124?cb=20191115004258"
   },
   {
     "id": "kren",
@@ -1034,7 +1094,8 @@
       "arena": "D",
       "dreamRealm": "B",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/da/Kren.png/revision/latest/scale-to-width-down/148?cb=20210126174736"
   },
   {
     "id": "ezizh",
@@ -1051,7 +1112,8 @@
       "arena": "B",
       "dreamRealm": "A+",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/2/2a/Ezizh.png/revision/latest/scale-to-width-down/154?cb=20190618175357"
   },
   {
     "id": "zaphrael",
@@ -1068,7 +1130,8 @@
       "arena": "A+",
       "dreamRealm": "C",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/ab/Zaphrael.png/revision/latest/scale-to-width-down/153?cb=20200927160250"
   },
   {
     "id": "athalia",
@@ -1085,7 +1148,8 @@
       "arena": "B",
       "dreamRealm": "C",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/cb/Athalia.png/revision/latest/scale-to-width-down/123?cb=20190618193241"
   },
   {
     "id": "raku",
@@ -1102,7 +1166,8 @@
       "arena": "E",
       "dreamRealm": "S",
       "guildHunt": "A"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/71/Raku.png/revision/latest/scale-to-width-down/182?cb=20210327225741"
   },
   {
     "id": "eironn",
@@ -1119,7 +1184,8 @@
       "arena": "D",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/69/Eironn.png/revision/latest/scale-to-width-down/111?cb=20191110025124"
   },
   {
     "id": "oscar",
@@ -1136,7 +1202,8 @@
       "arena": "B",
       "dreamRealm": "S",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/68/Oscar.png/revision/latest/scale-to-width-down/98?cb=20200402184206"
   },
   {
     "id": "pippa",
@@ -1153,7 +1220,8 @@
       "arena": "D",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/4/4a/Pippa.png/revision/latest/scale-to-width-down/165?cb=20201029173646"
   },
   {
     "id": "oden",
@@ -1170,7 +1238,8 @@
       "arena": "B",
       "dreamRealm": "C",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/0b/Oden.png/revision/latest/scale-to-width-down/124?cb=20200319134215"
   },
   {
     "id": "anasta",
@@ -1187,7 +1256,8 @@
       "arena": "C",
       "dreamRealm": "B",
       "guildHunt": "E"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/db/AnastaBust.png/revision/latest/scale-to-width-down/154?cb=20220802183000"
   },
   {
     "id": "thoran",
@@ -1204,7 +1274,8 @@
       "arena": "A+",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/10/Thoran.png/revision/latest/scale-to-width-down/148?cb=20190618185854"
   },
   {
     "id": "tidus",
@@ -1221,7 +1292,8 @@
       "arena": "B",
       "dreamRealm": "B",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/12/Tidus.png/revision/latest/scale-to-width-down/111?cb=20191115040829"
   },
   {
     "id": "leonardo",
@@ -1238,7 +1310,8 @@
       "arena": "E",
       "dreamRealm": "C",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/99/Leonardo_da_Vinci.png/revision/latest/scale-to-width-down/160?cb=20210928183054"
   },
   {
     "id": "hodgkin",
@@ -1255,7 +1328,8 @@
       "arena": "C",
       "dreamRealm": "B",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/c/c0/Hodgkin.png/revision/latest/scale-to-width-down/179?cb=20210805120527"
   },
   {
     "id": "ainz-ooal-gown",
@@ -1272,7 +1346,8 @@
       "arena": "D",
       "dreamRealm": "B",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/f/f7/Ainz_Ooal_Gown.png/revision/latest/scale-to-width-down/158?cb=20201029115225"
   },
   {
     "id": "treznor",
@@ -1289,7 +1364,8 @@
       "arena": "B",
       "dreamRealm": "D",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/2/2c/Treznor.png/revision/latest/scale-to-width-down/200?cb=20211111004111"
   },
   {
     "id": "belinda",
@@ -1306,7 +1382,8 @@
       "arena": "E",
       "dreamRealm": "S+",
       "guildHunt": "S"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/b7/Belinda.png/revision/latest/scale-to-width-down/123?cb=20190618175051"
   },
   {
     "id": "eluard",
@@ -1323,7 +1400,8 @@
       "arena": "A",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/4/4c/Eluard.png/revision/latest/scale-to-width-down/174?cb=20210303211632"
   },
   {
     "id": "drez",
@@ -1340,7 +1418,8 @@
       "arena": "C",
       "dreamRealm": "C",
       "guildHunt": "E"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/2/26/Drez.PNG/revision/latest/scale-to-width-down/193?cb=20210119155852"
   },
   {
     "id": "grezhul",
@@ -1357,7 +1436,8 @@
       "arena": "B",
       "dreamRealm": "B",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/7e/Grezhul.png/revision/latest/scale-to-width-down/200?cb=20190618184747"
   },
   {
     "id": "kelthur",
@@ -1374,7 +1454,8 @@
       "arena": "A",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/78/Kelthur.png/revision/latest/scale-to-width-down/176?cb=20190807194849"
   },
   {
     "id": "warek",
@@ -1391,7 +1472,8 @@
       "arena": "F",
       "dreamRealm": "SS",
       "guildHunt": "SS"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d2/Warek.png/revision/latest/scale-to-width-down/164?cb=20190618192102"
   },
   {
     "id": "mezoth",
@@ -1408,7 +1490,8 @@
       "arena": "B",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/f/fc/Mezoth.png/revision/latest/scale-to-width-down/200?cb=20200304144158"
   },
   {
     "id": "zikis",
@@ -1425,7 +1508,8 @@
       "arena": "C",
       "dreamRealm": "D",
       "guildHunt": "C"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/6d/Zikis.png/revision/latest/scale-to-width-down/167?cb=20210908003237"
   },
   {
     "id": "isabella",
@@ -1442,7 +1526,8 @@
       "arena": "E",
       "dreamRealm": "A",
       "guildHunt": "B"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/1b/Isabella.png/revision/latest/scale-to-width-down/200?cb=20190618190029"
   },
   {
     "id": "shemira",
@@ -1459,7 +1544,8 @@
       "arena": "F",
       "dreamRealm": "A+",
       "guildHunt": "D"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/4/47/Shemira.png/revision/latest/scale-to-width-down/159?cb=20190618185033"
   },
   {
     "id": "wukong",
@@ -1476,7 +1562,8 @@
       "arena": "B",
       "dreamRealm": "E",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/b0/Wukong.png/revision/latest/scale-to-width-down/200?cb=20200930021144"
   },
   {
     "id": "daimon",
@@ -1493,7 +1580,8 @@
       "arena": "D",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/8/86/Daimon.png/revision/latest/scale-to-width-down/136?cb=20210119154401"
   },
   {
     "id": "saurus",
@@ -1510,7 +1598,8 @@
       "arena": "F",
       "dreamRealm": "B",
       "guildHunt": "A"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/8/86/Saurus.png/revision/latest/scale-to-width-down/175?cb=20200507171419"
   },
   {
     "id": "oku",
@@ -1527,7 +1616,8 @@
       "arena": "C",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/18/Oku.png/revision/latest/scale-to-width-down/200?cb=20220408160152"
   },
   {
     "id": "ferael",
@@ -1544,7 +1634,8 @@
       "arena": "C",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/6e/Ferael.png/revision/latest/scale-to-width-down/198?cb=20190618191757"
   },
   {
     "id": "desira",
@@ -1561,7 +1652,8 @@
       "arena": "C",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/af/Desira.png/revision/latest/scale-to-width-down/200?cb=20210509125239"
   },
   {
     "id": "hendrik",
@@ -1578,7 +1670,8 @@
       "arena": "C",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/6/61/Hendrik.png/revision/latest/scale-to-width-down/150?cb=20190807182322"
   },
   {
     "id": "kaz",
@@ -1595,7 +1688,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/7/75/Kaz.png/revision/latest/scale-to-width-down/200?cb=20190618182230"
   },
   {
     "id": "morrow",
@@ -1612,7 +1706,8 @@
       "arena": "D",
       "dreamRealm": "E",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/b/bb/Morrow.png/revision/latest/scale-to-width-down/188?cb=20210913183331"
   },
   {
     "id": "nara",
@@ -1629,7 +1724,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/d6/Nara.png/revision/latest/scale-to-width-down/121?cb=20190807214914"
   },
   {
     "id": "thesku",
@@ -1646,7 +1742,8 @@
       "arena": "D",
       "dreamRealm": "E",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/aa/Thesku.png/revision/latest/scale-to-width-down/136?cb=20211118184209"
   },
   {
     "id": "lucius",
@@ -1663,7 +1760,8 @@
       "arena": "D",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5d/Lucius.png/revision/latest/scale-to-width-down/143?cb=20190618192211"
   },
   {
     "id": "gorvo",
@@ -1680,7 +1778,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/03/Gorvo.png/revision/latest/scale-to-width-down/180?cb=20190807184031"
   },
   {
     "id": "cecilia",
@@ -1697,7 +1796,8 @@
       "arena": "C",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/3/3a/Cecilia.png/revision/latest/scale-to-width-down/118?cb=20200217204549"
   },
   {
     "id": "antandra",
@@ -1714,7 +1814,8 @@
       "arena": "E",
       "dreamRealm": "E",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/91/Antandra.png/revision/latest/scale-to-width-down/153?cb=20190815234631"
   },
   {
     "id": "nemora",
@@ -1731,7 +1832,8 @@
       "arena": "F",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/e/e7/Nemora.png/revision/latest/scale-to-width-down/83?cb=20190618192634"
   },
   {
     "id": "seirus",
@@ -1748,7 +1850,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/a/ae/Seirus.png/revision/latest/scale-to-width-down/123?cb=20190618192450"
   },
   {
     "id": "respen",
@@ -1765,7 +1868,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/0/0e/Respen.png/revision/latest/scale-to-width-down/167?cb=20210611144525"
   },
   {
     "id": "fawkes",
@@ -1782,7 +1886,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/9/97/Fawkes.png/revision/latest/scale-to-width-down/110?cb=20190618190912"
   },
   {
     "id": "theowyn",
@@ -1799,7 +1904,8 @@
       "arena": "E",
       "dreamRealm": "F",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/d/db/Theowyn.png/revision/latest/scale-to-width-down/148?cb=20200827051959"
   },
   {
     "id": "vurk",
@@ -1816,7 +1922,8 @@
       "arena": "F",
       "dreamRealm": "E",
       "guildHunt": "F"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/1/16/Vurk.png/revision/latest/scale-to-width-down/200?cb=20190618190644"
   },
   {
     "id": "izold",
@@ -1833,7 +1940,8 @@
       "arena": "X",
       "dreamRealm": "X",
       "guildHunt": "X"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/59/Izold.png/revision/latest/scale-to-width-down/200?cb=20191107105845"
   },
   {
     "id": "alna",
@@ -1850,6 +1958,7 @@
       "arena": "X",
       "dreamRealm": "X",
       "guildHunt": "X"
-    }
+    },
+    "image": "https://static.wikia.nocookie.net/afk-arena/images/5/5a/Alna.png/revision/latest/scale-to-width-down/200?cb=20201218150400"
   }
 ]

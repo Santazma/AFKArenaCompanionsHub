@@ -85,7 +85,8 @@ newer version from the site.
 
 `/team-builder` lets you build hero comps for **Arena** (two boards — your
 team vs. an opponent's), **Dream Realm**, and **Guild Hunt** (one board vs. a
-boss placeholder).
+boss placeholder). Each board renders as a 2-front / 3-back formation (like
+the in-game team layout), not a flat row of 5.
 
 - **Mode switch** — pill buttons at the top swap between Arena / Dream Realm
   / Guild Hunt instantly; each mode keeps its own teams independently.
@@ -94,10 +95,12 @@ boss placeholder).
   pulled straight from the tier list's per-hero investment columns.
 - **Team count** — 1 to 5, controlled by the stepper below the boards; resizing
   keeps whatever teams already had heroes in them.
-- **Picking heroes** — click an empty slot to select it (or just click a hero
-  card — it fills the first empty slot automatically), then click a hero in
-  the search/scroll grid below to place them. Click a filled slot to clear it.
-  The grid is sorted by that mode's tier (best first) and filterable by name.
+- **Picking heroes** — desktop: drag a hero card from the grid onto a slot.
+  Mobile/touch (or just clicking): tap a hero to select it, then tap a slot
+  to place it there — same "select, then place" model works in either
+  order (tap a slot first, then a hero, also works). Click/tap a filled
+  slot to clear it. The grid is sorted by that mode's tier (best first) and
+  filterable by name.
 - **Share** — copies a URL with the current mode's teams encoded into a
   `?team=` query param (base64url JSON of hero IDs). Opening that link loads
   the shared comp with no account or backend needed.
@@ -110,13 +113,33 @@ boss placeholder).
 [tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI)
 via its `gviz/tq?tqx=out:csv` export endpoint — name, faction, overall rank,
 per-mode tier (Arena/Dream Realm/Guild Hunt), and minimum/optimal/competitive
-investment text are all real. **Hero portraits are not available** — the
-sheet has no exposed image URLs for its embedded art (nothing a CSV/gviz
-export can carry), so every hero renders as a faction-colored initial avatar
-(`HeroAvatar.tsx`) instead of real artwork. Swapping in real portraits later
-just means adding an `image` field per hero and rendering it in
-`HeroAvatar.tsx` — no other change needed. Re-running the export command
-against the same spreadsheet will pick up any tier list updates.
+investment text are all real. Re-running the export command against the same
+spreadsheet will pick up any tier list updates.
+
+**Portraits** (`image` field, 108/109 heroes) are hotlinked from the
+[AFK Arena Fandom wiki](https://afk-arena.fandom.com/) via its MediaWiki
+`pageimages` API (`action=query&prop=pageimages`), which is far more
+reliable than scraping rendered HTML — it resolves redirects and returns
+each page's canonical image directly. A handful of heroes needed a manual
+title override (e.g. `Wukong` → the actual page title `Wu Kong`,
+`Awakened Brutus` → falls back to the base hero `Brutus`) since the
+Companions roster's naming doesn't always match the (Classic AFK Arena)
+wiki 1:1 — Companions has a smaller, partly-overlapping hero roster with
+some exclusive crossover heroes (Sung Jinwoo, Saitama, etc.) that the
+Classic wiki happens to also document. Only `Judy & Punch` has no matching
+page and falls back to a placeholder.
+
+Two things matter if you regenerate this data:
+
+- Fandom's static image host (`static.wikia.nocookie.net`) has open CORS
+  (`Access-Control-Allow-Origin: *`), but its dynamic thumbnailer **rejects
+  requests that carry a cross-origin `Referer` header** (curl without one
+  gets `200`; a real `<img>` load from another site normally gets `404`).
+  `HeroAvatar.tsx` works around this with `referrerPolicy="no-referrer"` on
+  the `<img>` tag — don't remove it.
+- `HeroAvatar.tsx` falls back to a faction-colored initial avatar whenever
+  `hero.image` is `null` or the `<img>` fails to load (`onError`), so a
+  missing/renamed wiki image degrades gracefully instead of breaking.
 
 ## Getting started
 
@@ -156,9 +179,10 @@ Two things make client-side routing work on GitHub Pages' static hosting
       whether to bring it in-app (data file + filterable UI) later.
 - [ ] **Guide** — currently an external site link; revisit whether to bring
       it in-app later.
-- [ ] **Team Builder** — real hero portraits (currently initial avatars — see
-      [Hero data](#hero-data)); team notes/labels; per-team "recommended
-      comp" hints using the tier list's mode-specific rankings.
+- [ ] **Team Builder** — a real portrait for `Judy & Punch` (currently the
+      only placeholder avatar — see [Hero data](#hero-data)); team
+      notes/labels; per-team "recommended comp" hints using the tier list's
+      mode-specific rankings.
 
 ## License
 

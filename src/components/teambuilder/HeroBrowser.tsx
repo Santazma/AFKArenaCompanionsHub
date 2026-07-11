@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type DragEvent } from 'react'
 import { heroes } from '../../data/heroes'
 import { tierColor, tierRank, type ContentMode, type InvestmentLevel } from '../../lib/teamBuilder'
 import HeroAvatar from './HeroAvatar'
@@ -6,10 +6,11 @@ import HeroAvatar from './HeroAvatar'
 interface HeroBrowserProps {
   mode: ContentMode
   investmentLevel: InvestmentLevel
-  onPick: (heroId: string) => void
+  selectedHeroId: string | null
+  onSelectHero: (heroId: string) => void
 }
 
-export default function HeroBrowser({ mode, investmentLevel, onPick }: HeroBrowserProps) {
+export default function HeroBrowser({ mode, investmentLevel, selectedHeroId, onSelectHero }: HeroBrowserProps) {
   const [query, setQuery] = useState('')
 
   const sorted = useMemo(() => {
@@ -23,7 +24,7 @@ export default function HeroBrowser({ mode, investmentLevel, onPick }: HeroBrows
 
   return (
     <div className="rounded-2xl border border-border bg-surface/70 p-4">
-      <div className="mb-4 flex items-center justify-between gap-4">
+      <div className="mb-1 flex items-center justify-between gap-4">
         <h3 className="font-body text-xs font-semibold tracking-[0.15em] text-gold-100/60 uppercase">
           Heroes ({sorted.length})
         </h3>
@@ -35,14 +36,26 @@ export default function HeroBrowser({ mode, investmentLevel, onPick }: HeroBrows
           className="w-48 rounded-full border border-border bg-void/60 px-4 py-1.5 font-body text-sm text-gold-100 placeholder:text-gold-100/40 focus:border-gold-500 focus:outline-none sm:w-64"
         />
       </div>
+      <p className="mb-3 font-body text-[11px] text-gold-100/40">
+        Drag a hero onto a slot, or tap a hero then tap a slot to place them.
+      </p>
 
       <div className="grid max-h-[28rem] grid-cols-3 gap-3 overflow-y-auto pr-1 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
         {sorted.map((hero) => (
           <button
             key={hero.id}
             type="button"
-            onClick={() => onPick(hero.id)}
-            className="flex flex-col items-center gap-1 rounded-xl border border-transparent p-2 text-center transition-colors hover:border-gold-500/40 hover:bg-void/40"
+            draggable
+            onDragStart={(event: DragEvent) => {
+              event.dataTransfer.setData('text/plain', hero.id)
+              event.dataTransfer.effectAllowed = 'copy'
+            }}
+            onClick={() => onSelectHero(hero.id)}
+            className={`flex flex-col items-center gap-1 rounded-xl border p-2 text-center transition-colors ${
+              selectedHeroId === hero.id
+                ? 'border-gold-500 bg-gold-500/10'
+                : 'border-transparent hover:border-gold-500/40 hover:bg-void/40'
+            }`}
           >
             <HeroAvatar hero={hero} size="sm" />
             <span className="w-full truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>

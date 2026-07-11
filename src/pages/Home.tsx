@@ -61,7 +61,7 @@ export default function Home() {
               spotlightColor={section.spotlightColor}
               className="flex h-full flex-col gap-4 !border-border !bg-surface/80 transition-transform duration-300 group-hover:-translate-y-1"
             >
-              <h2 className="font-display text-2xl font-semibold text-gold-300">
+              <h2 className="font-display text-2xl font-bold text-gold-300">
                 {section.title}
               </h2>
               <p className="flex-1 font-body text-sm text-gold-100/70">{section.description}</p>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Hero } from '../../data/heroes'
 import { FACTION_COLORS } from '../../data/heroes'
 
@@ -20,10 +21,13 @@ interface HeroAvatarProps {
 }
 
 export default function HeroAvatar({ hero, size = 'md', className = '' }: HeroAvatarProps) {
+  const [imageFailed, setImageFailed] = useState(false)
   const color = FACTION_COLORS[hero.faction]
+  const showImage = hero.image && !imageFailed
+
   return (
     <div
-      className={`flex shrink-0 items-center justify-center rounded-full border-2 font-display font-bold ${SIZE_CLASSES[size]} ${className}`}
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-md border-2 font-body font-bold ${SIZE_CLASSES[size]} ${className}`}
       style={{
         borderColor: color,
         background: `radial-gradient(circle at 30% 20%, ${color}55, ${color}1a)`,
@@ -31,7 +35,18 @@ export default function HeroAvatar({ hero, size = 'md', className = '' }: HeroAv
       }}
       title={hero.name}
     >
-      {initials(hero.name)}
+      {showImage ? (
+        <img
+          src={hero.image!}
+          alt={hero.name}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          className="h-full w-full object-cover object-top"
+          onError={() => setImageFailed(true)}
+        />
+      ) : (
+        initials(hero.name)
+      )}
     </div>
   )
 }

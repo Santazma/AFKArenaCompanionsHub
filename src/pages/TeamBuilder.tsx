@@ -6,21 +6,27 @@ import ShareButton from '../components/teambuilder/ShareButton'
 import TeamCountControl from '../components/teambuilder/TeamCountControl'
 import TeamsBoard from '../components/teambuilder/TeamsBoard'
 import { useTeamBuilderState } from '../hooks/useTeamBuilderState'
-import type { SlotRef, Team, Side } from '../lib/teamBuilder'
+import type { SlotRef } from '../lib/teamBuilder'
 
-function findFirstEmptySlot(team: Team | undefined, side: Side, teamIndex: number): SlotRef | null {
-  if (!team) return null
-  const slotIndex = team.findIndex((heroId) => heroId === null)
-  return slotIndex === -1 ? null : { side, teamIndex, slotIndex }
+type Pending = { type: 'hero'; heroId: string } | { type: 'slot'; ref: SlotRef } | null
+
+function sameSlot(a: SlotRef, b: SlotRef) {
+  return a.side === b.side && a.teamIndex === b.teamIndex && a.slotIndex === b.slotIndex
 }
 
 export default function TeamBuilder() {
   const store = useTeamBuilderState()
-  const [selectedSlot, setSelectedSlot] = useState<SlotRef | null>(null)
+  const [pending, setPending] = useState<Pending>(null)
 
   useEffect(() => {
-    setSelectedSlot(null)
+    setPending(null)
   }, [store.mode])
+
+  const placeHero = (ref: SlotRef, heroId: string) => {
+    const team = ref.side === 'ours' ? store.teams.ours[ref.teamIndex] : store.teams.opponent[ref.teamIndex]
+    if (team?.includes(heroId)) return
+    store.assignHero(ref.side, ref.teamIndex, ref.slotIndex, heroId)
+  }
 
   const handleSlotClick = (ref: SlotRef) => {
     const team = ref.side === 'ours' ? store.teams.ours[ref.teamIndex] : store.teams.opponent[ref.teamIndex]
@@ -28,29 +34,31 @@ export default function TeamBuilder() {
 
     if (heroId) {
       store.clearSlot(ref.side, ref.teamIndex, ref.slotIndex)
-      setSelectedSlot(null)
+      setPending(null)
       return
     }
 
-    setSelectedSlot((prev) =>
-      prev && prev.side === ref.side && prev.teamIndex === ref.teamIndex && prev.slotIndex === ref.slotIndex
-        ? null
-        : ref,
-    )
+    if (pending?.type === 'hero') {
+      placeHero(ref, pending.heroId)
+      setPending(null)
+      return
+    }
+
+    setPending((prev) => (prev?.type === 'slot' && sameSlot(prev.ref, ref) ? null : { type: 'slot', ref }))
   }
 
-  const handlePick = (heroId: string) => {
-    const target = selectedSlot ?? findFirstEmptySlot(store.teams.ours[0], 'ours', 0)
-    if (!target) return
+  const handleSelectHero = (heroId: string) => {
+    if (pending?.type === 'slot') {
+      placeHero(pending.ref, heroId)
+      setPending(null)
+      return
+    }
+    setPending((prev) => (prev?.type === 'hero' && prev.heroId === heroId ? null : { type: 'hero', heroId }))
+  }
 
-    const targetTeam = target.side === 'ours' ? store.teams.ours[target.teamIndex] : store.teams.opponent[target.teamIndex]
-    if (targetTeam?.includes(heroId)) return
-
-    store.assignHero(target.side, target.teamIndex, target.slotIndex, heroId)
-
-    const updatedTeam = targetTeam ? [...targetTeam] : []
-    updatedTeam[target.slotIndex] = heroId
-    setSelectedSlot(findFirstEmptySlot(updatedTeam, target.side, target.teamIndex))
+  const handleDropHero = (ref: SlotRef, heroId: string) => {
+    placeHero(ref, heroId)
+    setPending(null)
   }
 
   return (
@@ -69,11 +77,22 @@ export default function TeamBuilder() {
         <ShareButton getUrl={store.shareUrl} />
       </div>
 
-      <TeamsBoard mode={store.mode} teams={store.teams} selectedSlot={selectedSlot} onSlotClick={handleSlotClick} />
+      <TeamsBoard
+        mode={store.mode}
+        teams={store.teams}
+        selectedSlot={pending?.type === 'slot' ? pending.ref : null}
+        onSlotClick={handleSlotClick}
+        onDropHero={handleDropHero}
+      />
 
       <TeamCountControl count={store.teams.ours.length} onChange={store.setTeamCount} />
 
-      <HeroBrowser mode={store.mode} investmentLevel={store.investmentLevel} onPick={handlePick} />
+      <HeroBrowser
+        mode={store.mode}
+        investmentLevel={store.investmentLevel}
+        selectedHeroId={pending?.type === 'hero' ? pending.heroId : null}
+        onSelectHero={handleSelectHero}
+      />
     </div>
   )
 }

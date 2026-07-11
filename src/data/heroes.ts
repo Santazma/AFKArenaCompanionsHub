@@ -15,6 +15,7 @@ export interface Hero {
   faction: Faction
   overallRank: string
   score: number
+  image: string | null
   investment: {
     minimum: string
     optimal: string
