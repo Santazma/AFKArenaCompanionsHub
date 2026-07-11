@@ -1,5 +1,5 @@
 import { heroById } from '../../data/heroes'
-import { bossLabelFor, type ContentMode, type ModeTeams, type SlotRef, type Team } from '../../lib/teamBuilder'
+import { bossLabelFor, slotKey, type ContentMode, type ModeTeams, type SlotRef, type Team } from '../../lib/teamBuilder'
 import HeroSlot from './HeroSlot'
 
 const FRONT_ROW_INDICES = [0, 1]
@@ -10,7 +10,8 @@ interface TeamsBoardProps {
   teams: ModeTeams
   selectedSlot: SlotRef | null
   onSlotClick: (ref: SlotRef) => void
-  onDropHero: (ref: SlotRef, heroId: string) => void
+  onRemoveHero: (ref: SlotRef) => void
+  onDropHero: (ref: SlotRef, heroId: string, sourceSlotKey: string | null) => void
 }
 
 function TeamPanel({
@@ -18,20 +19,24 @@ function TeamPanel({
   team,
   side,
   teamIndex,
+  mirrored = false,
   selectedSlot,
   onSlotClick,
+  onRemoveHero,
   onDropHero,
 }: {
   label: string
   team: Team
   side: SlotRef['side']
   teamIndex: number
+  mirrored?: boolean
   selectedSlot: SlotRef | null
   onSlotClick: (ref: SlotRef) => void
-  onDropHero: (ref: SlotRef, heroId: string) => void
+  onRemoveHero: (ref: SlotRef) => void
+  onDropHero: (ref: SlotRef, heroId: string, sourceSlotKey: string | null) => void
 }) {
-  const renderRow = (indices: number[]) => (
-    <div className="flex justify-center gap-2">
+  const renderColumn = (indices: number[]) => (
+    <div className="flex flex-col justify-center gap-2">
       {indices.map((slotIndex) => {
         const ref: SlotRef = { side, teamIndex, slotIndex }
         const isSelected =
@@ -42,8 +47,10 @@ function TeamPanel({
             key={slotIndex}
             hero={heroId ? (heroById.get(heroId) ?? null) : null}
             selected={isSelected}
+            slotKey={slotKey(ref)}
             onClick={() => onSlotClick(ref)}
-            onDropHero={(droppedId) => onDropHero(ref, droppedId)}
+            onRemove={() => onRemoveHero(ref)}
+            onDropHero={(droppedId, sourceSlotKey) => onDropHero(ref, droppedId, sourceSlotKey)}
           />
         )
       })}
@@ -55,14 +62,14 @@ function TeamPanel({
       <h3 className="mb-3 text-center font-body text-xs font-semibold tracking-[0.15em] text-gold-100/60 uppercase">
         {label}
       </h3>
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col items-center gap-1">
+      <div className={`flex items-center justify-center gap-3 ${mirrored ? 'flex-row-reverse' : ''}`}>
+        <div className="flex flex-col items-center gap-2">
           <span className="font-body text-[10px] tracking-[0.2em] text-gold-100/30 uppercase">Back</span>
-          {renderRow(BACK_ROW_INDICES)}
+          {renderColumn(BACK_ROW_INDICES)}
         </div>
-        <div className="flex flex-col items-center gap-1">
-          {renderRow(FRONT_ROW_INDICES)}
+        <div className="flex flex-col items-center gap-2">
           <span className="font-body text-[10px] tracking-[0.2em] text-gold-100/30 uppercase">Front</span>
+          {renderColumn(FRONT_ROW_INDICES)}
         </div>
       </div>
     </div>
@@ -80,7 +87,7 @@ function BossCard({ label }: { label: string }) {
   )
 }
 
-export default function TeamsBoard({ mode, teams, selectedSlot, onSlotClick, onDropHero }: TeamsBoardProps) {
+export default function TeamsBoard({ mode, teams, selectedSlot, onSlotClick, onRemoveHero, onDropHero }: TeamsBoardProps) {
   const bossLabel = bossLabelFor(mode)
 
   return (
@@ -94,6 +101,7 @@ export default function TeamsBoard({ mode, teams, selectedSlot, onSlotClick, onD
             teamIndex={teamIndex}
             selectedSlot={selectedSlot}
             onSlotClick={onSlotClick}
+            onRemoveHero={onRemoveHero}
             onDropHero={onDropHero}
           />
 
@@ -105,8 +113,10 @@ export default function TeamsBoard({ mode, teams, selectedSlot, onSlotClick, onD
               team={teams.opponent[teamIndex] ?? []}
               side="opponent"
               teamIndex={teamIndex}
+              mirrored
               selectedSlot={selectedSlot}
               onSlotClick={onSlotClick}
+              onRemoveHero={onRemoveHero}
               onDropHero={onDropHero}
             />
           )}

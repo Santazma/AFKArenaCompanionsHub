@@ -10,6 +10,16 @@ export interface SlotRef {
   slotIndex: number
 }
 
+export function slotKey(ref: SlotRef): string {
+  return `${ref.side}:${ref.teamIndex}:${ref.slotIndex}`
+}
+
+export function parseSlotKey(key: string): SlotRef | null {
+  const [side, teamIndex, slotIndex] = key.split(':')
+  if (side !== 'ours' && side !== 'opponent') return null
+  return { side, teamIndex: Number(teamIndex), slotIndex: Number(slotIndex) }
+}
+
 export const TEAM_SIZE = 5
 export const MIN_TEAMS = 1
 export const MAX_TEAMS = 5

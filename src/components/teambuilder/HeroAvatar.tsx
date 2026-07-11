@@ -41,7 +41,7 @@ export default function HeroAvatar({ hero, size = 'md', className = '' }: HeroAv
           alt={hero.name}
           loading="lazy"
           referrerPolicy="no-referrer"
-          className="h-full w-full object-cover object-top"
+          className="h-full w-full object-cover"
           onError={() => setImageFailed(true)}
         />
       ) : (

@@ -86,7 +86,10 @@ newer version from the site.
 `/team-builder` lets you build hero comps for **Arena** (two boards — your
 team vs. an opponent's), **Dream Realm**, and **Guild Hunt** (one board vs. a
 boss placeholder). Each board renders as a 2-front / 3-back formation (like
-the in-game team layout), not a flat row of 5.
+the in-game team layout) turned on its side: **back column on the left,
+front column on the right**. In Arena, the opponent board is mirrored (front
+on the left, back on the right) so the two front lines face each other in
+the middle, like an actual matchup.
 
 - **Mode switch** — pill buttons at the top swap between Arena / Dream Realm
   / Guild Hunt instantly; each mode keeps its own teams independently.
@@ -97,10 +100,14 @@ the in-game team layout), not a flat row of 5.
   keeps whatever teams already had heroes in them.
 - **Picking heroes** — desktop: drag a hero card from the grid onto a slot.
   Mobile/touch (or just clicking): tap a hero to select it, then tap a slot
-  to place it there — same "select, then place" model works in either
-  order (tap a slot first, then a hero, also works). Click/tap a filled
-  slot to clear it. The grid is sorted by that mode's tier (best first) and
-  filterable by name.
+  to place it there — the same "select, then place" model works in either
+  order (tap a slot first, then a hero, also works). The grid is sorted by
+  that mode's tier (best first) and filterable by name.
+- **Moving/swapping placed heroes** — an already-placed hero can be dragged
+  (or tapped, then tap the destination) onto any other slot, including a
+  slot in a different team or side. Dropping onto an empty slot moves the
+  hero there; dropping onto an occupied slot swaps the two heroes. A small
+  `×` button on each filled slot removes that hero outright.
 - **Share** — copies a URL with the current mode's teams encoded into a
   `?team=` query param (base64url JSON of hero IDs). Opening that link loads
   the shared comp with no account or backend needed.
@@ -116,18 +123,23 @@ per-mode tier (Arena/Dream Realm/Guild Hunt), and minimum/optimal/competitive
 investment text are all real. Re-running the export command against the same
 spreadsheet will pick up any tier list updates.
 
-**Portraits** (`image` field, 108/109 heroes) are hotlinked from the
-[AFK Arena Fandom wiki](https://afk-arena.fandom.com/) via its MediaWiki
-`pageimages` API (`action=query&prop=pageimages`), which is far more
-reliable than scraping rendered HTML — it resolves redirects and returns
-each page's canonical image directly. A handful of heroes needed a manual
-title override (e.g. `Wukong` → the actual page title `Wu Kong`,
-`Awakened Brutus` → falls back to the base hero `Brutus`) since the
-Companions roster's naming doesn't always match the (Classic AFK Arena)
-wiki 1:1 — Companions has a smaller, partly-overlapping hero roster with
-some exclusive crossover heroes (Sung Jinwoo, Saitama, etc.) that the
-Classic wiki happens to also document. Only `Judy & Punch` has no matching
-page and falls back to a placeholder.
+**Avatars** (`image` field, 108/109 heroes) are hotlinked from the
+[AFK Arena Fandom wiki](https://afk-arena.fandom.com/), specifically each
+hero's small square **game UI icon** (`{Name}_Icon.jpg`) rather than the
+large splash portrait (`{Name}.png`) — the icon is what actually looks right
+in a square avatar slot. Almost all of them (103/109) came from a single
+page fetch: every hero page embeds a shared navigation widget listing
+`_Icon.jpg` files for ~237 heroes, so one HTML page yields the whole map
+(name → icon URL) without hitting the API per hero. The remaining few used
+the MediaWiki `pageimages` API (`action=query&prop=pageimages`, which
+resolves redirects and title mismatches, e.g. `Wukong` → actual page title
+`Wu Kong`) and fall back to the full portrait when a hero genuinely has no
+separate icon file (`Zaphrael`, `Leonardo`, `Cha Hae-in`) — the Companions
+roster's naming doesn't always match the (Classic AFK Arena) wiki 1:1, since
+Companions has a smaller, partly-overlapping roster with some exclusive
+crossover heroes (Sung Jinwoo, Saitama, etc.) that the Classic wiki happens
+to also document. Only `Judy & Punch` has no matching page at all and falls
+back to a placeholder.
 
 Two things matter if you regenerate this data:
 

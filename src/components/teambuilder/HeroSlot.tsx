@@ -1,21 +1,30 @@
-import { useState, type DragEvent } from 'react'
+import { useState, type DragEvent, type KeyboardEvent } from 'react'
 import type { Hero } from '../../data/heroes'
 import HeroAvatar from './HeroAvatar'
 
 interface HeroSlotProps {
   hero: Hero | null
   selected: boolean
+  slotKey: string
   onClick: () => void
-  onDropHero: (heroId: string) => void
+  onRemove: () => void
+  onDropHero: (heroId: string, sourceSlotKey: string | null) => void
 }
 
-export default function HeroSlot({ hero, selected, onClick, onDropHero }: HeroSlotProps) {
+export default function HeroSlot({ hero, selected, slotKey, onClick, onRemove, onDropHero }: HeroSlotProps) {
   const [dragOver, setDragOver] = useState(false)
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <div
+      role="button"
+      tabIndex={0}
+      draggable={Boolean(hero)}
+      onDragStart={(event: DragEvent) => {
+        if (!hero) return
+        event.dataTransfer.setData('text/plain', hero.id)
+        event.dataTransfer.setData('application/x-slot-key', slotKey)
+        event.dataTransfer.effectAllowed = 'move'
+      }}
       onDragOver={(event: DragEvent) => {
         event.preventDefault()
         setDragOver(true)
@@ -25,10 +34,18 @@ export default function HeroSlot({ hero, selected, onClick, onDropHero }: HeroSl
         event.preventDefault()
         setDragOver(false)
         const heroId = event.dataTransfer.getData('text/plain')
-        if (heroId) onDropHero(heroId)
+        const sourceSlotKey = event.dataTransfer.getData('application/x-slot-key') || null
+        if (heroId) onDropHero(heroId, sourceSlotKey)
       }}
-      title={hero ? `${hero.name} — click to remove` : 'Empty slot — click or drop a hero to fill'}
-      className={`flex flex-col items-center gap-1 rounded-xl border p-2 transition-colors ${
+      onClick={onClick}
+      onKeyDown={(event: KeyboardEvent) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          onClick()
+        }
+      }}
+      title={hero ? `${hero.name} — drag or tap to move` : 'Empty slot — tap or drop a hero to fill'}
+      className={`relative flex cursor-pointer flex-col items-center gap-1 rounded-xl border p-2 transition-colors ${
         selected || dragOver
           ? 'border-gold-500 bg-gold-500/10'
           : hero
@@ -38,6 +55,17 @@ export default function HeroSlot({ hero, selected, onClick, onDropHero }: HeroSl
     >
       {hero ? (
         <>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation()
+              onRemove()
+            }}
+            aria-label={`Remove ${hero.name}`}
+            className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-void text-[10px] leading-none text-gold-100/60 hover:border-red-400 hover:text-red-400"
+          >
+            ×
+          </button>
           <HeroAvatar hero={hero} size="sm" />
           <span className="max-w-16 truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
         </>
@@ -49,6 +77,6 @@ export default function HeroSlot({ hero, selected, onClick, onDropHero }: HeroSl
           <span className="font-body text-[11px] text-gold-100/30">Empty</span>
         </>
       )}
-    </button>
+    </div>
   )
 }

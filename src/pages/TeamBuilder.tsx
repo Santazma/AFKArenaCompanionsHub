@@ -6,12 +6,16 @@ import ShareButton from '../components/teambuilder/ShareButton'
 import TeamCountControl from '../components/teambuilder/TeamCountControl'
 import TeamsBoard from '../components/teambuilder/TeamsBoard'
 import { useTeamBuilderState } from '../hooks/useTeamBuilderState'
-import type { SlotRef } from '../lib/teamBuilder'
+import { parseSlotKey, type ModeTeams, type SlotRef, type Team } from '../lib/teamBuilder'
 
 type Pending = { type: 'hero'; heroId: string } | { type: 'slot'; ref: SlotRef } | null
 
 function sameSlot(a: SlotRef, b: SlotRef) {
   return a.side === b.side && a.teamIndex === b.teamIndex && a.slotIndex === b.slotIndex
+}
+
+function getTeam(teams: ModeTeams, ref: SlotRef): Team | undefined {
+  return ref.side === 'ours' ? teams.ours[ref.teamIndex] : teams.opponent[ref.teamIndex]
 }
 
 export default function TeamBuilder() {
@@ -23,28 +27,51 @@ export default function TeamBuilder() {
   }, [store.mode])
 
   const placeHero = (ref: SlotRef, heroId: string) => {
-    const team = ref.side === 'ours' ? store.teams.ours[ref.teamIndex] : store.teams.opponent[ref.teamIndex]
+    const team = getTeam(store.teams, ref)
     if (team?.includes(heroId)) return
     store.assignHero(ref.side, ref.teamIndex, ref.slotIndex, heroId)
   }
 
-  const handleSlotClick = (ref: SlotRef) => {
-    const team = ref.side === 'ours' ? store.teams.ours[ref.teamIndex] : store.teams.opponent[ref.teamIndex]
-    const heroId = team?.[ref.slotIndex]
+  const moveOrSwap = (sourceRef: SlotRef, targetRef: SlotRef) => {
+    if (sameSlot(sourceRef, targetRef)) return
+    const sourceTeam = getTeam(store.teams, sourceRef)
+    const targetTeam = getTeam(store.teams, targetRef)
+    const sourceHero = sourceTeam?.[sourceRef.slotIndex] ?? null
+    const targetHero = targetTeam?.[targetRef.slotIndex] ?? null
+    if (!sourceHero) return
 
-    if (heroId) {
-      store.clearSlot(ref.side, ref.teamIndex, ref.slotIndex)
-      setPending(null)
-      return
+    const sameTeam = sourceRef.side === targetRef.side && sourceRef.teamIndex === targetRef.teamIndex
+    if (!sameTeam) {
+      if (targetTeam?.includes(sourceHero)) return
+      if (targetHero && sourceTeam?.includes(targetHero)) return
     }
 
+    store.assignHero(targetRef.side, targetRef.teamIndex, targetRef.slotIndex, sourceHero)
+    if (targetHero) {
+      store.assignHero(sourceRef.side, sourceRef.teamIndex, sourceRef.slotIndex, targetHero)
+    } else {
+      store.clearSlot(sourceRef.side, sourceRef.teamIndex, sourceRef.slotIndex)
+    }
+  }
+
+  const handleSlotClick = (ref: SlotRef) => {
     if (pending?.type === 'hero') {
       placeHero(ref, pending.heroId)
       setPending(null)
       return
     }
 
-    setPending((prev) => (prev?.type === 'slot' && sameSlot(prev.ref, ref) ? null : { type: 'slot', ref }))
+    if (pending?.type === 'slot') {
+      if (sameSlot(pending.ref, ref)) {
+        setPending(null)
+        return
+      }
+      moveOrSwap(pending.ref, ref)
+      setPending(null)
+      return
+    }
+
+    setPending({ type: 'slot', ref })
   }
 
   const handleSelectHero = (heroId: string) => {
@@ -56,9 +83,19 @@ export default function TeamBuilder() {
     setPending((prev) => (prev?.type === 'hero' && prev.heroId === heroId ? null : { type: 'hero', heroId }))
   }
 
-  const handleDropHero = (ref: SlotRef, heroId: string) => {
-    placeHero(ref, heroId)
+  const handleDropHero = (targetRef: SlotRef, heroId: string, sourceSlotKey: string | null) => {
+    const sourceRef = sourceSlotKey ? parseSlotKey(sourceSlotKey) : null
+    if (sourceRef) {
+      moveOrSwap(sourceRef, targetRef)
+    } else {
+      placeHero(targetRef, heroId)
+    }
     setPending(null)
+  }
+
+  const handleRemoveHero = (ref: SlotRef) => {
+    store.clearSlot(ref.side, ref.teamIndex, ref.slotIndex)
+    setPending((prev) => (prev?.type === 'slot' && sameSlot(prev.ref, ref) ? null : prev))
   }
 
   return (
@@ -82,6 +119,7 @@ export default function TeamBuilder() {
         teams={store.teams}
         selectedSlot={pending?.type === 'slot' ? pending.ref : null}
         onSlotClick={handleSlotClick}
+        onRemoveHero={handleRemoveHero}
         onDropHero={handleDropHero}
       />
 
