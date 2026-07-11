@@ -8,13 +8,13 @@ interface BossSlotProps {
   onSelectBoss: (bossId: string) => void
 }
 
-function BossThumb({ boss }: { boss: Boss }) {
+function BossThumb({ boss, fit = 'cover' }: { boss: Boss; fit?: 'cover' | 'contain' }) {
   return boss.image ? (
     <img
       src={boss.image}
       alt={boss.name}
       referrerPolicy="no-referrer"
-      className="h-full w-full object-cover"
+      className={`h-full w-full ${fit === 'contain' ? 'object-contain' : 'object-cover'}`}
     />
   ) : (
     <div className="flex h-full w-full items-center justify-center font-display text-2xl text-arcane-300">?</div>
@@ -77,7 +77,7 @@ export default function BossSlot({ mode, boss, onSelectBoss }: BossSlotProps) {
       {boss ? (
         <>
           <div className="min-h-0 flex-1">
-            <BossThumb boss={boss} />
+            <BossThumb boss={boss} fit="contain" />
           </div>
           <span className="py-2 font-body text-sm font-medium text-gold-100/80">{boss.name}</span>
         </>

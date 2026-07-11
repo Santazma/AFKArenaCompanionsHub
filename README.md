@@ -118,16 +118,20 @@ other in the middle, like an actual matchup.
   team starts as a "Select a boss" placeholder at a fixed height
   (`BossSlot.tsx`, `h-[22.5rem]` — matches the hero board's own natural
   height) so it never grows the row just because a boss's splash art is
-  tall; the art is `object-cover`-cropped to fit that fixed box instead.
-  (A flex row with `items-stretch` and no explicit height will size itself
-  to a tall image's *intrinsic* size even with `min-height: 0` on the
-  item — `min-height: 0` only lifts the floor, it doesn't stop content from
-  being the ceiling. An explicit height sidesteps that instead of fighting
-  it.) Clicking the slot opens a picker of that mode's bosses (own splash
-  art, not an icon); picking one shows that boss full-size (cropped) with
-  its name below, and clicking a picked boss again reopens the picker to
-  swap it. The boss is **one shared pick per mode** — every team is built
-  against the same boss, so selecting one updates all of them at once
+  tall. (A flex row with `items-stretch` and no explicit height will size
+  itself to a tall image's *intrinsic* size even with `min-height: 0` on
+  the item — `min-height: 0` only lifts the floor, it doesn't stop content
+  from being the ceiling. An explicit height sidesteps that instead of
+  fighting it.) The art itself uses `object-contain`, not `object-cover` —
+  it's letterboxed to fit the fixed box with its full aspect ratio intact,
+  never cropped top/bottom or left/right (the small picker-grid thumbnails
+  are the one place that still uses `object-cover`, since a uniform square
+  crop reads better at icon size than letterboxing would). Clicking the
+  slot opens a picker of that mode's bosses; picking one shows that boss
+  full-size (uncropped) with its name below, and clicking a picked boss
+  again reopens the picker to swap it. The boss is **one shared pick per
+  mode** — every team is built against the same boss, so selecting one
+  updates all of them at once
   (you're comparing team comps against a single fight, not fighting
   different bosses per team).
 - **Share** — copies a URL with the current mode's teams (and any picked
