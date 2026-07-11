@@ -130,6 +130,26 @@ npm run lint          # run oxlint
 
 Requires Node.js 20+.
 
+## Deployment
+
+Every push to `main` builds and deploys automatically to **GitHub Pages**
+via `.github/workflows/deploy.yml` — live at
+`https://santazma.github.io/AFKArenaCompanionsHub/`. One-time setup on
+GitHub: **Settings → Pages → Build and deployment → Source → "GitHub
+Actions"**. After that, no manual deploy step is needed.
+
+Two things make client-side routing work on GitHub Pages' static hosting
+(no server-side rewrites):
+
+- `vite.config.ts` sets `base: '/AFKArenaCompanionsHub/'`, and
+  `main.tsx` passes that same value as the router's `basename`.
+- `public/404.html` + a small decode script in `index.html` implement the
+  [spa-github-pages](https://github.com/rafgraph/spa-github-pages) redirect
+  trick, so a deep link like `/team-builder` (or a refresh on it) doesn't
+  404 — GitHub Pages serves `404.html`, which redirects back to `index.html`
+  with the real path encoded in a query param that gets decoded before
+  React Router boots.
+
 ## Roadmap
 
 - [ ] **Tier List** — currently an external spreadsheet link; revisit
