@@ -72,7 +72,7 @@ export default function BossSlot({ mode, boss, onSelectBoss }: BossSlotProps) {
       type="button"
       onClick={() => setPickerOpen(true)}
       title={boss ? `${boss.name} — click to change` : 'Click to choose a boss'}
-      className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-arcane-700/50 bg-void/40 transition-colors hover:border-arcane-500"
+      className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-arcane-700/50 bg-void/40 transition-colors hover:border-arcane-500"
     >
       {boss ? (
         <>

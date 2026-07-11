@@ -1,5 +1,8 @@
 import rawHeroes from './heroes.json'
+import chaHaeInImage from '../assets/heroes/cha-hae-in.webp'
 import judyPunchImage from '../assets/heroes/judy-punch.webp'
+import leonardoImage from '../assets/heroes/leonardo.webp'
+import zaphraelImage from '../assets/heroes/zaphrael.webp'
 
 export type Faction =
   | 'Dimensional'
@@ -29,8 +32,16 @@ export interface Hero {
   }
 }
 
+// These heroes have no dedicated square icon on the AFK Arena Fandom wiki
+// (only a large splash portrait, or no wiki page at all), so their icons
+// are downloaded from afk-web.onrender.com's tier list (Companions-specific,
+// 128px) and self-hosted here — that host blocks hotlinking via
+// Cross-Origin-Resource-Policy, same as Judy & Punch below.
 const IMAGE_OVERRIDES: Record<string, string> = {
   'judy-punch': judyPunchImage,
+  zaphrael: zaphraelImage,
+  leonardo: leonardoImage,
+  'cha-hae-in': chaHaeInImage,
 }
 
 export const heroes = (rawHeroes as Hero[]).map((hero) =>

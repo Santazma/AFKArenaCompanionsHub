@@ -22,7 +22,7 @@ interface TeamsBoardProps {
   onSlotClick: (ref: SlotRef) => void
   onRemoveHero: (ref: SlotRef) => void
   onDropHero: (ref: SlotRef, heroId: string, sourceSlotKey: string | null) => void
-  onSelectBoss: (teamIndex: number, bossId: string) => void
+  onSelectBoss: (bossId: string) => void
 }
 
 function TeamPanel({
@@ -101,46 +101,42 @@ export default function TeamsBoard({
   onSelectBoss,
 }: TeamsBoardProps) {
   const isBossMode = mode !== 'arena'
+  const boss = teams.bossId ? (bossById.get(teams.bossId) ?? null) : null
 
   return (
     <div className="flex flex-col gap-6">
-      {teams.ours.map((team, teamIndex) => {
-        const bossId = teams.bossIds[teamIndex]
-        const boss = bossId ? (bossById.get(bossId) ?? null) : null
+      {teams.ours.map((team, teamIndex) => (
+        <div key={teamIndex} className="flex flex-col items-stretch gap-4 sm:flex-row">
+          <TeamPanel
+            label={`Team ${teamIndex + 1} — Our Team`}
+            team={team}
+            side="ours"
+            teamIndex={teamIndex}
+            investmentLevel={investmentLevel}
+            selectedSlot={selectedSlot}
+            onSlotClick={onSlotClick}
+            onRemoveHero={onRemoveHero}
+            onDropHero={onDropHero}
+          />
 
-        return (
-          <div key={teamIndex} className="flex flex-col items-stretch gap-4 sm:flex-row">
+          {isBossMode ? (
+            <BossSlot mode={mode} boss={boss} onSelectBoss={onSelectBoss} />
+          ) : (
             <TeamPanel
-              label={`Team ${teamIndex + 1} — Our Team`}
-              team={team}
-              side="ours"
+              label={`Team ${teamIndex + 1} — Opponent`}
+              team={teams.opponent[teamIndex] ?? []}
+              side="opponent"
               teamIndex={teamIndex}
+              mirrored
               investmentLevel={investmentLevel}
               selectedSlot={selectedSlot}
               onSlotClick={onSlotClick}
               onRemoveHero={onRemoveHero}
               onDropHero={onDropHero}
             />
-
-            {isBossMode ? (
-              <BossSlot mode={mode} boss={boss} onSelectBoss={(selectedId) => onSelectBoss(teamIndex, selectedId)} />
-            ) : (
-              <TeamPanel
-                label={`Team ${teamIndex + 1} — Opponent`}
-                team={teams.opponent[teamIndex] ?? []}
-                side="opponent"
-                teamIndex={teamIndex}
-                mirrored
-                investmentLevel={investmentLevel}
-                selectedSlot={selectedSlot}
-                onSlotClick={onSlotClick}
-                onRemoveHero={onRemoveHero}
-                onDropHero={onDropHero}
-              />
-            )}
-          </div>
-        )
-      })}
+          )}
+        </div>
+      ))}
     </div>
   )
 }

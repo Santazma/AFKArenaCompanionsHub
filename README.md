@@ -114,13 +114,16 @@ other in the middle, like an actual matchup.
   slot in a different team or side. Dropping onto an empty slot moves the
   hero there; dropping onto an occupied slot swaps the two heroes. A small
   `×` button on each filled slot removes that hero outright.
-- **Boss picker** (Dream Realm / Guild Hunt) — each team's boss slot starts
-  as a "Select a boss" placeholder the same height as the hero board next to
-  it. Clicking it opens a picker of that mode's bosses (own large artwork,
-  not an icon); picking one shows that boss full-size with its name below.
-  Clicking an already-picked boss reopens the picker to swap it for another
-  — each team's boss is independent, so different teams can target
-  different bosses.
+- **Boss picker** (Dream Realm / Guild Hunt) — the boss slot next to each
+  team starts as a "Select a boss" placeholder that never grows taller than
+  the hero board beside it (the boss art is `object-cover`-cropped to fit,
+  not the other way around). Clicking it opens a picker of that mode's
+  bosses (own splash art, not an icon); picking one shows that boss
+  full-size with its name below, and clicking a picked boss again reopens
+  the picker to swap it. The boss is **one shared pick per mode** — every
+  team is built against the same boss, so selecting one updates all of
+  them at once (you're comparing team comps against a single fight, not
+  fighting different bosses per team).
 - **Share** — copies a URL with the current mode's teams (and any picked
   bosses) encoded into a `?team=` query param (base64url JSON). Opening that
   link loads the shared comp with no account or backend needed.
@@ -140,25 +143,32 @@ spreadsheet will pick up any tier list updates.
 [AFK Arena Fandom wiki](https://afk-arena.fandom.com/), specifically each
 hero's small square **game UI icon** (`{Name}_Icon.jpg`) rather than the
 large splash portrait (`{Name}.png`) — the icon is what actually looks right
-in a square avatar slot. Almost all of them (103/109) came from a single
-page fetch: every hero page embeds a shared navigation widget listing
-`_Icon.jpg` files for ~237 heroes, so one HTML page yields the whole map
-(name → icon URL) without hitting the API per hero. The remaining few used
-the MediaWiki `pageimages` API (`action=query&prop=pageimages`, which
-resolves redirects and title mismatches, e.g. `Wukong` → actual page title
-`Wu Kong`) and fall back to the full portrait when a hero genuinely has no
-separate icon file (`Zaphrael`, `Leonardo`, `Cha Hae-in`) — the Companions
-roster's naming doesn't always match the (Classic AFK Arena) wiki 1:1, since
+in a square avatar slot. Almost all of them came from a single page fetch:
+every hero page embeds a shared navigation widget listing `_Icon.jpg` files
+for ~237 heroes, so one HTML page yields the whole map (name → icon URL)
+without hitting the API per hero. Note that four `Awakened X` heroes
+(`Awakened Brutus/Baden/Solise/Talene`) have their **own** distinct
+`X_Awakened_Icon.jpg` in that same list — don't fall back to the base
+hero's plain icon for these, it's visibly wrong (a different portrait).
+The rest used the MediaWiki `pageimages` API
+(`action=query&prop=pageimages`, which resolves redirects and title
+mismatches, e.g. `Wukong` → actual page title `Wu Kong`).
+
+`Judy & Punch`, `Zaphrael`, `Leonardo`, and `Cha Hae-in` have no icon (or,
+for Judy & Punch, no page at all) on the Classic AFK Arena wiki — the
+Companions roster's naming doesn't always match the Classic wiki 1:1, since
 Companions has a smaller, partly-overlapping roster with some exclusive
 crossover heroes (Sung Jinwoo, Saitama, etc.) that the Classic wiki happens
-to also document. `Judy & Punch` has no matching wiki page, but does have an
-icon on [afk-web.onrender.com](https://afk-web.onrender.com) (the site
-linked from the Guide card) — that one image is downloaded into
-`src/assets/heroes/judy-punch.webp` and wired in via `IMAGE_OVERRIDES` in
-`heroes.ts`, rather than hotlinked, because that host sends
-`Cross-Origin-Resource-Policy: same-origin`, which browsers enforce
+to also document. For these four, [afk-web.onrender.com](https://afk-web.onrender.com)
+(the site linked from the Guide card, Companions-specific) has a proper
+128px icon per hero at `/images/generated/tier-list/heroes/{Name}-128.webp`.
+Those four images are downloaded into `src/assets/heroes/` and wired in via
+`IMAGE_OVERRIDES` in `heroes.ts`, rather than hotlinked, because that host
+sends `Cross-Origin-Resource-Policy: same-origin`, which browsers enforce
 regardless of `referrerPolicy` (unlike Fandom's Referer check below, this
-one has no client-side workaround).
+one has no client-side workaround). They end up inlined as base64 in the
+JS bundle since they're each under Vite's 4kB asset-inlining threshold —
+that's expected, not a bug.
 
 **Faction icons** (`FACTION_ICONS` in `heroes.ts`) are each faction's small
 circular emblem, pulled from the wiki's [Factions](https://afk-arena.fandom.com/wiki/Factions)

@@ -37,21 +37,14 @@ export const INVESTMENT_LEVELS: { id: InvestmentLevel; label: string }[] = [
   { id: 'competitive', label: 'Competitive' },
 ]
 
-const BOSS_LABEL: Record<Exclude<ContentMode, 'arena'>, string> = {
-  dreamRealm: 'Dream Realm Boss',
-  guildHunt: 'Guild Hunt Boss',
-}
-
-export function bossLabelFor(mode: ContentMode): string | null {
-  return mode === 'arena' ? null : BOSS_LABEL[mode]
-}
-
 export type Team = (string | null)[]
 
 export interface ModeTeams {
   ours: Team[]
   opponent: Team[]
-  bossIds: (string | null)[]
+  // A single boss shared by every team in this mode — Dream Realm / Guild
+  // Hunt teams are all built against the same boss, not one each.
+  bossId: string | null
 }
 
 export type BuilderState = Record<ContentMode, ModeTeams>
@@ -64,27 +57,17 @@ function emptyTeams(count: number): Team[] {
   return Array.from({ length: count }, emptyTeam)
 }
 
-function emptyBossIds(count: number): (string | null)[] {
-  return Array.from({ length: count }, () => null)
-}
-
 export function createInitialState(): BuilderState {
   return {
-    arena: { ours: emptyTeams(1), opponent: emptyTeams(1), bossIds: [] },
-    dreamRealm: { ours: emptyTeams(1), opponent: [], bossIds: emptyBossIds(1) },
-    guildHunt: { ours: emptyTeams(1), opponent: [], bossIds: emptyBossIds(1) },
+    arena: { ours: emptyTeams(1), opponent: emptyTeams(1), bossId: null },
+    dreamRealm: { ours: emptyTeams(1), opponent: [], bossId: null },
+    guildHunt: { ours: emptyTeams(1), opponent: [], bossId: null },
   }
 }
 
 export function resizeTeams(teams: Team[], count: number): Team[] {
   const next = teams.slice(0, count)
   while (next.length < count) next.push(emptyTeam())
-  return next
-}
-
-export function resizeBossIds(bossIds: (string | null)[], count: number): (string | null)[] {
-  const next = bossIds.slice(0, count)
-  while (next.length < count) next.push(null)
   return next
 }
 
@@ -126,7 +109,7 @@ interface ShareablePayload {
   mode: ContentMode
   ours: Team[]
   opponent: Team[]
-  bossIds: (string | null)[]
+  bossId: string | null
 }
 
 export function encodeShare(mode: ContentMode, teams: ModeTeams): string {
@@ -134,7 +117,7 @@ export function encodeShare(mode: ContentMode, teams: ModeTeams): string {
     mode,
     ours: teams.ours,
     opponent: teams.opponent,
-    bossIds: teams.bossIds,
+    bossId: teams.bossId,
   }
   return toBase64Url(JSON.stringify(payload))
 }
@@ -142,8 +125,8 @@ export function encodeShare(mode: ContentMode, teams: ModeTeams): string {
 function sanitizeModeTeams(parsed: {
   ours?: unknown
   opponent?: unknown
-  bossIds?: unknown
-}): Pick<ModeTeams, 'ours' | 'opponent' | 'bossIds'> {
+  bossId?: unknown
+}): Pick<ModeTeams, 'ours' | 'opponent' | 'bossId'> {
   const sanitizeTeam = (team: unknown): Team =>
     Array.isArray(team)
       ? Array.from({ length: TEAM_SIZE }, (_, i) => {
@@ -151,17 +134,10 @@ function sanitizeModeTeams(parsed: {
           return typeof id === 'string' && heroById.has(id) ? id : null
         })
       : emptyTeam()
-  const sanitizeBossId = (id: unknown): string | null => (typeof id === 'string' && bossById.has(id) ? id : null)
-  const ours = Array.isArray(parsed.ours) ? parsed.ours.map(sanitizeTeam) : []
-  const bossIds = Array.isArray(parsed.bossIds) ? parsed.bossIds.map(sanitizeBossId) : []
   return {
-    ours,
+    ours: Array.isArray(parsed.ours) ? parsed.ours.map(sanitizeTeam) : [],
     opponent: Array.isArray(parsed.opponent) ? parsed.opponent.map(sanitizeTeam) : [],
-    // Older saved state (from before boss picking existed) has no bossIds,
-    // or a length that no longer matches `ours` after a resize — always
-    // reconcile against the current team count so setBoss's index-based
-    // update can never silently no-op on a too-short array.
-    bossIds: resizeBossIds(bossIds, ours.length),
+    bossId: typeof parsed.bossId === 'string' && bossById.has(parsed.bossId) ? parsed.bossId : null,
   }
 }
 

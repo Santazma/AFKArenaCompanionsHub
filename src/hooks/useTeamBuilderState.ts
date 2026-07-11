@@ -8,7 +8,6 @@ import {
   decodeShare,
   encodeShare,
   loadState,
-  resizeBossIds,
   resizeTeams,
   saveState,
 } from '../lib/teamBuilder'
@@ -26,7 +25,7 @@ function readInitialState(): { state: BuilderState; mode: ContentMode } {
 
   const next: BuilderState = {
     ...stored,
-    [shared.mode]: { ours: shared.ours, opponent: shared.opponent, bossIds: shared.bossIds },
+    [shared.mode]: { ours: shared.ours, opponent: shared.opponent, bossId: shared.bossId },
   }
   return { state: next, mode: shared.mode }
 }
@@ -61,7 +60,7 @@ export function useTeamBuilderState() {
         const next: ModeTeams = {
           ours: resizeTeams(current.ours, count),
           opponent: current.opponent.length > 0 ? resizeTeams(current.opponent, count) : current.opponent,
-          bossIds: current.bossIds.length > 0 ? resizeBossIds(current.bossIds, count) : current.bossIds,
+          bossId: current.bossId,
         }
         return { ...prev, [mode]: next }
       })
@@ -70,13 +69,8 @@ export function useTeamBuilderState() {
   )
 
   const setBoss = useCallback(
-    (teamIndex: number, bossId: string | null) => {
-      setState((prev) => {
-        const current = prev[mode]
-        const padded = resizeBossIds(current.bossIds, Math.max(current.bossIds.length, teamIndex + 1))
-        const bossIds = padded.map((id, i) => (i === teamIndex ? bossId : id))
-        return { ...prev, [mode]: { ...current, bossIds } }
-      })
+    (bossId: string | null) => {
+      setState((prev) => ({ ...prev, [mode]: { ...prev[mode], bossId } }))
     },
     [mode],
   )
