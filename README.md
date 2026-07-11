@@ -1,22 +1,21 @@
 # AFK Arena Companions Hub
 
-A fan-made companion site for **AFK Arena** players — one place for hero tier
-lists, strategy guides, and an interactive team builder for Arena, Dream
-Realm, Guild Boss, and other game modes.
+A fan-made companion site for **AFK Arena: Companions** players — one place
+for hero tier lists, strategy guides, and an interactive team builder for
+Arena, Dream Realm, and Guild Hunt.
 
-> Not affiliated with or endorsed by Lilith Games.
+> Not affiliated with or endorsed by Lilith Games. AFK Arena: Companions is a
+> separate game from AFK Arena Classic, with its own (smaller) hero roster —
+> the hero dataset in this repo reflects that.
 
 ## Status
 
-This is the initial scaffold: base routing, layout, and home page are in
-place.
-
-- **Tier List** and **Guide** are external links for now — both the nav bar
-  and the home page cards open them in a new tab:
+- **Tier List** and **Guide** are external links — both the nav bar and the
+  home page cards open them in a new tab:
   - Tier List → the community [tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI/edit?pli=1&gid=1697331140#gid=1697331140)
   - Guide → [afk-web.onrender.com/guides](https://afk-web.onrender.com/guides)
-- **Team Builder** is the only in-app route so far, currently a "coming
-  soon" placeholder — see [Roadmap](#roadmap).
+- **Team Builder** is the only in-app route, and is functional — see
+  [Team Builder](#team-builder) below.
 
 ## Tech stack
 
@@ -39,22 +38,28 @@ Next.js (or adding a prerendering step) is a reasonable next step.
 
 ```
 src/
-├── App.tsx                 # Route definitions
-├── main.tsx                 # App entry point, router provider
-├── index.css                 # Tailwind import + theme tokens + fonts
+├── App.tsx                     # Route definitions
+├── main.tsx                     # App entry point, router provider
+├── index.css                     # Tailwind import + theme tokens + fonts
 ├── components/
-│   ├── Layout.tsx             # Page shell: Aurora background, nav, footer
-│   ├── NavBar.tsx              # Top navigation (incl. mobile menu)
-│   └── PlaceholderPage.tsx      # Shared "coming soon" page template
+│   ├── Layout.tsx                 # Page shell: Aurora background, nav, footer
+│   ├── NavBar.tsx                  # Top navigation (incl. mobile menu)
+│   └── teambuilder/                 # Team Builder UI pieces (see below)
 ├── pages/
-│   ├── Home.tsx                 # Landing page with the 3 entry points
-│   └── TeamBuilder.tsx           # /team-builder (placeholder)
+│   ├── Home.tsx                     # Landing page with the 3 entry points
+│   └── TeamBuilder.tsx               # /team-builder — the real feature
+├── hooks/
+│   └── useTeamBuilderState.ts         # Team Builder state: load/save/share
 ├── lib/
-│   └── externalLinks.ts           # Tier List / Guide URLs (single source of truth)
-└── reactbits/                       # Vendored React Bits components (see below)
-    ├── Aurora/                       # Animated WebGL background
-    ├── GradientText/                  # Animated gradient text
-    └── SpotlightCard/                  # Cursor-tracking spotlight card
+│   ├── externalLinks.ts                # Tier List / Guide URLs (single source of truth)
+│   └── teamBuilder.ts                   # Team Builder types, tiers, URL encode/decode
+├── data/
+│   ├── heroes.json                       # 109-hero dataset (see below)
+│   └── heroes.ts                          # Typed wrapper + faction colors
+└── reactbits/                               # Vendored React Bits components (see below)
+    ├── Aurora/                               # Animated WebGL background
+    ├── GradientText/                          # Animated gradient text
+    └── SpotlightCard/                          # Cursor-tracking spotlight card
 ```
 
 ## React Bits components
@@ -76,6 +81,43 @@ These live under `src/reactbits/<Component>/` with their original
 `.css` files untouched, so updating them later is a matter of dropping in a
 newer version from the site.
 
+## Team Builder
+
+`/team-builder` lets you build hero comps for **Arena** (two boards — your
+team vs. an opponent's), **Dream Realm**, and **Guild Hunt** (one board vs. a
+boss placeholder).
+
+- **Mode switch** — pill buttons at the top swap between Arena / Dream Realm
+  / Guild Hunt instantly; each mode keeps its own teams independently.
+- **Investment toggle** — Minimum / Optimal / Competitive buttons control
+  which investment text is shown under each hero in the browser grid below,
+  pulled straight from the tier list's per-hero investment columns.
+- **Team count** — 1 to 5, controlled by the stepper below the boards; resizing
+  keeps whatever teams already had heroes in them.
+- **Picking heroes** — click an empty slot to select it (or just click a hero
+  card — it fills the first empty slot automatically), then click a hero in
+  the search/scroll grid below to place them. Click a filled slot to clear it.
+  The grid is sorted by that mode's tier (best first) and filterable by name.
+- **Share** — copies a URL with the current mode's teams encoded into a
+  `?team=` query param (base64url JSON of hero IDs). Opening that link loads
+  the shared comp with no account or backend needed.
+- **Persistence** — all modes' teams are auto-saved to `localStorage`
+  (`afk-team-builder-state-v1`), so a refresh doesn't lose your work.
+
+### Hero data
+
+`src/data/heroes.json` (109 heroes) was generated from the
+[tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI)
+via its `gviz/tq?tqx=out:csv` export endpoint — name, faction, overall rank,
+per-mode tier (Arena/Dream Realm/Guild Hunt), and minimum/optimal/competitive
+investment text are all real. **Hero portraits are not available** — the
+sheet has no exposed image URLs for its embedded art (nothing a CSV/gviz
+export can carry), so every hero renders as a faction-colored initial avatar
+(`HeroAvatar.tsx`) instead of real artwork. Swapping in real portraits later
+just means adding an `image` field per hero and rendering it in
+`HeroAvatar.tsx` — no other change needed. Re-running the export command
+against the same spreadsheet will pick up any tier list updates.
+
 ## Getting started
 
 ```bash
@@ -94,10 +136,9 @@ Requires Node.js 20+.
       whether to bring it in-app (data file + filterable UI) later.
 - [ ] **Guide** — currently an external site link; revisit whether to bring
       it in-app later.
-- [ ] **Team Builder** — pick heroes into slots, save/share comps, likely
-      needs local storage (or a backend) for persistence.
-- [ ] Hero artwork/data source (manual dataset vs. an existing community
-      API) — needed if Tier List / Team Builder move in-app.
+- [ ] **Team Builder** — real hero portraits (currently initial avatars — see
+      [Hero data](#hero-data)); team notes/labels; per-team "recommended
+      comp" hints using the tier list's mode-specific rankings.
 
 ## License
 

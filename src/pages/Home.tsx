@@ -16,7 +16,7 @@ const sections: Section[] = [
   {
     href: TIER_LIST_URL,
     title: 'Tier List',
-    description: 'Ranked heroes for Arena, Campaign, Dream Realm and Guild Boss, updated for the current meta.',
+    description: 'Ranked heroes for Arena, Dream Realm, Guild Hunt and more, updated for the current meta.',
     cta: 'View rankings',
     spotlightColor: 'rgba(226, 181, 60, 0.25)',
   },
@@ -30,7 +30,7 @@ const sections: Section[] = [
   {
     to: '/team-builder',
     title: 'Team Builder',
-    description: 'Put together and save comps for Arena, Dream Realm, Guild Boss, and other modes.',
+    description: 'Put together and share comps for Arena, Dream Realm, and Guild Hunt.',
     cta: 'Build a team',
     spotlightColor: 'rgba(82, 39, 255, 0.25)',
   },

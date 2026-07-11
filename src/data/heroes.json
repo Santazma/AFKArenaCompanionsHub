@@ -1,0 +1,1855 @@
+[
+  {
+    "id": "dracula",
+    "name": "Dracula",
+    "faction": "Dimensional",
+    "overallRank": "SS",
+    "score": 78.4,
+    "investment": {
+      "minimum": "Mythic < A5* SI 20",
+      "optimal": "A5* SI 30",
+      "competitive": "T SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "lucilla",
+    "name": "Lucilla",
+    "faction": "Hypogean",
+    "overallRank": "S+",
+    "score": 77.1,
+    "investment": {
+      "minimum": "M < A1* SI 20",
+      "optimal": "A3* < A5* SI 20 < SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "S+",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "trishea",
+    "name": "Trishea",
+    "faction": "Wilder",
+    "overallRank": "S+",
+    "score": 73.4,
+    "investment": {
+      "minimum": "A1* SI 20",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": "A5* / T SI 30"
+    },
+    "modes": {
+      "arena": "S+",
+      "dreamRealm": "SS",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "sung-jinwoo",
+    "name": "Sung Jinwoo",
+    "faction": "Dimensional",
+    "overallRank": "S+",
+    "score": 73.1,
+    "investment": {
+      "minimum": "A3* SI 20",
+      "optimal": "A5* SI 20 < SI 30",
+      "competitive": "T SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "S",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "liberta",
+    "name": "Liberta",
+    "faction": "Celestial",
+    "overallRank": "S+",
+    "score": 73,
+    "investment": {
+      "minimum": "Mythic SI 20 < SI 30",
+      "optimal": "A3* < A5* SI 30",
+      "competitive": "A5* Si 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "S+",
+      "guildHunt": "SSS"
+    }
+  },
+  {
+    "id": "tatsumaki-terrible-tornado",
+    "name": "Tatsumaki Terrible Tornado",
+    "faction": "Dimensional",
+    "overallRank": "S",
+    "score": 72.4,
+    "investment": {
+      "minimum": "A1* SI 20 < SI 30",
+      "optimal": "A5* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "awakened-talene",
+    "name": "Awakened Talene",
+    "faction": "Celestial",
+    "overallRank": "S",
+    "score": 72.3,
+    "investment": {
+      "minimum": "A SI 20",
+      "optimal": "A SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S+",
+      "dreamRealm": "S+",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "awakened-brutus",
+    "name": "Awakened Brutus",
+    "faction": "Mauler",
+    "overallRank": "S",
+    "score": 69.73,
+    "investment": {
+      "minimum": "A SI 20",
+      "optimal": "A SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "B",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "saitama",
+    "name": "Saitama",
+    "faction": "Dimensional",
+    "overallRank": "S",
+    "score": 69.6,
+    "investment": {
+      "minimum": "M < A3* SI 20",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "S+",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "lyca",
+    "name": "Lyca",
+    "faction": "Wilder",
+    "overallRank": "S",
+    "score": 68.9,
+    "investment": {
+      "minimum": "Mythic SI 0",
+      "optimal": "A3* < A5* SI 20 < SI 30",
+      "competitive": "A5* / T SI 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "S+",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "talimar",
+    "name": "Talimar",
+    "faction": "Mauler",
+    "overallRank": "S",
+    "score": 67.8,
+    "investment": {
+      "minimum": "Elite < A1* SI 0 < SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "SS",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "albedo",
+    "name": "Albedo",
+    "faction": "Dimensional",
+    "overallRank": "S-",
+    "score": 66.7,
+    "investment": {
+      "minimum": "Mythic SI 20 < SI 30",
+      "optimal": "A3* SI 30",
+      "competitive": "A5* / T SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "A",
+      "guildHunt": "A"
+    }
+  },
+  {
+    "id": "awakened-baden",
+    "name": "Awakened Baden",
+    "faction": "Graveborn",
+    "overallRank": "S-",
+    "score": 66.6,
+    "investment": {
+      "minimum": "A SI 10",
+      "optimal": "A SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "S",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "judy-punch",
+    "name": "Judy & Punch",
+    "faction": "Dimensional",
+    "overallRank": "S-",
+    "score": 66.2,
+    "investment": {
+      "minimum": "A3* < A5* SI 20 < SI 30",
+      "optimal": "A5* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "palmer",
+    "name": "Palmer",
+    "faction": "Lightbearer",
+    "overallRank": "S-",
+    "score": 65.4,
+    "investment": {
+      "minimum": "Mythic SI 20",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "mira",
+    "name": "Mira",
+    "faction": "Graveborn",
+    "overallRank": "S-",
+    "score": 65,
+    "investment": {
+      "minimum": "A1* SI 0 < SI 20",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "S-",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "talene",
+    "name": "Talene",
+    "faction": "Celestial",
+    "overallRank": "S-",
+    "score": 64.8,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Mythic SI 20 / SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "S",
+      "guildHunt": "S"
+    }
+  },
+  {
+    "id": "maetria",
+    "name": "Maetria",
+    "faction": "Hypogean",
+    "overallRank": "S-",
+    "score": 64.56,
+    "investment": {
+      "minimum": "A SI 30",
+      "optimal": "A SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S+",
+      "dreamRealm": "B",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "marcille",
+    "name": "Marcille",
+    "faction": "Dimensional",
+    "overallRank": "S-",
+    "score": 64.4,
+    "investment": {
+      "minimum": "A3* SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "S",
+      "guildHunt": "S"
+    }
+  },
+  {
+    "id": "haelus",
+    "name": "Haelus",
+    "faction": "Celestial",
+    "overallRank": "S-",
+    "score": 64,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "A3* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "S-",
+      "guildHunt": "S-"
+    }
+  },
+  {
+    "id": "merlin",
+    "name": "Merlin",
+    "faction": "Dimensional",
+    "overallRank": "S-",
+    "score": 63.91,
+    "investment": {
+      "minimum": "A5* SI 0",
+      "optimal": "A5* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "shalltear",
+    "name": "Shalltear",
+    "faction": "Dimensional",
+    "overallRank": "S-",
+    "score": 62.81,
+    "investment": {
+      "minimum": "A1* SI 10",
+      "optimal": "A3* SI 20",
+      "competitive": "A5* / T SI 30"
+    },
+    "modes": {
+      "arena": "SS",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "lorsan",
+    "name": "Lorsan",
+    "faction": "Wilder",
+    "overallRank": "A+",
+    "score": 59.8,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite < A5* SI 0 < SI 20",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "S+",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "nevanthi",
+    "name": "Nevanthi",
+    "faction": "Wilder",
+    "overallRank": "A+",
+    "score": 58,
+    "investment": {
+      "minimum": "A1* < A3* SI 0",
+      "optimal": "A5* SI 10 < 20",
+      "competitive": "T SI 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "A",
+      "guildHunt": "A+"
+    }
+  },
+  {
+    "id": "awakened-solise",
+    "name": "Awakened Solise",
+    "faction": "Wilder",
+    "overallRank": "A+",
+    "score": 57.9,
+    "investment": {
+      "minimum": "A SI 30",
+      "optimal": "A SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "A",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "salaki",
+    "name": "Salaki",
+    "faction": "Mauler",
+    "overallRank": "A+",
+    "score": 57.7,
+    "investment": {
+      "minimum": "Elite < A1* SI 0",
+      "optimal": "A3* < A5* SI 0",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S",
+      "dreamRealm": "B",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "cha-hae-in",
+    "name": "Cha Hae-In",
+    "faction": "Dimensional",
+    "overallRank": "A+",
+    "score": 57.3,
+    "investment": {
+      "minimum": "A5* SI 20",
+      "optimal": "A5* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "A+",
+      "guildHunt": "A+"
+    }
+  },
+  {
+    "id": "arthur",
+    "name": "Arthur",
+    "faction": "Dimensional",
+    "overallRank": "A+",
+    "score": 57.1,
+    "investment": {
+      "minimum": "Mythic SI 20",
+      "optimal": "Mythic < A5* SI 20",
+      "competitive": "A5* SI 20 < 30"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "A",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "gwyneth",
+    "name": "Gwyneth",
+    "faction": "Lightbearer",
+    "overallRank": "A+",
+    "score": 56.9,
+    "investment": {
+      "minimum": "A1* SI 10",
+      "optimal": "A3* SI 20",
+      "competitive": "A5* SI 20 < SI 30"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "S-",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "rowan",
+    "name": "Rowan",
+    "faction": "Lightbearer",
+    "overallRank": "A+",
+    "score": 56.9,
+    "investment": {
+      "minimum": "Mythic < A1* SI 0 < SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "S",
+      "guildHunt": "S-"
+    }
+  },
+  {
+    "id": "laios",
+    "name": "Laios",
+    "faction": "Dimensional",
+    "overallRank": "A+",
+    "score": 56.4,
+    "investment": {
+      "minimum": "Elite < Mythic SI 20",
+      "optimal": "A1* < A3* SI 20",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "SS",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "framton",
+    "name": "Framton",
+    "faction": "Hypogean",
+    "overallRank": "A",
+    "score": 55.3,
+    "investment": {
+      "minimum": "Elite < A1* SI 20",
+      "optimal": "A3* SI 20 < SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S+",
+      "dreamRealm": "D",
+      "guildHunt": "E"
+    }
+  },
+  {
+    "id": "rosaline",
+    "name": "Rosaline",
+    "faction": "Lightbearer",
+    "overallRank": "A",
+    "score": 55.1,
+    "investment": {
+      "minimum": "Mythic < A SI 0",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "selene",
+    "name": "Selene",
+    "faction": "Celestial",
+    "overallRank": "A",
+    "score": 54.8,
+    "investment": {
+      "minimum": "Elite < Mythic SI 20",
+      "optimal": "A3* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "A+",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "thane",
+    "name": "Thane",
+    "faction": "Lightbearer",
+    "overallRank": "A",
+    "score": 54.5,
+    "investment": {
+      "minimum": "A3* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "S-",
+      "guildHunt": "S"
+    }
+  },
+  {
+    "id": "raine",
+    "name": "Raine",
+    "faction": "Lightbearer",
+    "overallRank": "A",
+    "score": 53.7,
+    "investment": {
+      "minimum": "Elite < Mythic SI 10",
+      "optimal": "A3* SI 10",
+      "competitive": "A5* SI 10 < SI 20"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "S+",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "zolrath",
+    "name": "Zolrath",
+    "faction": "Hypogean",
+    "overallRank": "A",
+    "score": 53.5,
+    "investment": {
+      "minimum": "Elite < A1* SI 30",
+      "optimal": "A1* SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S+",
+      "dreamRealm": "C",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "skriath",
+    "name": "Skriath",
+    "faction": "Mauler",
+    "overallRank": "A",
+    "score": 53,
+    "investment": {
+      "minimum": "Elite < A1* SI 0",
+      "optimal": "A5* SI 0 < SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "S",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "satrana",
+    "name": "Satrana",
+    "faction": "Mauler",
+    "overallRank": "A",
+    "score": 52.9,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "A1* SI 0",
+      "competitive": "A5 SI 20 < SI 30"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "B",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "brutus",
+    "name": "Brutus",
+    "faction": "Mauler",
+    "overallRank": "A",
+    "score": 52.6,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite < A1* SI 0",
+      "competitive": "A5* SI 0 < SI 20"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "B",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "orthros",
+    "name": "Orthros",
+    "faction": "Celestial",
+    "overallRank": "A",
+    "score": 50.8,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A3* / A5* SI 0",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "S",
+      "guildHunt": "A"
+    }
+  },
+  {
+    "id": "skreg",
+    "name": "Skreg",
+    "faction": "Mauler",
+    "overallRank": "A",
+    "score": 50.6,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A5* SI 0 < SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "C",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "audrae",
+    "name": "Audrae",
+    "faction": "Celestial",
+    "overallRank": "A",
+    "score": 50.5,
+    "investment": {
+      "minimum": "Elite < A1* SI 20",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "A+",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "mishka",
+    "name": "Mishka",
+    "faction": "Wilder",
+    "overallRank": "B",
+    "score": 50.2,
+    "investment": {
+      "minimum": "A3* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "B",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "estrilda",
+    "name": "Estrilda",
+    "faction": "Lightbearer",
+    "overallRank": "B",
+    "score": 50.2,
+    "investment": {
+      "minimum": "Elite < A1* SI 0",
+      "optimal": "A3* < A5* SI 0 / SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "S-",
+      "guildHunt": "A"
+    }
+  },
+  {
+    "id": "crassio",
+    "name": "Crassio",
+    "faction": "Mauler",
+    "overallRank": "B",
+    "score": 49.8,
+    "investment": {
+      "minimum": "A1* SI 0 < SI 10",
+      "optimal": "A3* < A5* SI 10 < SI 20",
+      "competitive": "A5* / T SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "B",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "flora",
+    "name": "Flora",
+    "faction": "Celestial",
+    "overallRank": "B",
+    "score": 49.4,
+    "investment": {
+      "minimum": "A1* SI 10",
+      "optimal": "A1* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "S-",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "walker",
+    "name": "Walker",
+    "faction": "Lightbearer",
+    "overallRank": "B",
+    "score": 48.8,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "A1* < A5* SI 0",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "mehira",
+    "name": "Mehira",
+    "faction": "Hypogean",
+    "overallRank": "B",
+    "score": 48.3,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite",
+      "competitive": "M / A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "A+",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "lucretia",
+    "name": "Lucretia",
+    "faction": "Hypogean",
+    "overallRank": "B",
+    "score": 48,
+    "investment": {
+      "minimum": "A1* SI 30",
+      "optimal": "A3* < A5* SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "B",
+      "guildHunt": "A+"
+    }
+  },
+  {
+    "id": "elijah-lailah",
+    "name": "Elijah & Lailah",
+    "faction": "Celestial",
+    "overallRank": "B",
+    "score": 47.5,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite / Elite+",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "mortas",
+    "name": "Mortas",
+    "faction": "Hypogean",
+    "overallRank": "B",
+    "score": 47.5,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite / Elite +",
+      "competitive": "Mythic SI 20"
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "S+",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "khasos",
+    "name": "Khasos",
+    "faction": "Mauler",
+    "overallRank": "B",
+    "score": 45.8,
+    "investment": {
+      "minimum": "Elite < A3*",
+      "optimal": "A5* SI 0",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "C",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "safiya",
+    "name": "Safiya",
+    "faction": "Mauler",
+    "overallRank": "B",
+    "score": 45.5,
+    "investment": {
+      "minimum": "Elite < M SI 0",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "B",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "silas",
+    "name": "Silas",
+    "faction": "Graveborn",
+    "overallRank": "B",
+    "score": 45.5,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "A",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "khazard",
+    "name": "Khazard",
+    "faction": "Hypogean",
+    "overallRank": "B",
+    "score": 45.5,
+    "investment": {
+      "minimum": "Mythic SI 0 < SI 30",
+      "optimal": "A5* SI 30",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "C",
+      "guildHunt": "E"
+    }
+  },
+  {
+    "id": "tasi",
+    "name": "Tasi",
+    "faction": "Wilder",
+    "overallRank": "B",
+    "score": 44.9,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": "A5* SI 10 < SI 20"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "B",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "scarlet",
+    "name": "Scarlet",
+    "faction": "Lightbearer",
+    "overallRank": "C",
+    "score": 44.6,
+    "investment": {
+      "minimum": "A3* SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "S+",
+      "guildHunt": "S+"
+    }
+  },
+  {
+    "id": "sonja",
+    "name": "Sonja",
+    "faction": "Lightbearer",
+    "overallRank": "C",
+    "score": 44.6,
+    "investment": {
+      "minimum": "Mythic < A1* SI 0",
+      "optimal": "A5* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "D",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "numisu",
+    "name": "Numisu",
+    "faction": "Mauler",
+    "overallRank": "C",
+    "score": 44.5,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* SI 10",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "B",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "kren",
+    "name": "Kren",
+    "faction": "Mauler",
+    "overallRank": "C",
+    "score": 42.6,
+    "investment": {
+      "minimum": "Mythic SI 0",
+      "optimal": "A1* SI 10",
+      "competitive": "A3* < A5* SI 10 < (SI 20)"
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "B",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "ezizh",
+    "name": "Ezizh",
+    "faction": "Hypogean",
+    "overallRank": "C",
+    "score": 41.6,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "A+",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "zaphrael",
+    "name": "Zaphrael",
+    "faction": "Celestial",
+    "overallRank": "C",
+    "score": 41.2,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite",
+      "competitive": "A1* / A5* SI 30"
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "C",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "athalia",
+    "name": "Athalia",
+    "faction": "Celestial",
+    "overallRank": "C",
+    "score": 40.6,
+    "investment": {
+      "minimum": "Elite < A3* SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "C",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "raku",
+    "name": "Raku",
+    "faction": "Wilder",
+    "overallRank": "C",
+    "score": 40.5,
+    "investment": {
+      "minimum": "Mythic SI 30",
+      "optimal": "A1* < A3* SI 30",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "S",
+      "guildHunt": "A"
+    }
+  },
+  {
+    "id": "eironn",
+    "name": "Eironn",
+    "faction": "Wilder",
+    "overallRank": "C",
+    "score": 40.4,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": "A5* SI 15"
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "oscar",
+    "name": "Oscar",
+    "faction": "Lightbearer",
+    "overallRank": "C",
+    "score": 38.8,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite < A3* SI 0",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "S",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "pippa",
+    "name": "Pippa",
+    "faction": "Wilder",
+    "overallRank": "C",
+    "score": 38.1,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "oden",
+    "name": "Oden",
+    "faction": "Graveborn",
+    "overallRank": "C",
+    "score": 38,
+    "investment": {
+      "minimum": "A3* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "C",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "anasta",
+    "name": "Anasta",
+    "faction": "Mauler",
+    "overallRank": "C",
+    "score": 37.6,
+    "investment": {
+      "minimum": "Mythic SI 10",
+      "optimal": "A5* SI 10",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "B",
+      "guildHunt": "E"
+    }
+  },
+  {
+    "id": "thoran",
+    "name": "Thoran",
+    "faction": "Graveborn",
+    "overallRank": "C",
+    "score": 37,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "A+",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "tidus",
+    "name": "Tidus",
+    "faction": "Mauler",
+    "overallRank": "C",
+    "score": 36,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 10 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "B",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "leonardo",
+    "name": "Leonardo",
+    "faction": "Dimensional",
+    "overallRank": "C",
+    "score": 35.9,
+    "investment": {
+      "minimum": "A5* SI 0",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "C",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "hodgkin",
+    "name": "Hodgkin",
+    "faction": "Graveborn",
+    "overallRank": "C",
+    "score": 35.8,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "B",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "ainz-ooal-gown",
+    "name": "Ainz Ooal Gown",
+    "faction": "Dimensional",
+    "overallRank": "C",
+    "score": 35.4,
+    "investment": {
+      "minimum": "A5* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "B",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "treznor",
+    "name": "Treznor",
+    "faction": "Graveborn",
+    "overallRank": "C",
+    "score": 35.3,
+    "investment": {
+      "minimum": "Mythic < A1* SI 0",
+      "optimal": "A3* < A5* SI 0 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "D",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "belinda",
+    "name": "Belinda",
+    "faction": "Lightbearer",
+    "overallRank": "C",
+    "score": 34.3,
+    "investment": {
+      "minimum": "A1* < A3* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "S+",
+      "guildHunt": "S"
+    }
+  },
+  {
+    "id": "eluard",
+    "name": "Eluard",
+    "faction": "Lightbearer",
+    "overallRank": "D",
+    "score": 33,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "drez",
+    "name": "Drez",
+    "faction": "Mauler",
+    "overallRank": "D",
+    "score": 32.5,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0 < SI 10",
+      "competitive": "A5* Si 20"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "C",
+      "guildHunt": "E"
+    }
+  },
+  {
+    "id": "grezhul",
+    "name": "Grezhul",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 32.5,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": "A5* SI 10 < SI 20"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "B",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "kelthur",
+    "name": "Kelthur",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 31.7,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "A1* SI 0",
+      "competitive": "A5* Si 0"
+    },
+    "modes": {
+      "arena": "A",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "warek",
+    "name": "Warek",
+    "faction": "Mauler",
+    "overallRank": "D",
+    "score": 30.5,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite",
+      "competitive": "A5* SI 0"
+    },
+    "modes": {
+      "arena": "F",
+      "dreamRealm": "SS",
+      "guildHunt": "SS"
+    }
+  },
+  {
+    "id": "mezoth",
+    "name": "Mezoth",
+    "faction": "Hypogean",
+    "overallRank": "D",
+    "score": 29.8,
+    "investment": {
+      "minimum": "A1* SI 20",
+      "optimal": "A1* SI 20",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "zikis",
+    "name": "Zikis",
+    "faction": "Hypogean",
+    "overallRank": "D",
+    "score": 28.8,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A1* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "D",
+      "guildHunt": "C"
+    }
+  },
+  {
+    "id": "isabella",
+    "name": "Isabella",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 28.3,
+    "investment": {
+      "minimum": "A1* SI 10",
+      "optimal": "A3* SI 10 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "A",
+      "guildHunt": "B"
+    }
+  },
+  {
+    "id": "shemira",
+    "name": "Shemira",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 27.4,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A5* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "F",
+      "dreamRealm": "A+",
+      "guildHunt": "D"
+    }
+  },
+  {
+    "id": "wukong",
+    "name": "Wukong",
+    "faction": "Celestial",
+    "overallRank": "D",
+    "score": 27.2,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A1* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "B",
+      "dreamRealm": "E",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "daimon",
+    "name": "Daimon",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 26.6,
+    "investment": {
+      "minimum": "A1* SI 0 < SI 10",
+      "optimal": "A3* < A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "saurus",
+    "name": "Saurus",
+    "faction": "Wilder",
+    "overallRank": "D",
+    "score": 26.1,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A1* SI 0 < SI 10",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "F",
+      "dreamRealm": "B",
+      "guildHunt": "A"
+    }
+  },
+  {
+    "id": "oku",
+    "name": "Oku",
+    "faction": "Wilder",
+    "overallRank": "D",
+    "score": 26,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "ferael",
+    "name": "Ferael",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 25.4,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "desira",
+    "name": "Desira",
+    "faction": "Graveborn",
+    "overallRank": "D",
+    "score": 23.7,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10",
+      "competitive": "A5* SI 30"
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "hendrik",
+    "name": "Hendrik",
+    "faction": "Lightbearer",
+    "overallRank": "D",
+    "score": 23.3,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "kaz",
+    "name": "Kaz",
+    "faction": "Wilder",
+    "overallRank": "E",
+    "score": 22.3,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": "A5* SI 20"
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "morrow",
+    "name": "Morrow",
+    "faction": "Lightbearer",
+    "overallRank": "E",
+    "score": 20,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A5* SI 10 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "E",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "nara",
+    "name": "Nara",
+    "faction": "Graveborn",
+    "overallRank": "E",
+    "score": 17.2,
+    "investment": {
+      "minimum": "Elite",
+      "optimal": "Elite < A3* SI 0",
+      "competitive": "A5* SI 0"
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "thesku",
+    "name": "Thesku",
+    "faction": "Mauler",
+    "overallRank": "E",
+    "score": 16,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "E",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "lucius",
+    "name": "Lucius",
+    "faction": "Lightbearer",
+    "overallRank": "E",
+    "score": 13.4,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "D",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "gorvo",
+    "name": "Gorvo",
+    "faction": "Wilder",
+    "overallRank": "E",
+    "score": 13.2,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "cecilia",
+    "name": "Cecilia",
+    "faction": "Lightbearer",
+    "overallRank": "E",
+    "score": 12.2,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "C",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "antandra",
+    "name": "Antandra",
+    "faction": "Mauler",
+    "overallRank": "F",
+    "score": 8.8,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* < A5* SI 10 < SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "E",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "nemora",
+    "name": "Nemora",
+    "faction": "Wilder",
+    "overallRank": "F",
+    "score": 7.8,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "F",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "seirus",
+    "name": "Seirus",
+    "faction": "Wilder",
+    "overallRank": "F",
+    "score": 7.6,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "respen",
+    "name": "Respen",
+    "faction": "Wilder",
+    "overallRank": "F",
+    "score": 6.6,
+    "investment": {
+      "minimum": "A3* SI 10",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "fawkes",
+    "name": "Fawkes",
+    "faction": "Lightbearer",
+    "overallRank": "F",
+    "score": 5.6,
+    "investment": {
+      "minimum": "A1* SI 0",
+      "optimal": "A3* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "theowyn",
+    "name": "Theowyn",
+    "faction": "Graveborn",
+    "overallRank": "F",
+    "score": 4,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 10",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "E",
+      "dreamRealm": "F",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "vurk",
+    "name": "Vurk",
+    "faction": "Mauler",
+    "overallRank": "F",
+    "score": 3.2,
+    "investment": {
+      "minimum": "A3* SI 0",
+      "optimal": "A5* SI 0",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "F",
+      "dreamRealm": "E",
+      "guildHunt": "F"
+    }
+  },
+  {
+    "id": "izold",
+    "name": "Izold",
+    "faction": "Graveborn",
+    "overallRank": "X",
+    "score": 0,
+    "investment": {
+      "minimum": "A3* SI 20",
+      "optimal": "A5* SI 20",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "X",
+      "dreamRealm": "X",
+      "guildHunt": "X"
+    }
+  },
+  {
+    "id": "alna",
+    "name": "Alna",
+    "faction": "Celestial",
+    "overallRank": "X",
+    "score": 0,
+    "investment": {
+      "minimum": "",
+      "optimal": "",
+      "competitive": ""
+    },
+    "modes": {
+      "arena": "X",
+      "dreamRealm": "X",
+      "guildHunt": "X"
+    }
+  }
+]
