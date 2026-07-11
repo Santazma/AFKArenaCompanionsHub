@@ -152,10 +152,16 @@ function sanitizeModeTeams(parsed: {
         })
       : emptyTeam()
   const sanitizeBossId = (id: unknown): string | null => (typeof id === 'string' && bossById.has(id) ? id : null)
+  const ours = Array.isArray(parsed.ours) ? parsed.ours.map(sanitizeTeam) : []
+  const bossIds = Array.isArray(parsed.bossIds) ? parsed.bossIds.map(sanitizeBossId) : []
   return {
-    ours: Array.isArray(parsed.ours) ? parsed.ours.map(sanitizeTeam) : [],
+    ours,
     opponent: Array.isArray(parsed.opponent) ? parsed.opponent.map(sanitizeTeam) : [],
-    bossIds: Array.isArray(parsed.bossIds) ? parsed.bossIds.map(sanitizeBossId) : [],
+    // Older saved state (from before boss picking existed) has no bossIds,
+    // or a length that no longer matches `ours` after a resize — always
+    // reconcile against the current team count so setBoss's index-based
+    // update can never silently no-op on a too-short array.
+    bossIds: resizeBossIds(bossIds, ours.length),
   }
 }
 

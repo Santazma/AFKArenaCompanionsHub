@@ -73,7 +73,8 @@ export function useTeamBuilderState() {
     (teamIndex: number, bossId: string | null) => {
       setState((prev) => {
         const current = prev[mode]
-        const bossIds = current.bossIds.map((id, i) => (i === teamIndex ? bossId : id))
+        const padded = resizeBossIds(current.bossIds, Math.max(current.bossIds.length, teamIndex + 1))
+        const bossIds = padded.map((id, i) => (i === teamIndex ? bossId : id))
         return { ...prev, [mode]: { ...current, bossIds } }
       })
     },
