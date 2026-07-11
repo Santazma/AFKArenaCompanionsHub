@@ -1,17 +1,27 @@
 import { useState, type DragEvent, type KeyboardEvent } from 'react'
 import type { Hero } from '../../data/heroes'
+import type { InvestmentLevel } from '../../lib/teamBuilder'
 import HeroAvatar from './HeroAvatar'
 
 interface HeroSlotProps {
   hero: Hero | null
   selected: boolean
   slotKey: string
+  investmentLevel: InvestmentLevel
   onClick: () => void
   onRemove: () => void
   onDropHero: (heroId: string, sourceSlotKey: string | null) => void
 }
 
-export default function HeroSlot({ hero, selected, slotKey, onClick, onRemove, onDropHero }: HeroSlotProps) {
+export default function HeroSlot({
+  hero,
+  selected,
+  slotKey,
+  investmentLevel,
+  onClick,
+  onRemove,
+  onDropHero,
+}: HeroSlotProps) {
   const [dragOver, setDragOver] = useState(false)
 
   return (
@@ -68,6 +78,9 @@ export default function HeroSlot({ hero, selected, slotKey, onClick, onRemove, o
           </button>
           <HeroAvatar hero={hero} size="sm" />
           <span className="max-w-16 truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
+          <span className="max-w-16 truncate font-body text-[10px] text-gold-100/40">
+            {hero.investment[investmentLevel] || '—'}
+          </span>
         </>
       ) : (
         <>

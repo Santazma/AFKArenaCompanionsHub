@@ -117,10 +117,12 @@ export default function TeamBuilder() {
       <TeamsBoard
         mode={store.mode}
         teams={store.teams}
+        investmentLevel={store.investmentLevel}
         selectedSlot={pending?.type === 'slot' ? pending.ref : null}
         onSlotClick={handleSlotClick}
         onRemoveHero={handleRemoveHero}
         onDropHero={handleDropHero}
+        onSelectBoss={store.setBoss}
       />
 
       <TeamCountControl count={store.teams.ours.length} onChange={store.setTeamCount} />

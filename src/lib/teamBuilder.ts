@@ -1,3 +1,4 @@
+import { bossById } from '../data/bosses'
 import { heroById } from '../data/heroes'
 
 export type ContentMode = 'arena' | 'dreamRealm' | 'guildHunt'
@@ -50,6 +51,7 @@ export type Team = (string | null)[]
 export interface ModeTeams {
   ours: Team[]
   opponent: Team[]
+  bossIds: (string | null)[]
 }
 
 export type BuilderState = Record<ContentMode, ModeTeams>
@@ -62,17 +64,27 @@ function emptyTeams(count: number): Team[] {
   return Array.from({ length: count }, emptyTeam)
 }
 
+function emptyBossIds(count: number): (string | null)[] {
+  return Array.from({ length: count }, () => null)
+}
+
 export function createInitialState(): BuilderState {
   return {
-    arena: { ours: emptyTeams(1), opponent: emptyTeams(1) },
-    dreamRealm: { ours: emptyTeams(1), opponent: [] },
-    guildHunt: { ours: emptyTeams(1), opponent: [] },
+    arena: { ours: emptyTeams(1), opponent: emptyTeams(1), bossIds: [] },
+    dreamRealm: { ours: emptyTeams(1), opponent: [], bossIds: emptyBossIds(1) },
+    guildHunt: { ours: emptyTeams(1), opponent: [], bossIds: emptyBossIds(1) },
   }
 }
 
 export function resizeTeams(teams: Team[], count: number): Team[] {
   const next = teams.slice(0, count)
   while (next.length < count) next.push(emptyTeam())
+  return next
+}
+
+export function resizeBossIds(bossIds: (string | null)[], count: number): (string | null)[] {
+  const next = bossIds.slice(0, count)
+  while (next.length < count) next.push(null)
   return next
 }
 
@@ -114,29 +126,44 @@ interface ShareablePayload {
   mode: ContentMode
   ours: Team[]
   opponent: Team[]
+  bossIds: (string | null)[]
 }
 
 export function encodeShare(mode: ContentMode, teams: ModeTeams): string {
-  const payload: ShareablePayload = { mode, ours: teams.ours, opponent: teams.opponent }
+  const payload: ShareablePayload = {
+    mode,
+    ours: teams.ours,
+    opponent: teams.opponent,
+    bossIds: teams.bossIds,
+  }
   return toBase64Url(JSON.stringify(payload))
+}
+
+function sanitizeModeTeams(parsed: {
+  ours?: unknown
+  opponent?: unknown
+  bossIds?: unknown
+}): Pick<ModeTeams, 'ours' | 'opponent' | 'bossIds'> {
+  const sanitizeTeam = (team: unknown): Team =>
+    Array.isArray(team)
+      ? Array.from({ length: TEAM_SIZE }, (_, i) => {
+          const id = team[i]
+          return typeof id === 'string' && heroById.has(id) ? id : null
+        })
+      : emptyTeam()
+  const sanitizeBossId = (id: unknown): string | null => (typeof id === 'string' && bossById.has(id) ? id : null)
+  return {
+    ours: Array.isArray(parsed.ours) ? parsed.ours.map(sanitizeTeam) : [],
+    opponent: Array.isArray(parsed.opponent) ? parsed.opponent.map(sanitizeTeam) : [],
+    bossIds: Array.isArray(parsed.bossIds) ? parsed.bossIds.map(sanitizeBossId) : [],
+  }
 }
 
 export function decodeShare(code: string): ShareablePayload | null {
   try {
     const parsed = JSON.parse(fromBase64Url(code)) as ShareablePayload
     if (!parsed || typeof parsed.mode !== 'string' || !Array.isArray(parsed.ours)) return null
-    const sanitizeTeam = (team: unknown): Team =>
-      Array.isArray(team)
-        ? Array.from({ length: TEAM_SIZE }, (_, i) => {
-            const id = team[i]
-            return typeof id === 'string' && heroById.has(id) ? id : null
-          })
-        : emptyTeam()
-    return {
-      mode: parsed.mode,
-      ours: (parsed.ours as unknown[]).map(sanitizeTeam),
-      opponent: Array.isArray(parsed.opponent) ? (parsed.opponent as unknown[]).map(sanitizeTeam) : [],
-    }
+    return { mode: parsed.mode, ...sanitizeModeTeams(parsed) }
   } catch {
     return null
   }
@@ -149,10 +176,11 @@ export function loadState(): BuilderState {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
     if (!raw) return createInitialState()
-    const parsed = JSON.parse(raw) as Partial<BuilderState>
+    const parsed = JSON.parse(raw) as Partial<Record<ContentMode, Partial<ModeTeams>>>
     const base = createInitialState()
     for (const mode of Object.keys(base) as ContentMode[]) {
-      if (parsed[mode]) base[mode] = parsed[mode] as ModeTeams
+      const modeTeams = parsed[mode]
+      if (modeTeams) base[mode] = sanitizeModeTeams(modeTeams)
     }
     return base
   } catch {

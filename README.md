@@ -85,32 +85,45 @@ newer version from the site.
 
 `/team-builder` lets you build hero comps for **Arena** (two boards — your
 team vs. an opponent's), **Dream Realm**, and **Guild Hunt** (one board vs. a
-boss placeholder). Each board renders as a 2-front / 3-back formation (like
-the in-game team layout) turned on its side: **back column on the left,
-front column on the right**. In Arena, the opponent board is mirrored (front
-on the left, back on the right) so the two front lines face each other in
-the middle, like an actual matchup.
+selectable boss). Each hero board renders as a 2-front / 3-back formation
+(like the in-game team layout) turned on its side: **back column on the
+left, front column on the right**. In Arena, the opponent board is mirrored
+(front on the left, back on the right) so the two front lines face each
+other in the middle, like an actual matchup.
 
 - **Mode switch** — pill buttons at the top swap between Arena / Dream Realm
   / Guild Hunt instantly; each mode keeps its own teams independently.
 - **Investment toggle** — Minimum / Optimal / Competitive buttons control
-  which investment text is shown under each hero in the browser grid below,
-  pulled straight from the tier list's per-hero investment columns.
+  which investment text is shown under each hero, both in the browser grid
+  and under any hero already placed in a slot, pulled straight from the
+  tier list's per-hero investment columns.
 - **Team count** — 1 to 5, controlled by the stepper below the boards; resizing
   keeps whatever teams already had heroes in them.
+- **Faction filter** — seven faction icons above the hero grid (Lightbearer,
+  Mauler, Wilder, Graveborn, Celestial, Hypogean, Dimensional); click any
+  number of them to narrow the grid to just those factions, click again to
+  deactivate.
 - **Picking heroes** — desktop: drag a hero card from the grid onto a slot.
   Mobile/touch (or just clicking): tap a hero to select it, then tap a slot
   to place it there — the same "select, then place" model works in either
   order (tap a slot first, then a hero, also works). The grid is sorted by
-  that mode's tier (best first) and filterable by name.
+  that mode's tier (best first), filterable by name, and filterable by
+  faction.
 - **Moving/swapping placed heroes** — an already-placed hero can be dragged
   (or tapped, then tap the destination) onto any other slot, including a
   slot in a different team or side. Dropping onto an empty slot moves the
   hero there; dropping onto an occupied slot swaps the two heroes. A small
   `×` button on each filled slot removes that hero outright.
-- **Share** — copies a URL with the current mode's teams encoded into a
-  `?team=` query param (base64url JSON of hero IDs). Opening that link loads
-  the shared comp with no account or backend needed.
+- **Boss picker** (Dream Realm / Guild Hunt) — each team's boss slot starts
+  as a "Select a boss" placeholder the same height as the hero board next to
+  it. Clicking it opens a picker of that mode's bosses (own large artwork,
+  not an icon); picking one shows that boss full-size with its name below.
+  Clicking an already-picked boss reopens the picker to swap it for another
+  — each team's boss is independent, so different teams can target
+  different bosses.
+- **Share** — copies a URL with the current mode's teams (and any picked
+  bosses) encoded into a `?team=` query param (base64url JSON). Opening that
+  link loads the shared comp with no account or backend needed.
 - **Persistence** — all modes' teams are auto-saved to `localStorage`
   (`afk-team-builder-state-v1`), so a refresh doesn't lose your work.
 
@@ -138,8 +151,35 @@ separate icon file (`Zaphrael`, `Leonardo`, `Cha Hae-in`) — the Companions
 roster's naming doesn't always match the (Classic AFK Arena) wiki 1:1, since
 Companions has a smaller, partly-overlapping roster with some exclusive
 crossover heroes (Sung Jinwoo, Saitama, etc.) that the Classic wiki happens
-to also document. Only `Judy & Punch` has no matching page at all and falls
-back to a placeholder.
+to also document. `Judy & Punch` has no matching wiki page, but does have an
+icon on [afk-web.onrender.com](https://afk-web.onrender.com) (the site
+linked from the Guide card) — that one image is downloaded into
+`src/assets/heroes/judy-punch.webp` and wired in via `IMAGE_OVERRIDES` in
+`heroes.ts`, rather than hotlinked, because that host sends
+`Cross-Origin-Resource-Policy: same-origin`, which browsers enforce
+regardless of `referrerPolicy` (unlike Fandom's Referer check below, this
+one has no client-side workaround).
+
+**Faction icons** (`FACTION_ICONS` in `heroes.ts`) are each faction's small
+circular emblem, pulled from the wiki's [Factions](https://afk-arena.fandom.com/wiki/Factions)
+page the same way — hotlinked from `static.wikia.nocookie.net`.
+
+**Bosses** (`src/data/bosses.ts`) use each boss's own splash art (not an
+icon) since the boss slot displays it at full board height. The 6 Dream
+Realm bosses (Kane, Ice Shemira, Demonic Entity, Grotesque Mage, The
+Unhinged, Burning Brute) are all documented on the wiki's
+[The Twisted Realm](https://afk-arena.fandom.com/wiki/The_Twisted_Realm)
+page, with each boss's own portrait fetched via `pageimages`. Guild Hunt
+only has one confirmed image: **Wrizz**. `Dune Destroyer` is a real,
+named boss on the wiki's
+[Nightmare Corridor](https://afk-arena.fandom.com/wiki/Nightmare_Corridor)
+page (a large rotating boss-name list) but has no artwork uploaded there
+yet; `Raven Whisperer` and `Fortune Firecrackers` don't appear anywhere on
+the Classic wiki at all (likely Companions-exclusive, undocumented
+content) despite a thorough search (direct titles, MediaWiki search API,
+wikitext dives). All three still work in the picker — `BossSlot.tsx` shows
+a `?` placeholder in place of the `<img>` when `boss.image` is `null` —
+swap in real art later by just filling in the `image` field.
 
 Two things matter if you regenerate this data:
 
@@ -191,10 +231,10 @@ Two things make client-side routing work on GitHub Pages' static hosting
       whether to bring it in-app (data file + filterable UI) later.
 - [ ] **Guide** — currently an external site link; revisit whether to bring
       it in-app later.
-- [ ] **Team Builder** — a real portrait for `Judy & Punch` (currently the
-      only placeholder avatar — see [Hero data](#hero-data)); team
-      notes/labels; per-team "recommended comp" hints using the tier list's
-      mode-specific rankings.
+- [ ] **Team Builder** — art for `Dune Destroyer`, `Raven Whisperer`, and
+      `Fortune Firecrackers` (see [Boss data](#hero-data)) once it exists
+      somewhere; team notes/labels; per-team "recommended comp" hints using
+      the tier list's mode-specific rankings.
 
 ## License
 

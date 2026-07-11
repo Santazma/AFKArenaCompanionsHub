@@ -8,6 +8,7 @@ import {
   decodeShare,
   encodeShare,
   loadState,
+  resizeBossIds,
   resizeTeams,
   saveState,
 } from '../lib/teamBuilder'
@@ -23,7 +24,10 @@ function readInitialState(): { state: BuilderState; mode: ContentMode } {
   const shared = decodeShare(shareCode)
   if (!shared) return { state: stored, mode: 'arena' }
 
-  const next: BuilderState = { ...stored, [shared.mode]: { ours: shared.ours, opponent: shared.opponent } }
+  const next: BuilderState = {
+    ...stored,
+    [shared.mode]: { ours: shared.ours, opponent: shared.opponent, bossIds: shared.bossIds },
+  }
   return { state: next, mode: shared.mode }
 }
 
@@ -57,8 +61,20 @@ export function useTeamBuilderState() {
         const next: ModeTeams = {
           ours: resizeTeams(current.ours, count),
           opponent: current.opponent.length > 0 ? resizeTeams(current.opponent, count) : current.opponent,
+          bossIds: current.bossIds.length > 0 ? resizeBossIds(current.bossIds, count) : current.bossIds,
         }
         return { ...prev, [mode]: next }
+      })
+    },
+    [mode],
+  )
+
+  const setBoss = useCallback(
+    (teamIndex: number, bossId: string | null) => {
+      setState((prev) => {
+        const current = prev[mode]
+        const bossIds = current.bossIds.map((id, i) => (i === teamIndex ? bossId : id))
+        return { ...prev, [mode]: { ...current, bossIds } }
       })
     },
     [mode],
@@ -125,6 +141,7 @@ export function useTeamBuilderState() {
     setTeamCount,
     assignHero,
     clearSlot,
+    setBoss,
     usedHeroIds,
     shareUrl,
   }

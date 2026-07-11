@@ -1,6 +1,7 @@
 import { useMemo, useState, type DragEvent } from 'react'
-import { heroes } from '../../data/heroes'
+import { heroes, type Faction } from '../../data/heroes'
 import { tierColor, tierRank, type ContentMode, type InvestmentLevel } from '../../lib/teamBuilder'
+import FactionFilter from './FactionFilter'
 import HeroAvatar from './HeroAvatar'
 
 interface HeroBrowserProps {
@@ -12,22 +13,37 @@ interface HeroBrowserProps {
 
 export default function HeroBrowser({ mode, investmentLevel, selectedHeroId, onSelectHero }: HeroBrowserProps) {
   const [query, setQuery] = useState('')
+  const [activeFactions, setActiveFactions] = useState<Set<Faction>>(new Set())
+
+  const toggleFaction = (faction: Faction) => {
+    setActiveFactions((prev) => {
+      const next = new Set(prev)
+      if (next.has(faction)) next.delete(faction)
+      else next.add(faction)
+      return next
+    })
+  }
 
   const sorted = useMemo(() => {
-    const filtered = heroes.filter((hero) => hero.name.toLowerCase().includes(query.trim().toLowerCase()))
+    const filtered = heroes.filter((hero) => {
+      const matchesName = hero.name.toLowerCase().includes(query.trim().toLowerCase())
+      const matchesFaction = activeFactions.size === 0 || activeFactions.has(hero.faction)
+      return matchesName && matchesFaction
+    })
     return filtered.sort((a, b) => {
       const rankDiff = tierRank(a.modes[mode]) - tierRank(b.modes[mode])
       if (rankDiff !== 0) return rankDiff
       return b.score - a.score
     })
-  }, [query, mode])
+  }, [query, mode, activeFactions])
 
   return (
     <div className="rounded-2xl border border-border bg-surface/70 p-4">
-      <div className="mb-1 flex items-center justify-between gap-4">
+      <div className="mb-3 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="font-body text-xs font-semibold tracking-[0.15em] text-gold-100/60 uppercase">
           Heroes ({sorted.length})
         </h3>
+        <FactionFilter active={activeFactions} onToggle={toggleFaction} />
         <input
           type="search"
           value={query}
