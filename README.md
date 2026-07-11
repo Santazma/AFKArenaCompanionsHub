@@ -115,15 +115,21 @@ other in the middle, like an actual matchup.
   hero there; dropping onto an occupied slot swaps the two heroes. A small
   `×` button on each filled slot removes that hero outright.
 - **Boss picker** (Dream Realm / Guild Hunt) — the boss slot next to each
-  team starts as a "Select a boss" placeholder that never grows taller than
-  the hero board beside it (the boss art is `object-cover`-cropped to fit,
-  not the other way around). Clicking it opens a picker of that mode's
-  bosses (own splash art, not an icon); picking one shows that boss
-  full-size with its name below, and clicking a picked boss again reopens
-  the picker to swap it. The boss is **one shared pick per mode** — every
-  team is built against the same boss, so selecting one updates all of
-  them at once (you're comparing team comps against a single fight, not
-  fighting different bosses per team).
+  team starts as a "Select a boss" placeholder at a fixed height
+  (`BossSlot.tsx`, `h-[22.5rem]` — matches the hero board's own natural
+  height) so it never grows the row just because a boss's splash art is
+  tall; the art is `object-cover`-cropped to fit that fixed box instead.
+  (A flex row with `items-stretch` and no explicit height will size itself
+  to a tall image's *intrinsic* size even with `min-height: 0` on the
+  item — `min-height: 0` only lifts the floor, it doesn't stop content from
+  being the ceiling. An explicit height sidesteps that instead of fighting
+  it.) Clicking the slot opens a picker of that mode's bosses (own splash
+  art, not an icon); picking one shows that boss full-size (cropped) with
+  its name below, and clicking a picked boss again reopens the picker to
+  swap it. The boss is **one shared pick per mode** — every team is built
+  against the same boss, so selecting one updates all of them at once
+  (you're comparing team comps against a single fight, not fighting
+  different bosses per team).
 - **Share** — copies a URL with the current mode's teams (and any picked
   bosses) encoded into a `?team=` query param (base64url JSON). Opening that
   link loads the shared comp with no account or backend needed.
