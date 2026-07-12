@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import type { Hero } from '../../data/heroes'
 import { FACTION_COLORS } from '../../data/heroes'
-import type { InvestmentLevel } from '../../lib/teamBuilder'
-import { heroFrameUrl } from '../../lib/heroFrame'
 
 function initials(name: string): string {
   const words = name.split(/[\s&]+/).filter(Boolean)
@@ -22,20 +20,21 @@ interface HeroAvatarProps {
   hero: Hero
   size?: keyof typeof SIZE_CLASSES
   className?: string
-  // When provided, the avatar renders floofpire's pre-framed icon matching the
-  // hero's recommended investment at this level (ascension tier + stars + SI).
-  investmentLevel?: InvestmentLevel
+  // Pre-resolved floofpire framed-icon URL (art + investment frame). When set,
+  // it replaces the plain avatar. Callers resolve it via resolveFrameUrl so the
+  // roster-driven "My Investment" level works without threading roster in here.
+  frameUrl?: string | null
 }
 
-export default function HeroAvatar({ hero, size = 'md', className = '', investmentLevel }: HeroAvatarProps) {
+export default function HeroAvatar({ hero, size = 'md', className = '', frameUrl }: HeroAvatarProps) {
   const [imageFailed, setImageFailed] = useState(false)
   const [frameFailed, setFrameFailed] = useState(false)
 
-  const frameUrl = investmentLevel && !frameFailed ? heroFrameUrl(hero, investmentLevel) : null
+  const showFrame = frameUrl && !frameFailed
 
   // Framed icons are self-contained (art + border baked in) and sit on a
   // transparent field, so we drop the faction ring/background and just contain.
-  if (frameUrl) {
+  if (showFrame) {
     return (
       <div className={`flex shrink-0 items-center justify-center ${SIZE_CLASSES[size]} ${className}`} title={hero.name}>
         <img
@@ -43,6 +42,7 @@ export default function HeroAvatar({ hero, size = 'md', className = '', investme
           alt={hero.name}
           loading="lazy"
           referrerPolicy="no-referrer"
+          crossOrigin="anonymous"
           className="h-full w-full scale-110 object-contain"
           onError={() => setFrameFailed(true)}
         />

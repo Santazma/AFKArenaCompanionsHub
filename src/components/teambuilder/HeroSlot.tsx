@@ -1,13 +1,16 @@
 import { useState, type DragEvent, type KeyboardEvent } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import type { Hero } from '../../data/heroes'
-import type { InvestmentLevel } from '../../lib/teamBuilder'
 import HeroAvatar from './HeroAvatar'
+import FactionBadge from './FactionBadge'
 
 interface HeroSlotProps {
   hero: Hero | null
   selected: boolean
   slotKey: string
-  investmentLevel: InvestmentLevel
+  frameUrl?: string | null
+  caption?: string
+  owned?: boolean
   onClick: () => void
   onRemove: () => void
   onDropHero: (heroId: string, sourceSlotKey: string | null) => void
@@ -17,7 +20,9 @@ export default function HeroSlot({
   hero,
   selected,
   slotKey,
-  investmentLevel,
+  frameUrl,
+  caption,
+  owned,
   onClick,
   onRemove,
   onDropHero,
@@ -63,33 +68,57 @@ export default function HeroSlot({
             : 'border-dashed border-border/70 bg-void/20 hover:border-gold-500/40'
       }`}
     >
-      {hero ? (
-        <>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation()
-              onRemove()
-            }}
-            aria-label={`Remove ${hero.name}`}
-            className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-void text-[10px] leading-none text-gold-100/60 hover:border-red-400 hover:text-red-400"
+      <AnimatePresence mode="popLayout" initial={false}>
+        {hero ? (
+          <motion.div
+            key={hero.id}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+            className="flex flex-col items-center gap-1"
           >
-            ×
-          </button>
-          <HeroAvatar hero={hero} size="sm" investmentLevel={investmentLevel} />
-          <span className="max-w-16 truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
-          <span className="max-w-16 truncate font-body text-[10px] text-gold-100/40">
-            {hero.investment[investmentLevel] || '—'}
-          </span>
-        </>
-      ) : (
-        <>
-          <div className="flex h-12 w-12 items-center justify-center rounded-md border-2 border-dashed border-border/70 text-gold-100/30">
-            +
-          </div>
-          <span className="font-body text-[11px] text-gold-100/30">Empty</span>
-        </>
-      )}
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation()
+                onRemove()
+              }}
+              aria-label={`Remove ${hero.name}`}
+              className="absolute -top-1.5 -right-1.5 z-10 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-void text-[10px] leading-none text-gold-100/60 hover:border-red-400 hover:text-red-400"
+            >
+              ×
+            </button>
+            <div className="relative">
+              <HeroAvatar hero={hero} size="sm" frameUrl={frameUrl} />
+              <FactionBadge faction={hero.faction} size="xs" className="absolute -top-1 -left-1" />
+              {owned && (
+                <span
+                  title="In your roster"
+                  className="absolute -bottom-1 -left-1 flex h-3.5 w-3.5 items-center justify-center rounded-full border border-void bg-emerald-500 text-[8px] font-bold text-void"
+                >
+                  ✓
+                </span>
+              )}
+            </div>
+            <span className="max-w-16 truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
+            <span className="max-w-16 truncate font-body text-[10px] text-gold-100/40">{caption || '—'}</span>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center gap-1"
+          >
+            <div className="flex h-14 w-14 items-center justify-center rounded-md border-2 border-dashed border-border/70 text-gold-100/30">
+              +
+            </div>
+            <span className="font-body text-[11px] text-gold-100/30">Empty</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

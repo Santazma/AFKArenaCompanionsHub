@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { Hero } from '../data/heroes'
 import HeroBrowser from '../components/teambuilder/HeroBrowser'
+import HeroDetailModal from '../components/teambuilder/HeroDetailModal'
+import HeroPickerModal from '../components/teambuilder/HeroPickerModal'
 import InvestmentTabs from '../components/teambuilder/InvestmentTabs'
 import ModeTabs from '../components/teambuilder/ModeTabs'
-import ShareButton from '../components/teambuilder/ShareButton'
+import BuilderToolbar from '../components/teambuilder/BuilderToolbar'
 import TeamCountControl from '../components/teambuilder/TeamCountControl'
 import TeamsBoard from '../components/teambuilder/TeamsBoard'
 import { useTeamBuilderState } from '../hooks/useTeamBuilderState'
+import { useRoster } from '../hooks/useRoster'
+import { downloadNodeAsPng } from '../lib/exportImage'
 import { parseSlotKey, type ModeTeams, type SlotRef, type Team } from '../lib/teamBuilder'
 
 type Pending = { type: 'hero'; heroId: string } | { type: 'slot'; ref: SlotRef } | null
@@ -18,13 +23,38 @@ function getTeam(teams: ModeTeams, ref: SlotRef): Team | undefined {
   return ref.side === 'ours' ? teams.ours[ref.teamIndex] : teams.opponent[ref.teamIndex]
 }
 
+function slotTitle(ref: SlotRef): string {
+  const side = ref.side === 'ours' ? 'Our Team' : 'Opponent'
+  const row = ref.slotIndex <= 1 ? 'Front' : 'Back'
+  return `Team ${ref.teamIndex + 1} · ${side} · ${row}`
+}
+
 export default function TeamBuilder() {
   const store = useTeamBuilderState()
+  const roster = useRoster()
   const [pending, setPending] = useState<Pending>(null)
+  const [detailHero, setDetailHero] = useState<Hero | null>(null)
+  const [pickerSlot, setPickerSlot] = useState<SlotRef | null>(null)
+  const [exporting, setExporting] = useState(false)
+  const boardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setPending(null)
+    setPickerSlot(null)
   }, [store.mode])
+
+  const handleExport = async () => {
+    if (!boardRef.current) return
+    setExporting(true)
+    try {
+      await downloadNodeAsPng(boardRef.current, `afk-${store.mode}-comp.png`)
+    } catch (err) {
+      console.error('Export failed', err)
+      window.alert('Sorry, exporting the image failed. Please try again.')
+    } finally {
+      setExporting(false)
+    }
+  }
 
   const placeHero = (ref: SlotRef, heroId: string) => {
     const team = getTeam(store.teams, ref)
@@ -71,7 +101,19 @@ export default function TeamBuilder() {
       return
     }
 
-    setPending({ type: 'slot', ref })
+    // No pending action: an occupied slot is selected for a move/swap, while an
+    // empty slot opens the in-place picker so you never scroll to the browser.
+    const occupied = getTeam(store.teams, ref)?.[ref.slotIndex]
+    if (occupied) {
+      setPending({ type: 'slot', ref })
+    } else {
+      setPickerSlot(ref)
+    }
+  }
+
+  const handlePick = (heroId: string) => {
+    if (pickerSlot) placeHero(pickerSlot, heroId)
+    setPickerSlot(null)
   }
 
   const handleSelectHero = (heroId: string) => {
@@ -111,7 +153,18 @@ export default function TeamBuilder() {
         <ModeTabs mode={store.mode} onChange={store.setMode} />
         <InvestmentTabs level={store.investmentLevel} onChange={store.setInvestmentLevel} />
 
-        <ShareButton getUrl={store.shareUrl} />
+        <BuilderToolbar
+          canUndo={store.canUndo}
+          hasTeams={store.hasTeams}
+          exporting={exporting}
+          onUndo={store.undo}
+          onClear={store.clearTeams}
+          onExport={handleExport}
+          shareUrl={store.shareUrl}
+          shareCode={store.shareCode}
+          summary={store.summary}
+          onImport={store.importBuild}
+        />
       </div>
 
       <TeamsBoard
@@ -119,6 +172,8 @@ export default function TeamBuilder() {
         teams={store.teams}
         investmentLevel={store.investmentLevel}
         selectedSlot={pending?.type === 'slot' ? pending.ref : null}
+        roster={roster}
+        boardRef={boardRef}
         onSlotClick={handleSlotClick}
         onRemoveHero={handleRemoveHero}
         onDropHero={handleDropHero}
@@ -131,8 +186,23 @@ export default function TeamBuilder() {
         mode={store.mode}
         investmentLevel={store.investmentLevel}
         selectedHeroId={pending?.type === 'hero' ? pending.heroId : null}
+        roster={roster}
         onSelectHero={handleSelectHero}
+        onOpenDetail={setDetailHero}
       />
+
+      <HeroPickerModal
+        open={pickerSlot !== null}
+        title={pickerSlot ? slotTitle(pickerSlot) : ''}
+        mode={store.mode}
+        investmentLevel={store.investmentLevel}
+        roster={roster}
+        onPick={handlePick}
+        onOpenDetail={setDetailHero}
+        onClose={() => setPickerSlot(null)}
+      />
+
+      <HeroDetailModal hero={detailHero} roster={roster} onClose={() => setDetailHero(null)} />
     </div>
   )
 }

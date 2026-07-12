@@ -80,14 +80,18 @@ function buildFileName(unitId: number, parsed: ParsedInvestment): string {
   return `${name}_2x.webp`
 }
 
+// The three preset investment bands come straight from the tier-list data; the
+// fourth level ("mine") is roster-driven and handled by ownedFrameUrl below.
+type PresetLevel = 'minimum' | 'optimal' | 'competitive'
+
 // Returns the CDN URL of the framed icon for this hero at the given investment
 // level, falling back to lower levels if the requested one is blank, or null if
 // the hero has no floofpire mapping (anime collabs) or no usable investment data.
-export function heroFrameUrl(hero: Hero, level: InvestmentLevel): string | null {
+export function heroFrameUrl(hero: Hero, level: PresetLevel): string | null {
   const unitId = FLOOFPIRE_UNIT_ID[hero.id]
   if (unitId == null) return null
 
-  const fallbackOrder: InvestmentLevel[] =
+  const fallbackOrder: PresetLevel[] =
     level === 'competitive'
       ? ['competitive', 'optimal', 'minimum']
       : level === 'optimal'
@@ -99,4 +103,53 @@ export function heroFrameUrl(hero: Hero, level: InvestmentLevel): string | null 
     if (parsed) return `${CDN_BASE}/${buildFileName(unitId, parsed)}`
   }
   return null
+}
+
+// Maps a roster ascension label to the CDN's short code.
+const OWNED_TIER_CODE: Record<string, string> = {
+  Elite: 'e',
+  'Elite+': 'ep',
+  Legendary: 'l',
+  Mythic: 'm',
+  'Mythic+': 'mp',
+  Ascended: 'a',
+  A1: 'a1',
+  A2: 'a2',
+  A3: 'a3',
+  A4: 'a4',
+  A5: 'a5',
+}
+
+export interface Ownership {
+  tier: string | null
+  si: number | null
+}
+
+// "My Investment" view: heroes you don't own (or own without a set tier) show the
+// plain Common (green) frame, mirroring the game's uninvested icon; owned heroes
+// render at the exact ascension + SI recorded in your roster.
+export function ownedFrameUrl(hero: Hero, ownership: Ownership | null): string | null {
+  const unitId = FLOOFPIRE_UNIT_ID[hero.id]
+  if (unitId == null) return null
+
+  const asc = ownership?.tier ? OWNED_TIER_CODE[ownership.tier] : null
+  if (!asc) return `${CDN_BASE}/${unitId}_c_2x.webp`
+
+  let name = `${unitId}_${asc}`
+  if (ascensionRank(asc) >= MYTHIC_RANK) name += `_si${ownership?.si ?? 0}`
+  return `${CDN_BASE}/${name}_2x.webp`
+}
+
+// Resolves the framed icon for any investment level, including roster-driven "mine".
+export function resolveFrameUrl(hero: Hero, level: InvestmentLevel, ownership: Ownership | null): string | null {
+  if (level === 'mine') return ownedFrameUrl(hero, ownership)
+  return heroFrameUrl(hero, level)
+}
+
+// Short text describing the investment shown for a level (for card captions).
+export function investmentLabel(hero: Hero, level: InvestmentLevel, ownership: Ownership | null): string {
+  if (level !== 'mine') return hero.investment[level] || '—'
+  if (!ownership) return 'Not owned'
+  const tier = ownership.tier ?? 'Owned'
+  return ownership.si != null ? `${tier} · SI ${ownership.si}` : tier
 }

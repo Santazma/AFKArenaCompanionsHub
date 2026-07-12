@@ -1,33 +1,50 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { heroById } from '../data/heroes'
 import {
   type BuilderState,
   type ContentMode,
   type InvestmentLevel,
   type ModeTeams,
   type Side,
+  buildSummary,
+  clearModeTeams,
+  decodeBuild,
   decodeShare,
-  encodeShare,
+  encodeBuild,
   loadState,
   resizeTeams,
   saveState,
 } from '../lib/teamBuilder'
+
+const MAX_HISTORY = 50
 
 function readInitialState(): { state: BuilderState; mode: ContentMode } {
   const stored = loadState()
   if (typeof window === 'undefined') return { state: stored, mode: 'arena' }
 
   const params = new URLSearchParams(window.location.search)
-  const shareCode = params.get('team')
-  if (!shareCode) return { state: stored, mode: 'arena' }
 
-  const shared = decodeShare(shareCode)
-  if (!shared) return { state: stored, mode: 'arena' }
-
-  const next: BuilderState = {
-    ...stored,
-    [shared.mode]: { ours: shared.ours, opponent: shared.opponent, bossId: shared.bossId },
+  // Full-build link (all modes at once).
+  const buildCode = params.get('build')
+  if (buildCode) {
+    const decoded = decodeBuild(buildCode)
+    if (decoded) return { state: decoded, mode: 'arena' }
   }
-  return { state: next, mode: shared.mode }
+
+  // Legacy single-mode link.
+  const shareCode = params.get('team')
+  if (shareCode) {
+    const shared = decodeShare(shareCode)
+    if (shared) {
+      const next: BuilderState = {
+        ...stored,
+        [shared.mode]: { ours: shared.ours, opponent: shared.opponent, bossId: shared.bossId },
+      }
+      return { state: next, mode: shared.mode }
+    }
+  }
+
+  return { state: stored, mode: 'arena' }
 }
 
 export function useTeamBuilderState() {
@@ -35,19 +52,32 @@ export function useTeamBuilderState() {
   const [state, setState] = useState<BuilderState>(initialState)
   const [mode, setMode] = useState<ContentMode>(initialMode)
   const [investmentLevel, setInvestmentLevel] = useState<InvestmentLevel>('optimal')
+  const [past, setPast] = useState<BuilderState[]>([])
+
+  // Mirror the committed state so history snapshots read the latest value
+  // without being taken inside a setState updater (which Strict Mode double-runs).
+  const presentRef = useRef(state)
+  presentRef.current = state
+
+  const snapshot = useCallback(() => {
+    setPast((prev) => [...prev, presentRef.current].slice(-MAX_HISTORY))
+  }, [])
 
   useEffect(() => {
     saveState(state)
   }, [state])
 
   useEffect(() => {
-    // Once loaded, drop the share param so the URL reflects live edits rather than the imported snapshot.
     if (typeof window === 'undefined') return
     const url = new URL(window.location.href)
-    if (url.searchParams.has('team')) {
-      url.searchParams.delete('team')
-      window.history.replaceState({}, '', url)
+    let changed = false
+    for (const param of ['team', 'build']) {
+      if (url.searchParams.has(param)) {
+        url.searchParams.delete(param)
+        changed = true
+      }
     }
+    if (changed) window.history.replaceState({}, '', url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -55,6 +85,7 @@ export function useTeamBuilderState() {
 
   const setTeamCount = useCallback(
     (count: number) => {
+      snapshot()
       setState((prev) => {
         const current = prev[mode]
         const next: ModeTeams = {
@@ -65,18 +96,20 @@ export function useTeamBuilderState() {
         return { ...prev, [mode]: next }
       })
     },
-    [mode],
+    [mode, snapshot],
   )
 
   const setBoss = useCallback(
     (bossId: string | null) => {
+      snapshot()
       setState((prev) => ({ ...prev, [mode]: { ...prev[mode], bossId } }))
     },
-    [mode],
+    [mode, snapshot],
   )
 
   const assignHero = useCallback(
     (side: Side, teamIndex: number, slotIndex: number, heroId: string) => {
+      snapshot()
       setState((prev) => {
         const current = prev[mode]
         const targetTeams = side === 'ours' ? current.ours : current.opponent
@@ -91,11 +124,12 @@ export function useTeamBuilderState() {
         return { ...prev, [mode]: next }
       })
     },
-    [mode],
+    [mode, snapshot],
   )
 
   const clearSlot = useCallback(
     (side: Side, teamIndex: number, slotIndex: number) => {
+      snapshot()
       setState((prev) => {
         const current = prev[mode]
         const targetTeams = side === 'ours' ? current.ours : current.opponent
@@ -110,7 +144,33 @@ export function useTeamBuilderState() {
         return { ...prev, [mode]: next }
       })
     },
-    [mode],
+    [mode, snapshot],
+  )
+
+  const clearTeams = useCallback(() => {
+    snapshot()
+    setState((prev) => ({ ...prev, [mode]: clearModeTeams(prev[mode]) }))
+  }, [mode, snapshot])
+
+  const undo = useCallback(() => {
+    setPast((prev) => {
+      if (!prev.length) return prev
+      const previous = prev[prev.length - 1]
+      setState(previous)
+      return prev.slice(0, -1)
+    })
+  }, [])
+
+  // Loads a full-build share code into every mode. Returns false if invalid.
+  const importBuild = useCallback(
+    (code: string): boolean => {
+      const decoded = decodeBuild(code.trim())
+      if (!decoded) return false
+      snapshot()
+      setState(decoded)
+      return true
+    },
+    [snapshot],
   )
 
   const usedHeroIds = useMemo(() => {
@@ -120,12 +180,21 @@ export function useTeamBuilderState() {
     return used
   }, [teams])
 
+  const hasTeams = useMemo(
+    () => teams.ours.some((team) => team.some(Boolean)) || teams.opponent.some((team) => team.some(Boolean)),
+    [teams],
+  )
+
+  const shareCode = useCallback(() => encodeBuild(state), [state])
+
   const shareUrl = useCallback(() => {
-    const code = encodeShare(mode, teams)
     const url = new URL(window.location.href)
-    url.searchParams.set('team', code)
+    url.searchParams.delete('team')
+    url.searchParams.set('build', encodeBuild(state))
     return url.toString()
-  }, [mode, teams])
+  }, [state])
+
+  const summary = useCallback(() => buildSummary(state, (id) => heroById.get(id)?.name ?? id), [state])
 
   return {
     mode,
@@ -136,9 +205,16 @@ export function useTeamBuilderState() {
     setTeamCount,
     assignHero,
     clearSlot,
+    clearTeams,
     setBoss,
+    undo,
+    importBuild,
+    canUndo: past.length > 0,
+    hasTeams,
     usedHeroIds,
     shareUrl,
+    shareCode,
+    summary,
   }
 }
 

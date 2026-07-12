@@ -2,7 +2,7 @@ import { bossById } from '../data/bosses'
 import { heroById } from '../data/heroes'
 
 export type ContentMode = 'arena' | 'dreamRealm' | 'guildHunt'
-export type InvestmentLevel = 'minimum' | 'optimal' | 'competitive'
+export type InvestmentLevel = 'minimum' | 'optimal' | 'competitive' | 'mine'
 export type Side = 'ours' | 'opponent'
 
 export interface SlotRef {
@@ -35,6 +35,7 @@ export const INVESTMENT_LEVELS: { id: InvestmentLevel; label: string }[] = [
   { id: 'minimum', label: 'Minimum' },
   { id: 'optimal', label: 'Optimal' },
   { id: 'competitive', label: 'Competitive' },
+  { id: 'mine', label: 'My Investment' },
 ]
 
 export type Team = (string | null)[]
@@ -148,6 +149,61 @@ export function decodeShare(code: string): ShareablePayload | null {
     return { mode: parsed.mode, ...sanitizeModeTeams(parsed) }
   } catch {
     return null
+  }
+}
+
+// Encodes the ENTIRE builder (all three modes) into one shareable code, so a
+// single link carries a player's Arena, Dream Realm and Guild Hunt drafts.
+export function encodeBuild(state: BuilderState): string {
+  const slim: Record<string, Pick<ModeTeams, 'ours' | 'opponent' | 'bossId'>> = {}
+  for (const mode of Object.keys(state) as ContentMode[]) {
+    const { ours, opponent, bossId } = state[mode]
+    slim[mode] = { ours, opponent, bossId }
+  }
+  return toBase64Url(JSON.stringify(slim))
+}
+
+export function decodeBuild(code: string): BuilderState | null {
+  try {
+    const parsed = JSON.parse(fromBase64Url(code)) as Partial<Record<ContentMode, unknown>>
+    if (!parsed || typeof parsed !== 'object') return null
+    const base = createInitialState()
+    for (const mode of Object.keys(base) as ContentMode[]) {
+      const modeTeams = parsed[mode]
+      if (modeTeams && typeof modeTeams === 'object') {
+        base[mode] = sanitizeModeTeams(modeTeams as Record<string, unknown>)
+      }
+    }
+    return base
+  } catch {
+    return null
+  }
+}
+
+// A plain-text roster summary of every non-empty team, for pasting into chat.
+export function buildSummary(state: BuilderState, heroName: (id: string) => string): string {
+  const lines: string[] = []
+  for (const { id, label } of CONTENT_MODES) {
+    const modeTeams = state[id]
+    const teamLines: string[] = []
+    modeTeams.ours.forEach((team, i) => {
+      const names = team.filter((h): h is string => Boolean(h)).map(heroName)
+      if (names.length) teamLines.push(`  Team ${i + 1}: ${names.join(', ')}`)
+    })
+    if (teamLines.length) {
+      const bossName = modeTeams.bossId ? bossById.get(modeTeams.bossId)?.name : null
+      lines.push(`${label}${bossName ? ` (vs ${bossName})` : ''}:`)
+      lines.push(...teamLines)
+    }
+  }
+  return lines.length ? lines.join('\n') : 'No teams built yet.'
+}
+
+export function clearModeTeams(teams: ModeTeams): ModeTeams {
+  return {
+    ours: teams.ours.map(() => emptyTeam()),
+    opponent: teams.opponent.map(() => emptyTeam()),
+    bossId: teams.bossId,
   }
 }
 

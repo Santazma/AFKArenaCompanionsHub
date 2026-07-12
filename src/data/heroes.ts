@@ -1,4 +1,5 @@
 import rawHeroes from './heroes.json'
+import { HERO_ROLE, HERO_CLASS } from './heroMeta'
 import chaHaeInImage from '../assets/heroes/cha-hae-in.webp'
 import judyPunchImage from '../assets/heroes/judy-punch.webp'
 import leonardoImage from '../assets/heroes/leonardo.webp'
@@ -20,6 +21,10 @@ export interface Hero {
   overallRank: string
   score: number
   image: string | null
+  // Combat role (e.g. "Tank", "Burst Damage") and class ("Warrior", "Mage",
+  // "Ranger"), sourced from floofpire metadata; null when unmapped.
+  role: string | null
+  class: string | null
   investment: {
     minimum: string
     optimal: string
@@ -44,9 +49,14 @@ const IMAGE_OVERRIDES: Record<string, string> = {
   'cha-hae-in': chaHaeInImage,
 }
 
-export const heroes = (rawHeroes as Hero[]).map((hero) =>
-  IMAGE_OVERRIDES[hero.id] ? { ...hero, image: IMAGE_OVERRIDES[hero.id] } : hero,
-)
+type RawHero = Omit<Hero, 'role' | 'class'>
+
+export const heroes: Hero[] = (rawHeroes as RawHero[]).map((hero) => ({
+  ...hero,
+  image: IMAGE_OVERRIDES[hero.id] ?? hero.image,
+  role: HERO_ROLE[hero.id] ?? null,
+  class: HERO_CLASS[hero.id] ?? null,
+}))
 
 export const heroById = new Map(heroes.map((hero) => [hero.id, hero]))
 
