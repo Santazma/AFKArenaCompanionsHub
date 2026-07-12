@@ -73,7 +73,7 @@ export default function HeroBrowser({ mode, investmentLevel, selectedHeroId, onS
                 : 'border-transparent hover:border-gold-500/40 hover:bg-void/40'
             }`}
           >
-            <HeroAvatar hero={hero} size="sm" />
+            <HeroAvatar hero={hero} size="sm" investmentLevel={investmentLevel} />
             <span className="w-full truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
             <span
               className="rounded-full px-2 py-0.5 font-body text-[10px] font-semibold"

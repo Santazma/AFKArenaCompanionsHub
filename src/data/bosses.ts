@@ -7,57 +7,22 @@ export interface Boss {
   image: string | null
 }
 
+// Boss art uses floofpire/cdn's unit icons (keyed by the game's numeric unit
+// id), matching the framed hero icons for a consistent look.
+const bossIcon = (unitId: number) =>
+  `https://raw.githubusercontent.com/floofpire/cdn/main/unit_icon_by_id/${unitId}_2x.webp`
+
 export const bosses: Boss[] = [
-  {
-    id: 'kane',
-    name: 'Kane',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/6/6c/Kane.png/revision/latest?cb=20190915194839',
-  },
-  {
-    id: 'ice-shemira',
-    name: 'Ice Shemira',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/6/6d/Shemira_Skin_Model.png/revision/latest?cb=20210113223358',
-  },
-  {
-    id: 'demonic-entity',
-    name: 'Demonic Entity',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/0/0b/Nemora_Alt_Design.jpg/revision/latest?cb=20191109195849',
-  },
-  {
-    id: 'grotesque-mage',
-    name: 'Grotesque Mage',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/4/44/Grotesque_Mage.png/revision/latest?cb=20210319151547',
-  },
-  {
-    id: 'the-unhinged',
-    name: 'The Unhinged',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/6/65/The_Unhinged.png/revision/latest?cb=20210122174320',
-  },
-  {
-    id: 'burning-brute',
-    name: 'Burning Brute',
-    mode: 'dreamRealm',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/f/f1/Nian_Monster.png/revision/latest?cb=20200928210346',
-  },
-  {
-    id: 'wrizz',
-    name: 'Wrizz',
-    mode: 'guildHunt',
-    image: 'https://static.wikia.nocookie.net/afk-arena/images/f/f5/Wrizz_Model.png/revision/latest?cb=20210122042548',
-  },
-  // No artwork found on the AFK Arena Fandom wiki for these three — the wiki
-  // confirms "Dune Destroyer" as a real (upcoming/undocumented) Nightmare
-  // Corridor boss name with no uploaded art yet, while "Raven Whisperer" and
-  // "Fortune Firecrackers" don't appear anywhere on the wiki at all, likely
-  // Companions-exclusive content. They stay selectable with a placeholder.
-  { id: 'dune-destroyer', name: 'Dune Destroyer', mode: 'guildHunt', image: null },
-  { id: 'raven-whisperer', name: 'Raven Whisperer', mode: 'guildHunt', image: null },
-  { id: 'fortune-firecrackers', name: 'Fortune Firecrackers', mode: 'guildHunt', image: null },
+  { id: 'kane', name: 'Kane', mode: 'dreamRealm', image: bossIcon(1003) },
+  { id: 'ice-shemira', name: 'Ice Shemira', mode: 'dreamRealm', image: bossIcon(1016) },
+  { id: 'demonic-entity', name: 'Demonic Entity', mode: 'dreamRealm', image: bossIcon(1012) },
+  { id: 'grotesque-mage', name: 'Grotesque Mage', mode: 'dreamRealm', image: bossIcon(1025) },
+  { id: 'the-unhinged', name: 'The Unhinged', mode: 'dreamRealm', image: bossIcon(1022) },
+  { id: 'burning-brute', name: 'Burning Brute', mode: 'dreamRealm', image: bossIcon(1017) },
+  { id: 'wrizz', name: 'Wrizz', mode: 'guildHunt', image: bossIcon(1006) },
+  { id: 'dune-destroyer', name: 'Dune Destroyer', mode: 'guildHunt', image: bossIcon(1075) },
+  { id: 'raven-whisperer', name: 'Raven Whisperer', mode: 'guildHunt', image: bossIcon(1092) },
+  { id: 'fortune-firecrackers', name: 'Fortune Firecrackers', mode: 'guildHunt', image: bossIcon(1098) },
 ]
 
 export const bossById = new Map(bosses.map((boss) => [boss.id, boss]))

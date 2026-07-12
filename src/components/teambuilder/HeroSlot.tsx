@@ -76,7 +76,7 @@ export default function HeroSlot({
           >
             ×
           </button>
-          <HeroAvatar hero={hero} size="sm" />
+          <HeroAvatar hero={hero} size="sm" investmentLevel={investmentLevel} />
           <span className="max-w-16 truncate font-body text-[11px] text-gold-100/80">{hero.name}</span>
           <span className="max-w-16 truncate font-body text-[10px] text-gold-100/40">
             {hero.investment[investmentLevel] || '—'}
