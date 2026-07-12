@@ -6,12 +6,25 @@ import HeroPickerModal from '../components/teambuilder/HeroPickerModal'
 import InvestmentTabs from '../components/teambuilder/InvestmentTabs'
 import ModeTabs from '../components/teambuilder/ModeTabs'
 import BuilderToolbar from '../components/teambuilder/BuilderToolbar'
+import ProfileManager from '../components/teambuilder/ProfileManager'
 import TeamCountControl from '../components/teambuilder/TeamCountControl'
 import TeamsBoard from '../components/teambuilder/TeamsBoard'
 import { useTeamBuilderState } from '../hooks/useTeamBuilderState'
 import { useRoster } from '../hooks/useRoster'
+import { useProfiles, type ProfileData } from '../hooks/useProfiles'
+import { heroById } from '../data/heroes'
+import { heroFrameUrl } from '../lib/heroFrame'
 import { downloadNodeAsPng } from '../lib/exportImage'
+import {
+  encodeProfileCode,
+  encodeTeamCode,
+  encodeRosterCode,
+  decodeProfileCode,
+  decodeTeamCode,
+  decodeRosterCode,
+} from '../lib/shareCodes'
 import { parseSlotKey, type ModeTeams, type SlotRef, type Team } from '../lib/teamBuilder'
+import HeroAvatar from '../components/teambuilder/HeroAvatar'
 
 type Pending = { type: 'hero'; heroId: string } | { type: 'slot'; ref: SlotRef } | null
 
@@ -32,9 +45,12 @@ function slotTitle(ref: SlotRef): string {
 export default function TeamBuilder() {
   const store = useTeamBuilderState()
   const roster = useRoster()
+  const profiles = useProfiles()
   const [pending, setPending] = useState<Pending>(null)
   const [detailHero, setDetailHero] = useState<Hero | null>(null)
   const [pickerSlot, setPickerSlot] = useState<SlotRef | null>(null)
+  const [managerOpen, setManagerOpen] = useState(false)
+  const [avatarFor, setAvatarFor] = useState<string | null>(null)
   const [exporting, setExporting] = useState(false)
   const boardRef = useRef<HTMLDivElement>(null)
 
@@ -42,6 +58,66 @@ export default function TeamBuilder() {
     setPending(null)
     setPickerSlot(null)
   }, [store.mode])
+
+  // Mirror the live roster + teams into the active profile so switching away
+  // never loses edits (and switching back restores them). Safe on first run
+  // because the live state already equals the active profile after migration.
+  const { saveActive } = profiles
+  useEffect(() => {
+    saveActive(roster.roster, store.builds)
+  }, [roster.roster, store.builds, saveActive])
+
+  const loadData = (data: ProfileData | null) => {
+    if (!data) return
+    roster.replaceRoster(data.roster)
+    store.importBuildState(data.builds)
+  }
+
+  // Apply a shared profile link (?profile=…) once on mount, then clean the URL.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const code = new URLSearchParams(window.location.search).get('profile')
+    if (code) {
+      const decoded = decodeProfileCode(code)
+      if (decoded) {
+        loadData(profiles.importProfile(decoded.name, decoded.avatarHeroId, decoded.roster, decoded.builds))
+      }
+      const url = new URL(window.location.href)
+      url.searchParams.delete('profile')
+      window.history.replaceState({}, '', url)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleImportTeam = (code: string): boolean => {
+    const builds = decodeTeamCode(code)
+    if (!builds) return false
+    store.importBuildState(builds)
+    return true
+  }
+
+  const handleImportRoster = (code: string): boolean => {
+    const parsed = decodeRosterCode(code)
+    if (!parsed) return false
+    roster.replaceRoster(parsed)
+    return true
+  }
+
+  const profileCode = () =>
+    encodeProfileCode({
+      name: profiles.active.name,
+      avatarHeroId: profiles.active.avatarHeroId,
+      roster: roster.roster,
+      builds: store.builds,
+    })
+
+  const profileLink = () => {
+    const url = new URL(window.location.href)
+    url.searchParams.delete('build')
+    url.searchParams.delete('team')
+    url.searchParams.set('profile', profileCode())
+    return url.toString()
+  }
 
   const handleExport = async () => {
     if (!boardRef.current) return
@@ -150,6 +226,28 @@ export default function TeamBuilder() {
           <h1 className="font-display text-3xl font-bold text-gold-300 sm:text-4xl">Build Your Comps</h1>
         </div>
 
+        <button
+          type="button"
+          onClick={() => setManagerOpen(true)}
+          title="Manage profiles"
+          className="flex items-center gap-2 rounded-full border border-arcane-500/50 bg-arcane-500/10 py-1.5 pr-4 pl-1.5 transition-colors hover:bg-arcane-500/20"
+        >
+          {profiles.active.avatarHeroId && heroById.get(profiles.active.avatarHeroId) ? (
+            <HeroAvatar
+              hero={heroById.get(profiles.active.avatarHeroId)!}
+              size="sm"
+              frameUrl={heroFrameUrl(heroById.get(profiles.active.avatarHeroId)!, 'optimal')}
+              className="!h-9 !w-9"
+            />
+          ) : (
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-void/60 text-lg">👤</span>
+          )}
+          <span className="max-w-[10rem] truncate font-body text-sm font-medium text-arcane-200">
+            {profiles.active.name}
+          </span>
+          <span className="font-body text-xs text-arcane-300/60">▾</span>
+        </button>
+
         <ModeTabs mode={store.mode} onChange={store.setMode} />
         <InvestmentTabs level={store.investmentLevel} onChange={store.setInvestmentLevel} />
 
@@ -163,7 +261,6 @@ export default function TeamBuilder() {
           shareUrl={store.shareUrl}
           shareCode={store.shareCode}
           summary={store.summary}
-          onImport={store.importBuild}
         />
       </div>
 
@@ -203,6 +300,45 @@ export default function TeamBuilder() {
       />
 
       <HeroDetailModal hero={detailHero} roster={roster} onClose={() => setDetailHero(null)} />
+
+      <ProfileManager
+        open={managerOpen}
+        profiles={profiles.profiles}
+        activeId={profiles.activeId}
+        onClose={() => setManagerOpen(false)}
+        onSwitch={(id) => loadData(profiles.switchTo(id))}
+        onCreate={(name) => loadData(profiles.createAndSwitch(name))}
+        onRename={profiles.rename}
+        onPickAvatar={(id) => {
+          setAvatarFor(id)
+          setManagerOpen(false)
+        }}
+        onDelete={(id) => loadData(profiles.remove(id))}
+        profileCode={profileCode}
+        profileLink={profileLink}
+        teamCode={() => encodeTeamCode(store.builds)}
+        rosterCode={() => encodeRosterCode(roster.roster)}
+        onImportTeam={handleImportTeam}
+        onImportRoster={handleImportRoster}
+      />
+
+      <HeroPickerModal
+        open={avatarFor !== null}
+        title="Choose profile picture"
+        mode={store.mode}
+        investmentLevel={store.investmentLevel}
+        roster={roster}
+        onPick={(heroId) => {
+          if (avatarFor) profiles.setAvatar(avatarFor, heroId)
+          setAvatarFor(null)
+          setManagerOpen(true)
+        }}
+        onOpenDetail={setDetailHero}
+        onClose={() => {
+          setAvatarFor(null)
+          setManagerOpen(true)
+        }}
+      />
     </div>
   )
 }

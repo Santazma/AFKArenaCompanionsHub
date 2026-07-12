@@ -173,6 +173,15 @@ export function useTeamBuilderState() {
     [snapshot],
   )
 
+  // Loads an already-decoded build state (from a profile import).
+  const importBuildState = useCallback(
+    (next: BuilderState) => {
+      snapshot()
+      setState(next)
+    },
+    [snapshot],
+  )
+
   const usedHeroIds = useMemo(() => {
     const used = new Set<string>()
     teams.ours.forEach((team) => team.forEach((id) => id && used.add(id)))
@@ -209,6 +218,8 @@ export function useTeamBuilderState() {
     setBoss,
     undo,
     importBuild,
+    importBuildState,
+    builds: state,
     canUndo: past.length > 0,
     hasTeams,
     usedHeroIds,

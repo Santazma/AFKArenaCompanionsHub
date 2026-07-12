@@ -88,6 +88,9 @@ export function useRoster() {
     setRoster((prev) => ({ ...prev, [heroId]: { tier: prev[heroId]?.tier ?? null, si } }))
   }, [])
 
+  // Replaces the entire roster wholesale — used when importing a profile.
+  const replaceRoster = useCallback((next: Roster) => setRoster(next), [])
+
   return {
     roster,
     isOwned,
@@ -98,6 +101,7 @@ export function useRoster() {
     setOwned,
     setOwnedTier,
     setOwnedSi,
+    replaceRoster,
     ownedCount: Object.keys(roster).length,
   }
 }

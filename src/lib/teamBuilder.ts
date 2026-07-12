@@ -90,7 +90,7 @@ export function tierColor(tier: string): string {
   return '#6b6375'
 }
 
-function toBase64Url(input: string): string {
+export function toBase64Url(input: string): string {
   const bytes = new TextEncoder().encode(input)
   let binary = ''
   bytes.forEach((byte) => {
@@ -99,7 +99,7 @@ function toBase64Url(input: string): string {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 }
 
-function fromBase64Url(input: string): string {
+export function fromBase64Url(input: string): string {
   const padded = input + '='.repeat((4 - (input.length % 4)) % 4)
   const binary = atob(padded.replace(/-/g, '+').replace(/_/g, '/'))
   const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0))
@@ -163,18 +163,27 @@ export function encodeBuild(state: BuilderState): string {
   return toBase64Url(JSON.stringify(slim))
 }
 
-export function decodeBuild(code: string): BuilderState | null {
-  try {
-    const parsed = JSON.parse(fromBase64Url(code)) as Partial<Record<ContentMode, unknown>>
-    if (!parsed || typeof parsed !== 'object') return null
-    const base = createInitialState()
+// Validates a decoded (object) build into a full BuilderState, ignoring unknown
+// modes/heroes. Shared by decodeBuild and the profile importer.
+export function sanitizeBuild(parsed: unknown): BuilderState {
+  const base = createInitialState()
+  if (parsed && typeof parsed === 'object') {
+    const byMode = parsed as Partial<Record<ContentMode, unknown>>
     for (const mode of Object.keys(base) as ContentMode[]) {
-      const modeTeams = parsed[mode]
+      const modeTeams = byMode[mode]
       if (modeTeams && typeof modeTeams === 'object') {
         base[mode] = sanitizeModeTeams(modeTeams as Record<string, unknown>)
       }
     }
-    return base
+  }
+  return base
+}
+
+export function decodeBuild(code: string): BuilderState | null {
+  try {
+    const parsed = JSON.parse(fromBase64Url(code))
+    if (!parsed || typeof parsed !== 'object') return null
+    return sanitizeBuild(parsed)
   } catch {
     return null
   }
