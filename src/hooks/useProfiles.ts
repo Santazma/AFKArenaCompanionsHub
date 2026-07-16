@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { createInitialState, loadState, type BuilderState } from '../lib/teamBuilder'
+import { createInitialState, loadState, sanitizeBuild, type BuilderState } from '../lib/teamBuilder'
 import { sanitizeRoster } from '../lib/shareCodes'
 import type { Roster } from './useRoster'
 
@@ -61,7 +61,9 @@ function sanitizeState(parsed: unknown): ProfilesState | null {
     name: typeof pr.name === 'string' && pr.name.trim() ? pr.name : 'Profile',
     avatarHeroId: typeof pr.avatarHeroId === 'string' ? pr.avatarHeroId : null,
     roster: sanitizeRoster(pr.roster),
-    builds: (pr.builds as BuilderState) ?? createInitialState(),
+    // Run persisted builds back through the same validator as imported codes so
+    // a tampered/corrupt localStorage entry can't inject unknown hero/boss ids.
+    builds: sanitizeBuild(pr.builds),
   }))
   const activeId = profiles.some((pr) => pr.id === p.activeId) ? (p.activeId as string) : profiles[0].id
   return { profiles, activeId }
