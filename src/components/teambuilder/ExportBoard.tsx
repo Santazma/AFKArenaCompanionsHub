@@ -14,9 +14,10 @@ import HeroAvatar from './HeroAvatar'
 // on a phone the live board is a cramped single column, which made shared
 // screenshots look tiny and low-res.
 
-// In-game formation, top to bottom: 3 back, then 2 front.
-const BACK_ROW = [2, 3, 4]
-const FRONT_ROW = [0, 1]
+// Same formation as the on-screen board: two columns side by side, back column
+// (slots 2,3,4) on the left, front column (slots 0,1) on the right.
+const BACK_COLUMN = [2, 3, 4]
+const FRONT_COLUMN = [0, 1]
 
 function ExportSlot({
   heroId,
@@ -53,19 +54,24 @@ function ExportSlot({
 function ExportTeamPanel({
   label,
   team,
+  mirrored = false,
   investmentLevel,
   roster,
 }: {
   label: string
   team: Team
+  mirrored?: boolean
   investmentLevel: InvestmentLevel
   roster: RosterStore
 }) {
-  const row = (indices: number[]) => (
-    <div className="flex justify-center gap-3">
-      {indices.map((i) => (
-        <ExportSlot key={i} heroId={team[i] ?? null} investmentLevel={investmentLevel} roster={roster} />
-      ))}
+  const column = (title: string, indices: number[]) => (
+    <div className="flex flex-col items-center gap-2">
+      <span className="font-body text-[10px] tracking-[0.2em] text-gold-100/30 uppercase">{title}</span>
+      <div className="flex flex-col justify-center gap-2">
+        {indices.map((i) => (
+          <ExportSlot key={i} heroId={team[i] ?? null} investmentLevel={investmentLevel} roster={roster} />
+        ))}
+      </div>
     </div>
   )
   return (
@@ -73,9 +79,9 @@ function ExportTeamPanel({
       <h4 className="mb-3 text-center font-body text-xs font-semibold tracking-[0.15em] text-gold-100/60 uppercase">
         {label}
       </h4>
-      <div className="flex flex-col items-center gap-3">
-        {row(BACK_ROW)}
-        {row(FRONT_ROW)}
+      <div className={`flex items-center justify-center gap-4 ${mirrored ? 'flex-row-reverse' : ''}`}>
+        {column('Back', BACK_COLUMN)}
+        {column('Front', FRONT_COLUMN)}
       </div>
     </div>
   )
@@ -155,6 +161,7 @@ export default function ExportBoard({ mode, teams, investmentLevel, roster, prof
               <ExportTeamPanel
                 label={`Team ${i + 1} — Opponent`}
                 team={teams.opponent[i] ?? []}
+                mirrored
                 investmentLevel={investmentLevel}
                 roster={roster}
               />
