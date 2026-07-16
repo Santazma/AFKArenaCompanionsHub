@@ -44,10 +44,8 @@ links to be removed, take them down — they're centralized in
 | UI effects  | Hand-picked components from [React Bits](https://reactbits.dev) |
 | Linting     | [oxlint](https://oxc.rs)                                       |
 
-Vite + React Router was chosen over Next.js since the whole app is a
-client-rendered SPA for now — no server rendering or backend is needed yet.
-If SEO for guide/tier-list content becomes a priority later, migrating to
-Next.js (or adding a prerendering step) is a reasonable next step.
+Plain Vite + React Router (not Next.js) — the app is a client-rendered SPA
+with no backend. Add prerendering later if SEO ever becomes a priority.
 
 ## Project structure
 
@@ -85,22 +83,11 @@ Content-Security-Policy can keep a strict `script-src 'self'` (see
 
 ## React Bits components
 
-Per the request to use [reactbits.dev](https://reactbits.dev) components,
-three were pulled in (source vendored directly into `src/reactbits/`, then
-manually converted to TypeScript, since ReactBits ships JS+CSS source and
-there's no install CLI for arbitrary registries):
-
-- **Aurora** (`Backgrounds`) — the animated purple/gold WebGL background
-  behind every page, rendered once in `Layout.tsx`. Depends on `ogl`.
-- **GradientText** (`Text Animations`) — the animated gold → lilac gradient
-  used for the site title in the nav bar and on the home page. Depends on
-  `motion`.
-- **SpotlightCard** (`Components`) — the cursor-tracking glow cards used for
-  the three home page entry points and the placeholder pages.
-
-These live under `src/reactbits/<Component>/` with their original
-`.css` files untouched, so updating them later is a matter of dropping in a
-newer version from the site.
+Three [React Bits](https://reactbits.dev) components are vendored under
+`src/reactbits/` (converted to TypeScript; their `.css` is kept untouched, so
+updating means dropping in a newer version): **Aurora** (the WebGL background,
+needs `ogl`), **GradientText** (the animated site title, needs `motion`), and
+**SpotlightCard** (the cursor-tracking glow cards).
 
 ## Team Builder
 
