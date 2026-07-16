@@ -24,9 +24,19 @@ interface HeroAvatarProps {
   // it replaces the plain avatar. Callers resolve it via resolveFrameUrl so the
   // roster-driven "My Investment" level works without threading roster in here.
   frameUrl?: string | null
+  // Skip the hotlinked wiki avatar and fall straight to the faction initials
+  // when there's no frame. Used by PNG export: html-to-image can't inline the
+  // Referer-blocked wiki thumbnails, so they'd capture as blank boxes.
+  hideRemoteImage?: boolean
 }
 
-export default function HeroAvatar({ hero, size = 'md', className = '', frameUrl }: HeroAvatarProps) {
+export default function HeroAvatar({
+  hero,
+  size = 'md',
+  className = '',
+  frameUrl,
+  hideRemoteImage = false,
+}: HeroAvatarProps) {
   const [imageFailed, setImageFailed] = useState(false)
   const [frameFailed, setFrameFailed] = useState(false)
 
@@ -51,7 +61,7 @@ export default function HeroAvatar({ hero, size = 'md', className = '', frameUrl
   }
 
   const color = FACTION_COLORS[hero.faction]
-  const showImage = hero.image && !imageFailed
+  const showImage = hero.image && !imageFailed && !hideRemoteImage
 
   return (
     <div

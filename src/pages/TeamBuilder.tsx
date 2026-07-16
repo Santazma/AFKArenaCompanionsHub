@@ -9,6 +9,7 @@ import BuilderToolbar from '../components/teambuilder/BuilderToolbar'
 import ProfileManager from '../components/teambuilder/ProfileManager'
 import TeamCountControl from '../components/teambuilder/TeamCountControl'
 import TeamsBoard from '../components/teambuilder/TeamsBoard'
+import ExportBoard from '../components/teambuilder/ExportBoard'
 import { useTeamBuilderState } from '../hooks/useTeamBuilderState'
 import { useRoster } from '../hooks/useRoster'
 import { useProfiles, type ProfileData } from '../hooks/useProfiles'
@@ -53,6 +54,9 @@ export default function TeamBuilder() {
   const [avatarFor, setAvatarFor] = useState<string | null>(null)
   const [exporting, setExporting] = useState(false)
   const boardRef = useRef<HTMLDivElement>(null)
+  // Dedicated off-screen node captured for PNG export (see the hidden
+  // ExportBoard below) — decoupled from the responsive on-screen board.
+  const exportRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setPending(null)
@@ -120,10 +124,10 @@ export default function TeamBuilder() {
   }
 
   const handleExport = async () => {
-    if (!boardRef.current) return
+    if (!exportRef.current) return
     setExporting(true)
     try {
-      await downloadNodeAsPng(boardRef.current, `afk-${store.mode}-comp.png`)
+      await downloadNodeAsPng(exportRef.current, `afk-${store.mode}-comp.png`)
     } catch (err) {
       console.error('Export failed', err)
       window.alert('Sorry, exporting the image failed. Please try again.')
@@ -339,6 +343,21 @@ export default function TeamBuilder() {
           setManagerOpen(true)
         }}
       />
+
+      {/* Off-screen, fixed-width layout used only for PNG export. Kept mounted
+          (not display:none) so its images are already loaded when captured;
+          positioned far off-screen rather than hidden with opacity, which
+          html-to-image would copy into a blank image. */}
+      <div aria-hidden className="pointer-events-none fixed top-0" style={{ left: '-99999px' }}>
+        <ExportBoard
+          mode={store.mode}
+          teams={store.teams}
+          investmentLevel={store.investmentLevel}
+          roster={roster}
+          profileName={profiles.active.name}
+          boardRef={exportRef}
+        />
+      </div>
     </div>
   )
 }
