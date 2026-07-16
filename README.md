@@ -135,26 +135,11 @@ other in the middle, like an actual matchup.
   slot in a different team or side. Dropping onto an empty slot moves the
   hero there; dropping onto an occupied slot swaps the two heroes. A small
   `×` button on each filled slot removes that hero outright.
-- **Boss picker** (Dream Realm / Guild Hunt) — the boss slot next to each
-  team starts as a "Select a boss" placeholder at a fixed height
-  (`BossSlot.tsx`, `h-[22.5rem]` — matches the hero board's own natural
-  height) so it never grows the row just because a boss's splash art is
-  tall. (A flex row with `items-stretch` and no explicit height will size
-  itself to a tall image's *intrinsic* size even with `min-height: 0` on
-  the item — `min-height: 0` only lifts the floor, it doesn't stop content
-  from being the ceiling. An explicit height sidesteps that instead of
-  fighting it.) The art itself uses `object-contain`, not `object-cover` —
-  it's letterboxed to fit the fixed box with its full aspect ratio intact,
-  never cropped top/bottom or left/right (the small picker-grid thumbnails
-  are the one place that still uses `object-cover`, since a uniform square
-  crop reads better at icon size than letterboxing would). Clicking the
-  slot opens a picker of that mode's bosses; picking one shows that boss
-  full-size (uncropped) with its name below, and clicking a picked boss
-  again reopens the picker to swap it. The boss is **one shared pick per
-  mode** — every team is built against the same boss, so selecting one
-  updates all of them at once
-  (you're comparing team comps against a single fight, not fighting
-  different bosses per team).
+- **Boss picker** (Dream Realm / Guild Hunt) — the boss slot opens a picker of
+  that mode's bosses and shows the picked boss's full splash art (letterboxed,
+  never cropped) with its name below; click it again to swap. The boss is a
+  single **shared pick per mode** — every team is built against the same fight,
+  so selecting one updates all teams at once.
 - **Share** — copies a URL with the current mode's teams (and any picked
   bosses) encoded into a `?team=` query param (base64url JSON). Opening that
   link loads the shared comp with no account or backend needed.
@@ -163,76 +148,23 @@ other in the middle, like an actual matchup.
 
 ### Hero data
 
-`src/data/heroes.json` (109 heroes) was generated from the
+`src/data/heroes.json` (109 heroes) is generated from the
 [tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI)
-via its `gviz/tq?tqx=out:csv` export endpoint — name, faction, overall rank,
-per-mode tier (Arena/Dream Realm/Guild Hunt), and minimum/optimal/competitive
-investment text are all real. Re-running the export command against the same
-spreadsheet will pick up any tier list updates.
+via its `gviz/tq?tqx=out:csv` export — name, faction, overall rank, per-mode
+tier, and investment text. Re-run the export against the same sheet to pick up
+tier list updates.
 
-**Avatars** (`image` field, 108/109 heroes) are hotlinked from the
-[AFK Arena Fandom wiki](https://afk-arena.fandom.com/), specifically each
-hero's small square **game UI icon** (`{Name}_Icon.jpg`) rather than the
-large splash portrait (`{Name}.png`) — the icon is what actually looks right
-in a square avatar slot. Almost all of them came from a single page fetch:
-every hero page embeds a shared navigation widget listing `_Icon.jpg` files
-for ~237 heroes, so one HTML page yields the whole map (name → icon URL)
-without hitting the API per hero. Note that four `Awakened X` heroes
-(`Awakened Brutus/Baden/Solise/Talene`) have their **own** distinct
-`X_Awakened_Icon.jpg` in that same list — don't fall back to the base
-hero's plain icon for these, it's visibly wrong (a different portrait).
-The rest used the MediaWiki `pageimages` API
-(`action=query&prop=pageimages`, which resolves redirects and title
-mismatches, e.g. `Wukong` → actual page title `Wu Kong`).
-
-`Judy & Punch`, `Zaphrael`, `Leonardo`, and `Cha Hae-in` have no icon (or,
-for Judy & Punch, no page at all) on the Classic AFK Arena wiki — the
-Companions roster's naming doesn't always match the Classic wiki 1:1, since
-Companions has a smaller, partly-overlapping roster with some exclusive
-crossover heroes (Sung Jinwoo, Saitama, etc.) that the Classic wiki happens
-to also document. For these four, [afk-web.onrender.com](https://afk-web.onrender.com)
-(the site linked from the Guide card, Companions-specific) has a proper
-128px icon per hero at `/images/generated/tier-list/heroes/{Name}-128.webp`.
-Those four images are downloaded into `src/assets/heroes/` and wired in via
-`IMAGE_OVERRIDES` in `heroes.ts`, rather than hotlinked, because that host
-sends `Cross-Origin-Resource-Policy: same-origin`, which browsers enforce
-regardless of `referrerPolicy` (unlike Fandom's Referer check below, this
-one has no client-side workaround). They end up inlined as base64 in the
-JS bundle since they're each under Vite's 4kB asset-inlining threshold —
-that's expected, not a bug.
-
-**Faction icons** (`FACTION_ICONS` in `heroes.ts`) are each faction's small
-circular emblem, pulled from the wiki's [Factions](https://afk-arena.fandom.com/wiki/Factions)
-page the same way — hotlinked from `static.wikia.nocookie.net`.
-
-**Bosses** (`src/data/bosses.ts`) use each boss's own splash art (not an
-icon) since the boss slot displays it at full board height. The 6 Dream
-Realm bosses (Kane, Ice Shemira, Demonic Entity, Grotesque Mage, The
-Unhinged, Burning Brute) are all documented on the wiki's
-[The Twisted Realm](https://afk-arena.fandom.com/wiki/The_Twisted_Realm)
-page, with each boss's own portrait fetched via `pageimages`. Guild Hunt
-only has one confirmed image: **Wrizz**. `Dune Destroyer` is a real,
-named boss on the wiki's
-[Nightmare Corridor](https://afk-arena.fandom.com/wiki/Nightmare_Corridor)
-page (a large rotating boss-name list) but has no artwork uploaded there
-yet; `Raven Whisperer` and `Fortune Firecrackers` don't appear anywhere on
-the Classic wiki at all (likely Companions-exclusive, undocumented
-content) despite a thorough search (direct titles, MediaWiki search API,
-wikitext dives). All three still work in the picker — `BossSlot.tsx` shows
-a `?` placeholder in place of the `<img>` when `boss.image` is `null` —
-swap in real art later by just filling in the `image` field.
-
-Two things matter if you regenerate this data:
-
-- Fandom's static image host (`static.wikia.nocookie.net`) has open CORS
-  (`Access-Control-Allow-Origin: *`), but its dynamic thumbnailer **rejects
-  requests that carry a cross-origin `Referer` header** (curl without one
-  gets `200`; a real `<img>` load from another site normally gets `404`).
-  `HeroAvatar.tsx` works around this with `referrerPolicy="no-referrer"` on
-  the `<img>` tag — don't remove it.
-- `HeroAvatar.tsx` falls back to a faction-colored initial avatar whenever
-  `hero.image` is `null` or the `<img>` fails to load (`onError`), so a
-  missing/renamed wiki image degrades gracefully instead of breaking.
+- **Hero avatars** are game-UI icons, mostly hotlinked from the
+  [AFK Arena Fandom wiki](https://afk-arena.fandom.com/). Four heroes with no
+  wiki icon are bundled in `src/assets/heroes/` and wired via `IMAGE_OVERRIDES`
+  in `heroes.ts`. `HeroAvatar.tsx` falls back to a faction-colored initial when
+  an image is missing or fails to load.
+  - **Gotcha:** keep `referrerPolicy="no-referrer"` on the avatar `<img>` — the
+    Fandom thumbnailer returns 404 for requests carrying a cross-origin
+    `Referer` header.
+- **Bosses** (`src/data/bosses.ts`) use full splash art. `Dune Destroyer`,
+  `Raven Whisperer`, and `Fortune Firecrackers` have no art yet — `BossSlot.tsx`
+  shows a `?` placeholder until their `image` field is filled in.
 
 ## Getting started
 
