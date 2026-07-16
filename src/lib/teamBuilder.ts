@@ -1,3 +1,4 @@
+import { compressToBase64, decompressFromBase64 } from 'lz-string'
 import { bossById } from '../data/bosses'
 import { heroById } from '../data/heroes'
 
@@ -106,6 +107,38 @@ export function fromBase64Url(input: string): string {
   return new TextDecoder().decode(bytes)
 }
 
+// Compact, URL-safe serialization for every share code/link. The payloads are
+// mostly repeated JSON keys and hero ids, which LZ-compresses well, so links
+// stop looking like enormous "virus" strings. `unpack` also decodes the old
+// plain base64url format, so codes already shared in chats keep working.
+export function pack(value: unknown): string {
+  // base64url so the code is fully URL-safe (only [-_A-Za-z0-9]) and never
+  // needs percent-escaping when dropped into a query param.
+  return compressToBase64(JSON.stringify(value)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+export function unpack(code: string): unknown | null {
+  const trimmed = code.trim()
+  if (!trimmed) return null
+  // New format: LZ-compressed base64url.
+  try {
+    const out = decompressFromBase64(trimmed.replace(/-/g, '+').replace(/_/g, '/'))
+    if (out) {
+      const parsed = JSON.parse(out)
+      if (parsed && typeof parsed === 'object') return parsed
+    }
+  } catch {
+    /* not an LZ code — fall through to the legacy path */
+  }
+  // Legacy format: plain base64url JSON (codes shared before compression).
+  try {
+    const parsed = JSON.parse(fromBase64Url(trimmed))
+    return parsed && typeof parsed === 'object' ? parsed : null
+  } catch {
+    return null
+  }
+}
+
 interface ShareablePayload {
   mode: ContentMode
   ours: Team[]
@@ -120,7 +153,7 @@ export function encodeShare(mode: ContentMode, teams: ModeTeams): string {
     opponent: teams.opponent,
     bossId: teams.bossId,
   }
-  return toBase64Url(JSON.stringify(payload))
+  return pack(payload)
 }
 
 function sanitizeModeTeams(parsed: {
@@ -143,13 +176,9 @@ function sanitizeModeTeams(parsed: {
 }
 
 export function decodeShare(code: string): ShareablePayload | null {
-  try {
-    const parsed = JSON.parse(fromBase64Url(code)) as ShareablePayload
-    if (!parsed || typeof parsed.mode !== 'string' || !Array.isArray(parsed.ours)) return null
-    return { mode: parsed.mode, ...sanitizeModeTeams(parsed) }
-  } catch {
-    return null
-  }
+  const parsed = unpack(code) as ShareablePayload | null
+  if (!parsed || typeof parsed.mode !== 'string' || !Array.isArray(parsed.ours)) return null
+  return { mode: parsed.mode, ...sanitizeModeTeams(parsed) }
 }
 
 // Encodes the ENTIRE builder (all three modes) into one shareable code, so a
@@ -160,7 +189,7 @@ export function encodeBuild(state: BuilderState): string {
     const { ours, opponent, bossId } = state[mode]
     slim[mode] = { ours, opponent, bossId }
   }
-  return toBase64Url(JSON.stringify(slim))
+  return pack(slim)
 }
 
 // Validates a decoded (object) build into a full BuilderState, ignoring unknown
@@ -180,13 +209,9 @@ export function sanitizeBuild(parsed: unknown): BuilderState {
 }
 
 export function decodeBuild(code: string): BuilderState | null {
-  try {
-    const parsed = JSON.parse(fromBase64Url(code))
-    if (!parsed || typeof parsed !== 'object') return null
-    return sanitizeBuild(parsed)
-  } catch {
-    return null
-  }
+  const parsed = unpack(code)
+  if (!parsed || typeof parsed !== 'object') return null
+  return sanitizeBuild(parsed)
 }
 
 // A plain-text roster summary of every non-empty team, for pasting into chat.

@@ -1,6 +1,6 @@
 import { heroById } from '../data/heroes'
 import { OWNED_SI, OWNED_TIERS, type OwnedSi, type OwnedTier, type Roster } from '../hooks/useRoster'
-import { fromBase64Url, sanitizeBuild, toBase64Url, type BuilderState, type ContentMode } from './teamBuilder'
+import { pack, sanitizeBuild, unpack, type BuilderState, type ContentMode } from './teamBuilder'
 
 // Portable, backend-less sync codes. Each code is tagged with a "kind" so the
 // importer can reject a team code pasted into the roster box (and vice versa).
@@ -34,16 +34,12 @@ export function sanitizeRoster(input: unknown): Roster {
 }
 
 function decode(code: string): Record<string, unknown> | null {
-  try {
-    const parsed = JSON.parse(fromBase64Url(code.trim()))
-    return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : null
-  } catch {
-    return null
-  }
+  const parsed = unpack(code)
+  return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : null
 }
 
 function tag(kind: Kind, payload: Record<string, unknown>): string {
-  return toBase64Url(JSON.stringify({ k: kind, v: 1, ...payload }))
+  return pack({ k: kind, v: 1, ...payload })
 }
 
 // ---- Team (builds only) ----
