@@ -188,21 +188,17 @@ Two things make client-side routing work on GitHub Pages' static hosting
 
 ## Security
 
-The app is fully static and client-side (no backend, no accounts, no
-secrets), so the hardening is defense-in-depth:
+Defense-in-depth for a static, client-side app (no backend/accounts/secrets).
+Don't undo these without knowing why they're here:
 
-- **Content-Security-Policy** — injected as a `<meta>` tag at build time only
-  (via a small plugin in `vite.config.ts`, so it never breaks the dev
-  server's inline HMR scripts). `script-src 'self'` with no inline/eval;
-  `img-src`/`connect-src` limited to self + the floofpire icon CDN. This is
-  why the SPA restore shim lives in an external file.
-- **Input sanitization** — every share/roster/profile code and every
-  `localStorage` payload is run through validators (`shareCodes.ts`,
-  `teamBuilder.ts`, `useProfiles.ts`) that drop unknown hero/boss ids and
-  out-of-range values, so a tampered code can't inject arbitrary data.
-- **Pinned CI actions** — `.github/workflows/deploy.yml` pins each GitHub
-  Action to a full commit SHA (with a `# v4`-style comment) to guard against
-  a moved tag serving malicious workflow code.
+- **CSP** — a build-only plugin in `vite.config.ts` injects a strict
+  `<meta>` policy (`script-src 'self'`, no inline/eval; `img`/`connect-src`
+  limited to self + the floofpire CDN). Build-only so it doesn't break dev HMR;
+  it's why the SPA restore shim is an external file, not inline.
+- **Input sanitization** — share/roster/profile codes and `localStorage`
+  payloads are validated (`shareCodes.ts`, `teamBuilder.ts`, `useProfiles.ts`),
+  dropping unknown ids and out-of-range values.
+- **Pinned CI actions** — `deploy.yml` pins each Action to a full commit SHA.
 
 ## Roadmap
 
