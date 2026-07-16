@@ -8,14 +8,29 @@ Arena, Dream Realm, and Guild Hunt.
 > separate game from AFK Arena Classic, with its own (smaller) hero roster —
 > the hero dataset in this repo reflects that.
 
+## Credits & attribution
+
+The **Tier List** and the **Guide** are **not** this project's content — they
+are created and hosted by **SaiLus**. This hub does **not** copy or reproduce
+them; it only links out to the originals, with visible credit:
+
+- Tier List → SaiLus's [tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI/edit?pli=1&gid=1697331140#gid=1697331140)
+- Guide → SaiLus's [afk-web.onrender.com/guides](https://afk-web.onrender.com/guides)
+
+The **Team Builder** is the only original tool in this repo. Credit and the
+full disclaimer live on the in-app `/legal` page (`src/pages/Legal.tsx`), and
+attribution is surfaced on the home cards and footer. If SaiLus asks for the
+links to be removed, take them down — they're centralized in
+`src/lib/externalLinks.ts`.
+
 ## Status
 
-- **Tier List** and **Guide** are external links — both the nav bar and the
-  home page cards open them in a new tab:
-  - Tier List → the community [tier list spreadsheet](https://docs.google.com/spreadsheets/d/1F8GWQiHuQV3ubYKLXVMpnHwwgtXAfdZOtCaMZ8usCWI/edit?pli=1&gid=1697331140#gid=1697331140)
-  - Guide → [afk-web.onrender.com/guides](https://afk-web.onrender.com/guides)
-- **Team Builder** is the only in-app route, and is functional — see
+- **Tier List** and **Guide** are external links (see
+  [Credits & attribution](#credits--attribution)) — both the nav bar and the
+  home page cards open them in a new tab.
+- **Team Builder** (`/team-builder`) is the only in-app feature route — see
   [Team Builder](#team-builder) below.
+- **Legal** (`/legal`) hosts the credits + disclaimers.
 
 ## Tech stack
 
@@ -38,20 +53,21 @@ Next.js (or adding a prerendering step) is a reasonable next step.
 
 ```
 src/
-├── App.tsx                     # Route definitions
+├── App.tsx                     # Route definitions (home, team-builder, legal)
 ├── main.tsx                     # App entry point, router provider
 ├── index.css                     # Tailwind import + theme tokens + fonts
 ├── components/
-│   ├── Layout.tsx                 # Page shell: Aurora background, nav, footer
+│   ├── Layout.tsx                 # Page shell: Aurora background, nav, footer + credit
 │   ├── NavBar.tsx                  # Top navigation (incl. mobile menu)
 │   └── teambuilder/                 # Team Builder UI pieces (see below)
 ├── pages/
-│   ├── Home.tsx                     # Landing page with the 3 entry points
-│   └── TeamBuilder.tsx               # /team-builder — the real feature
+│   ├── Home.tsx                     # Landing page with the 3 entry points + attribution
+│   ├── TeamBuilder.tsx               # /team-builder — the real feature
+│   └── Legal.tsx                      # /legal — credits + disclaimers
 ├── hooks/
 │   └── useTeamBuilderState.ts         # Team Builder state: load/save/share
 ├── lib/
-│   ├── externalLinks.ts                # Tier List / Guide URLs (single source of truth)
+│   ├── externalLinks.ts                # Tier List / Guide URLs + SaiLus attribution (single source of truth)
 │   └── teamBuilder.ts                   # Team Builder types, tiers, URL encode/decode
 ├── data/
 │   ├── heroes.json                       # 109-hero dataset (see below)
@@ -61,6 +77,11 @@ src/
     ├── GradientText/                          # Animated gradient text
     └── SpotlightCard/                          # Cursor-tracking spotlight card
 ```
+
+`public/spa-restore.js` holds the SPA deep-link restore shim (see
+[Deployment](#deployment)); it's an external file so the production
+Content-Security-Policy can keep a strict `script-src 'self'` (see
+[Security](#security)).
 
 ## React Bits components
 
@@ -238,19 +259,37 @@ Two things make client-side routing work on GitHub Pages' static hosting
 
 - `vite.config.ts` sets `base: '/AFKArenaCompanionsHub/'`, and
   `main.tsx` passes that same value as the router's `basename`.
-- `public/404.html` + a small decode script in `index.html` implement the
-  [spa-github-pages](https://github.com/rafgraph/spa-github-pages) redirect
-  trick, so a deep link like `/team-builder` (or a refresh on it) doesn't
-  404 — GitHub Pages serves `404.html`, which redirects back to `index.html`
-  with the real path encoded in a query param that gets decoded before
-  React Router boots.
+- `public/404.html` + `public/spa-restore.js` (loaded from `index.html`)
+  implement the [spa-github-pages](https://github.com/rafgraph/spa-github-pages)
+  redirect trick, so a deep link like `/team-builder` (or a refresh on it)
+  doesn't 404 — GitHub Pages serves `404.html`, which redirects back to
+  `index.html` with the real path encoded in a query param that
+  `spa-restore.js` decodes before React Router boots. The restore logic is an
+  external script (not inline) so the CSP can stay strict — see below.
+
+## Security
+
+The app is fully static and client-side (no backend, no accounts, no
+secrets), so the hardening is defense-in-depth:
+
+- **Content-Security-Policy** — injected as a `<meta>` tag at build time only
+  (via a small plugin in `vite.config.ts`, so it never breaks the dev
+  server's inline HMR scripts). `script-src 'self'` with no inline/eval;
+  `img-src`/`connect-src` limited to self + the floofpire icon CDN. This is
+  why the SPA restore shim lives in an external file.
+- **Input sanitization** — every share/roster/profile code and every
+  `localStorage` payload is run through validators (`shareCodes.ts`,
+  `teamBuilder.ts`, `useProfiles.ts`) that drop unknown hero/boss ids and
+  out-of-range values, so a tampered code can't inject arbitrary data.
+- **Pinned CI actions** — `.github/workflows/deploy.yml` pins each GitHub
+  Action to a full commit SHA (with a `# v4`-style comment) to guard against
+  a moved tag serving malicious workflow code.
 
 ## Roadmap
 
-- [ ] **Tier List** — currently an external spreadsheet link; revisit
-      whether to bring it in-app (data file + filterable UI) later.
-- [ ] **Guide** — currently an external site link; revisit whether to bring
-      it in-app later.
+- [ ] **Tier List / Guide** — these stay as external links to SaiLus's
+      originals. Do **not** copy or embed that content in-app without SaiLus's
+      explicit permission (see [Credits & attribution](#credits--attribution)).
 - [ ] **Team Builder** — art for `Dune Destroyer`, `Raven Whisperer`, and
       `Fortune Firecrackers` (see [Boss data](#hero-data)) once it exists
       somewhere; team notes/labels; per-team "recommended comp" hints using
@@ -258,4 +297,8 @@ Two things make client-side routing work on GitHub Pages' static hosting
 
 ## License
 
-No license chosen yet — all rights reserved by default until one is added.
+No license chosen yet — the original code here is all rights reserved by
+default until a license is added. Note this covers only this project's own
+code and the Team Builder: the linked Tier List and Guides belong to SaiLus,
+and game assets belong to Lilith Games / their respective owners (see
+[`/legal`](src/pages/Legal.tsx)).

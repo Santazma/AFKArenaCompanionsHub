@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import GradientText from '../reactbits/GradientText/GradientText'
 import SpotlightCard from '../reactbits/SpotlightCard/SpotlightCard'
-import { GUIDE_URL, TIER_LIST_URL } from '../lib/externalLinks'
+import { CONTENT_AUTHOR, GUIDE_URL, TIER_LIST_URL } from '../lib/externalLinks'
 
 interface Section {
   title: string
@@ -10,6 +10,9 @@ interface Section {
   spotlightColor: string
   to?: string
   href?: string
+  // Attribution for content we don't own — shown as a badge on the card.
+  credit?: string
+  external?: boolean
 }
 
 const sections: Section[] = [
@@ -19,6 +22,8 @@ const sections: Section[] = [
     description: 'Ranked heroes for Arena, Dream Realm, Guild Hunt and more, updated for the current meta.',
     cta: 'View rankings',
     spotlightColor: 'rgba(226, 181, 60, 0.25)',
+    credit: `Tier list by ${CONTENT_AUTHOR}`,
+    external: true,
   },
   {
     href: GUIDE_URL,
@@ -26,6 +31,8 @@ const sections: Section[] = [
     description: 'Beginner to advanced strategy: hero progression, resonating hall priorities, and game-mode tips.',
     cta: 'Read guides',
     spotlightColor: 'rgba(157, 92, 255, 0.25)',
+    credit: `Guides by ${CONTENT_AUTHOR}`,
+    external: true,
   },
   {
     to: '/team-builder',
@@ -54,6 +61,15 @@ export default function Home() {
         interactive team builder for every game mode.
       </p>
 
+      <p className="mt-4 max-w-2xl font-body text-xs text-gold-100/50">
+        The Tier List and Guide are created by <span className="text-gold-300/80">{CONTENT_AUTHOR}</span> and open on
+        their original site — this hub only links to them. The Team Builder is the only original tool here.{' '}
+        <Link to="/legal" className="text-arcane-300 underline-offset-2 hover:underline">
+          Credits &amp; legal
+        </Link>
+        .
+      </p>
+
       <div className="mt-16 grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sections.map((section) => {
           const card = (
@@ -61,10 +77,18 @@ export default function Home() {
               spotlightColor={section.spotlightColor}
               className="flex h-full flex-col gap-4 !border-border !bg-surface/80 transition-transform duration-300 group-hover:-translate-y-1"
             >
-              <h2 className="font-display text-2xl font-bold text-gold-300">
-                {section.title}
-              </h2>
+              <div className="flex items-start justify-between gap-3">
+                <h2 className="font-display text-2xl font-bold text-gold-300">{section.title}</h2>
+                {section.external && (
+                  <span className="mt-1 shrink-0 rounded-full border border-border/70 px-2 py-0.5 font-body text-[0.65rem] tracking-wide text-gold-100/50 uppercase">
+                    External ↗
+                  </span>
+                )}
+              </div>
               <p className="flex-1 font-body text-sm text-gold-100/70">{section.description}</p>
+              {section.credit && (
+                <span className="font-body text-xs text-gold-100/45">{section.credit}</span>
+              )}
               <span className="font-body text-sm font-medium text-arcane-300 transition-colors group-hover:text-gold-300">
                 {section.cta} &rarr;
               </span>

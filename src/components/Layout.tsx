@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import Aurora from '../reactbits/Aurora/Aurora'
 import NavBar from './NavBar'
+import { CONTENT_AUTHOR } from '../lib/externalLinks'
 
 export default function Layout() {
   return (
@@ -15,7 +16,14 @@ export default function Layout() {
           <Outlet />
         </main>
         <footer className="border-t border-border/60 px-6 py-8 text-center text-xs text-gold-100/50">
-          Fan-made hub for AFK Arena players. Not affiliated with Lilith Games.
+          <p>Fan-made, non-profit hub for AFK Arena players. Not affiliated with Lilith Games.</p>
+          <p className="mt-2">
+            Tier List &amp; Guides by <span className="text-gold-100/70">{CONTENT_AUTHOR}</span>
+            <span className="mx-2 text-gold-100/30">·</span>
+            <Link to="/legal" className="text-arcane-300 underline-offset-2 hover:underline">
+              Credits &amp; Legal
+            </Link>
+          </p>
         </footer>
       </div>
     </div>
